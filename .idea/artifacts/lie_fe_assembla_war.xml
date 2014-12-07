@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="lie-fe-assembla:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="lie-fe.war">
+      <element id="artifact" artifact-name="lie-fe-assembla:war exploded" />
+    </root>
+  </artifact>
+</component>
