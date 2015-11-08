@@ -77,8 +77,9 @@ public final class MatrixFormatter {
     private int findMaxRowWidth() {
         int rowLength = 0;
         for (final Derivative derivative : matrix) {
-            if (blowRow(derivative).length() > rowLength) {
-                rowLength = blowRow(derivative).length();
+            final int length = blowRow(derivative).length();
+            if (length > rowLength) {
+                rowLength = length;
             }
         }
         return rowLength;
