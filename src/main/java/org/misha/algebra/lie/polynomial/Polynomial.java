@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015. Misha's property, all rights reserved.
+ */
+
 package org.misha.algebra.lie.polynomial;
 
 import org.apache.log4j.Logger;
@@ -7,11 +11,8 @@ import org.misha.algebra.lie.polynomial.monomial.Monomial;
 import org.misha.algebra.lie.polynomial.monomial.MonomialUtils;
 import org.misha.algebra.parser.Parser;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.TreeSet;
 
 /**
@@ -25,7 +26,7 @@ import java.util.TreeSet;
 @SuppressWarnings({"ClassWithTooManyMethods", "SuppressionAnnotation"})
 public final class Polynomial implements Iterable<Monomial>, Cloneable {
     private static final Logger log = Logger.getLogger(Polynomial.class);
-    private final List<Monomial> monomials = new ArrayList<Monomial>();
+    private final TreeSet<Monomial> monomials = new TreeSet<Monomial>();
 
     /**
      * Static generation method
@@ -45,7 +46,7 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
         final Polynomial result = new Polynomial();
         result.addAll(monomials);//add clones
         final Monomial copy = m.copy();//m should be cloned
-        final List<Monomial> resultMonomials = result.monomials;
+        final TreeSet<Monomial> resultMonomials = result.monomials;
         for (final Iterator<Monomial> it = resultMonomials.iterator(); it.hasNext(); ) {
             final Monomial monomial = it.next();
             if (monomial.isSimilar(m)) {
@@ -55,7 +56,6 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
         if (copy.getConst() != 0) {
             result.add(copy);
         }
-        result.sort();
         return result;
     }
 
@@ -84,7 +84,6 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
         for (final Monomial m : p) {
             result = result.plus(m);
         }
-        result.sort();
         return result;
     }
 
@@ -92,10 +91,6 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
         for (final Monomial monomial : moreMonomials) {
             monomials.add(monomial.copy());//should add another references of added monomials
         }
-    }
-
-    public void sort() {
-        Collections.sort(monomials);
     }
 
     private void add(final Monomial monomial) {
@@ -155,7 +150,6 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
             }
         }
         result = result.hall();
-        result.sort();
         return result;
     }
 
@@ -236,7 +230,13 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
             return false;
         }
         final Polynomial monomials1 = (Polynomial) o;
-        return monomials.equals(monomials1.monomials);
+        final Iterator<Monomial> it = monomials1.iterator();
+        for (final Monomial m : monomials) {
+            if (!it.hasNext() || !m.equals(it.next())) {
+                return false;
+            }
+        }
+        return !it.hasNext();
     }
 
     @Override
@@ -298,20 +298,18 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
         Polynomial clone = null;
         try {
             clone = (Polynomial) super.clone();
-            int i = 0;
             for (final Monomial monomial : monomials) {
-                clone.monomials.set(i, monomial.clone());
+                clone.monomials.add(monomial.clone());
             }
-            ++i;
-        } catch (CloneNotSupportedException e) {
+        } catch (final CloneNotSupportedException e) {
             log.error(e);
         }
         return clone;
     }
 
-    public Polynomial actBy(Endo endo) {
+    public Polynomial actBy(final Endo endo) {
         Polynomial result = new Polynomial();
-        for (Monomial m : copy()) {
+        for (final Monomial m : copy()) {
             result = result.plus(m.actBy(endo));
         }
         return result;

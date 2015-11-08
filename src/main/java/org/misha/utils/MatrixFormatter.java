@@ -7,7 +7,7 @@ import org.misha.domain.JacobiMatrix;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Author: mshevelin
@@ -31,7 +31,7 @@ public final class MatrixFormatter {
 
     private void initColumnWidths(final Iterable<Derivative> matrix) {
         if (matrix.iterator().hasNext()) {
-            for (final Map.Entry<Monomial, Polynomial> ignored : matrix.iterator().next()) {
+            for (final Entry<Monomial, Polynomial> ignored : matrix.iterator().next()) {
                 columnWidths.add(2);
             }
         }
@@ -49,7 +49,7 @@ public final class MatrixFormatter {
     private void getMaxWidths() {
         for (final Derivative derivative : matrix) {
             int j = 0;
-            for (final Map.Entry<Monomial, Polynomial> entry : derivative) {
+            for (final Entry<Monomial, Polynomial> entry : derivative) {
                 final int length = entry.getValue().toString().length();
                 if (length > columnWidths.get(j)) {
                     columnWidths.set(j, length);
@@ -84,10 +84,10 @@ public final class MatrixFormatter {
         return rowLength;
     }
 
-    private StringBuilder blowRow(final Iterable<Map.Entry<Monomial, Polynomial>> derivative) {
+    private StringBuilder blowRow(final Iterable<Entry<Monomial, Polynomial>> derivative) {
         int j = 0;
         StringBuilder sbRow = new StringBuilder(BORDER_FRAGMENT);
-        for (final Map.Entry<Monomial, Polynomial> entry : derivative) {
+        for (final Entry<Monomial, Polynomial> entry : derivative) {
             final String value = entry.getValue().toString();
             final int blowFactor = (columnWidths.get(j) - value.length()) / 2;
             sbRow = sbRow.append(blow(blowFactor + FAT, value));

@@ -9,7 +9,7 @@
 ## 5. copy new war from target dir to server webapp dir
 ## 6. start server
 ## 7. open project home page
-appname="lie-fe-assembla"
+appname="lie-fe"
 ############### properties ####################
 ################ AT WORK ######################
 ###############################################
@@ -20,7 +20,7 @@ appname="lie-fe-assembla"
 ################################################
 ################ AT HOME #######################
 ################################################
-appfolder="/home/misha/workspace/"${appname}
+appfolder="/home/misha/workspace/"${appname}"-assembla"
 tomcatfolder="/home/misha/workspace/tomcat6"
 M2_HOME='/opt/apache-maven-3.2.2/'
 export M2_HOME
@@ -28,7 +28,7 @@ M2=${M2_HOME}/bin
 export M2
 PATH=${PATH}:${M2}
 export PATH
-
+logfile='./1'
 
 ################################################
 #export JAVA_HOME=${javahome}
@@ -37,9 +37,13 @@ tomcatwebapps=${tomcatfolder}/webapps
 if [ ! -e ${appfolder} ]; then echo 'ERROR: no appfolder' ${appfolder} 'found';exit 1; fi
 if [ ! -e ${tomcatbin} ]; then echo 'ERROR: no tomcatbin found';exit 1; fi
 cd ${appfolder}
-mvn  clean install
+mvn clean install $@ | tee out.txt ; test ${PIPESTATUS[0]} -eq 0
+if [ ${PIPESTATUS[0]} -ne "0" ]; then
+    echo ===================================================
+    echo maven build failed, see output for details;exit 1;
+    echo ===================================================
+fi
 cd ${tomcatbin}
-
 if [ "$(ps axf | grep catalina | grep -v grep)" ]; then
     echo ///////////////////////////
     echo        stopping tomcat...

@@ -7,15 +7,8 @@ import org.misha.service.DownloadService;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.Charset;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -78,7 +71,7 @@ public final class DownloadServiceImpl implements DownloadService {
             );
             writer.write(text, 0, text.length());
             writer.flush();
-        } catch (Throwable e) {
+        } catch (final Throwable e) {
             log.error(e);
         } finally {
             IOUtils.closeQuietly(writer);
@@ -88,8 +81,6 @@ public final class DownloadServiceImpl implements DownloadService {
 
     @Override
     public String currentTime() {
-        final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        final Calendar calendar = Calendar.getInstance();
-        return dateFormat.format(calendar.getTime());
+        return new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(Calendar.getInstance().getTime());
     }
 }

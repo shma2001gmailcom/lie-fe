@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015. Misha's property, all rights reserved.
+ */
+
 package org.misha.performance;
 
 import org.apache.log4j.Logger;
@@ -29,7 +33,7 @@ public class LongCommutator {
     );
     Endo reversedElementary = new Parser("").parseEndo("(+a ; + b + [a, c]; + c)");
 
-    public void testLongCommutator() {
+    public void testLongCommutator() throws CloneNotSupportedException {
         Endo endo;
         DOMConfigurator.configure("./src/main/resources/log4j.xml");
         log.debug(
@@ -90,7 +94,7 @@ public class LongCommutator {
         }
     }
 
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws CloneNotSupportedException {
         final LongCommutator longCommutator = new LongCommutator();
         longCommutator.testLongCommutator();
         longCommutator.testLongJacobi();

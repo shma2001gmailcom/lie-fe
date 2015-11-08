@@ -5,16 +5,15 @@
 package org.misha.algebra.permutation;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.misha.algebra.lie.polynomial.monomial.Monomial;
 import org.misha.algebra.lie.polynomial.monomial.MonomialUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Scanner;
-import java.util.TreeSet;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -33,12 +32,15 @@ public class PermutationGTest {
     private static final Monomial x = MonomialUtils.monomial("x");
     private static final Monomial y = MonomialUtils.monomial("y");
     private static final Monomial z = MonomialUtils.monomial("z");
-    private static final PermutationG<Monomial> letterPermutation = PermutationG.create(
-            new Monomial[]{y, z, x,}
+    private static final PermutationG<Monomial> letterPermutation = PermutationG.create(new Monomial[]{y, z, x,}
     );
-    private static final PermutationG<Monomial> letterPermutationSquared = PermutationG.create(
-            new Monomial[]{z, x, y}
+    private static final PermutationG<Monomial> letterPermutationSquared = PermutationG.create(new Monomial[]{z, x, y}
     );
+
+    @Before
+    public void setUp() throws Exception {
+        DOMConfigurator.configure("./src/main/resources/log4j.xml");
+    }
 
     @Test
     public void testGetAt() throws Exception {
@@ -64,12 +66,10 @@ public class PermutationGTest {
 
     @Test
     public void testCreate() {
-        final PermutationG<Integer> permutation1 = PermutationG.create(
-                Arrays.asList(new Integer[]{0, 2, 1})
+        final PermutationG<Integer> permutation1 = PermutationG.create(Arrays.asList(new Integer[]{0, 2, 1})
         );
         assertEquals(permutation, permutation1);
-        final PermutationG<Monomial> letterPermutation1 = PermutationG.create(
-                Arrays.asList(new Monomial[]{y, z, x,})
+        final PermutationG<Monomial> letterPermutation1 = PermutationG.create(Arrays.asList(new Monomial[]{y, z, x,})
         );
         assertEquals(letterPermutation1, letterPermutation);
     }
@@ -97,6 +97,14 @@ public class PermutationGTest {
 
     private PermutationG<Integer> create(final Integer... array) {
         return PermutationG.create(array);
+    }
+
+    private PermutationG<Monomial> create(final String... array) {
+        final Collection<Monomial> letters = new ArrayList<Monomial>(array.length);
+        for (final String s : array) {
+            letters.add(MonomialUtils.monomial(s));
+        }
+        return PermutationG.create(letters);
     }
 
     @Test
@@ -168,12 +176,20 @@ public class PermutationGTest {
                     expected.add(PermutationG.parse(line));
                 }
             }
-        } catch (final FileNotFoundException e) {
+        } catch (final Throwable e) {
             log.error(e);
         } finally {
             if (sc != null) {
                 sc.close();
             }
         }
+    }
+
+    @Ignore
+    @Test
+    public void generateSequence() {
+        final Collection<PermutationG<Monomial>> set = new TreeSet<PermutationG<Monomial>>();
+        set.addAll(PermutationG.sequence(create("a", "b", "c", "d", "e", "f", "g")));
+        log.debug(set);
     }
 }

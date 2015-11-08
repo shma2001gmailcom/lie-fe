@@ -41,7 +41,7 @@ public final class Validator {
         final Pattern emptyLeft = Pattern.compile("(.*)(\\[ *,(.*)])(.*)");
         final Pattern emptyRight = Pattern.compile("(.*)(\\[(.*), *])(.*)");
         if (emptyLeft.matcher(s).matches() || emptyRight.matcher(s).matches()) {
-            log.error("empty left multiplier in expression '" + s + "' is inadmissible.");
+            log.error("all left and right multipliers in expression '" + s + "' should be non-empty.");
             return false;
         }
         return true;

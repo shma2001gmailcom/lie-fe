@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Misha's property, all rights reserved.
+ */
+
 package org.misha.controller;
 
 import org.apache.commons.lang3.StringUtils;
@@ -36,13 +40,12 @@ final class JacobiController {
             @ModelAttribute("endoObject") final EndoObject endoObject, final ModelMap model
     ) {
         final String given = endoObject.getValue();
-        final String answer = service.jacobi(given);
+        final String answer = service.foxToHtml(given);
         if (StringUtils.isEmpty(answer)) {
             model.addAttribute("error", inputError);
         } else {
             model.addAttribute("answer", JACOBI_MATRIX_OF + given + " is <br>" + answer);
-            model.addAttribute(
-                    "txtAnswer", JACOBI_MATRIX_OF + given + " is \n\n" + service.toTxt(given)
+            model.addAttribute("txtAnswer", JACOBI_MATRIX_OF + given + " is \n\n" + service.foxToTxt(given)
             );
         }
         return "jacobi-result";

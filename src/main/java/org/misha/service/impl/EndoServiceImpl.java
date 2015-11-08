@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015. Misha's property, all rights reserved.
+ */
+
 package org.misha.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
@@ -22,13 +26,17 @@ public final class EndoServiceImpl implements EndoService {
     @Override
     public String getProductOf(final String s) {
         final String[] factors = StringUtils.split(s, "*");
-        final int factorsCount = factors.length;
-        if (factorsCount <= 1) {
+        if (factors.length <= 1) {
             return "Error: the factors count should be more then one.";
         }
+        return multiplyFactors(factors);
+    }
+
+    private String multiplyFactors(final String[] factors) {
         try {
             Endo leftFactor = new Parser("").parseEndo(factors[0]);
-            for (int i = 1; i < factorsCount; ++i) {
+            final int count = factors.length;
+            for (int i = 1; i < count; ++i) {
                 final Endo rightFactor = new Parser("").parseEndo(factors[i]);
                 leftFactor = leftFactor.times(rightFactor);
             }

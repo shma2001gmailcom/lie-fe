@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015. Misha's property, all rights reserved.
+ */
+
 package org.misha.controller;
 
 import org.apache.commons.lang3.StringUtils;
@@ -42,7 +46,7 @@ final class EndoController {
         if (StringUtils.isEmpty(answer)) {
             model.addAttribute("error", inputError);
         } else {
-            model.addAttribute("answer", given + "<br> = " + answer);
+            model.addAttribute("answer", given + " = " + answer);
         }
         return "endo-result";
     }

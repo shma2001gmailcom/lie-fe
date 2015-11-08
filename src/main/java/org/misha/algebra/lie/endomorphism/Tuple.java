@@ -1,14 +1,15 @@
+/*
+ * Copyright (c) 2015. Misha's property, all rights reserved.
+ */
+
 package org.misha.algebra.lie.endomorphism;
 
+import org.misha.algebra.lie.endomorphism.Tuple.Pair;
 import org.misha.algebra.lie.polynomial.Polynomial;
 import org.misha.algebra.lie.polynomial.monomial.Monomial;
 import org.misha.algebra.lie.polynomial.monomial.MonomialUtils;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * author: misha
@@ -18,12 +19,12 @@ import java.util.TreeSet;
  * Background object for endomorphism
  */
 
-final class Tuple implements Iterable<Tuple.Pair<Monomial, Polynomial>> {
+final class Tuple implements Iterable<Pair<Monomial, Polynomial>>, Cloneable {
     private static final int LETTERS_COUNT = 651;
     private static final String MUST_BE_A_LETTER = "The %s must be a letter.";
     private static final String MAP_DOES_NOT_EXIST = "The map of %s does not exist.";
     private static final String MAP_VIEW = "%s --> %s";
-    private final Set<Pair<Monomial, Polynomial>> mappings = new TreeSet<Pair<Monomial, Polynomial>>();
+    private final Collection<Pair<Monomial, Polynomial>> mappings = new TreeSet<Pair<Monomial, Polynomial>>();
     private final Set<Monomial> letters = new TreeSet<Monomial>();
 
     private boolean containsArgument(final Monomial argument) throws IllegalArgumentException {
@@ -109,8 +110,8 @@ final class Tuple implements Iterable<Tuple.Pair<Monomial, Polynomial>> {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        final Tuple pairs = (Tuple) o;
-        final Iterator<Pair<Monomial, Polynomial>> it = pairs.iterator();
+        final Iterable pairs = (Iterable) o;
+        final Iterator it = pairs.iterator();
         for (final Pair<Monomial, Polynomial> mapping : mappings) {
             if (!it.hasNext()) {
                 return false;
@@ -124,6 +125,19 @@ final class Tuple implements Iterable<Tuple.Pair<Monomial, Polynomial>> {
     @Override
     public int hashCode() {
         return mappings.hashCode();
+    }
+
+    @Override
+    public Tuple clone() throws CloneNotSupportedException {
+        final Tuple clone = (Tuple) super.clone();
+        for (final Monomial letter : letters) {
+            final Monomial letterClone = letter.clone();
+            clone.letters.add(letterClone);
+        }
+        for (final Monomial letterClone : clone.letters) {
+            clone.mapTo(letterClone, getAt(letterClone));
+        }
+        return clone;
     }
 
     public static class Pair<T extends Comparable<T>, S> implements Comparable<Pair<T, S>> {

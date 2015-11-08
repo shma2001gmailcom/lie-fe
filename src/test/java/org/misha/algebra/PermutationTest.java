@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015. Misha's property, all rights reserved.
+ */
+
 package org.misha.algebra;
 
 import org.junit.Test;

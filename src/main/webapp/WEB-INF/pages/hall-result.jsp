@@ -1,6 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="resources.jsp" %>
+<%--
+  ~ Copyright (c) 2014. Misha's property, all rights reserved.
+  --%>
+
 <html>
 <head>
     <title>hall-result</title>
@@ -8,12 +13,12 @@
 <body>
 <form:form id="form" modelAttribute="polynomialObject" action="download" class="check-me">
     <form:input type="hidden" id="answer" path="value" value="${answer}" name="answer"/>
-    <!--form:input type="hidden" id="serviceName" path="value" value="hallService" name="serviceName"/-->
-    <div id="answer" class='color-light-gray-yellow'>${answer}</div>
-    <div id="error" class="error-message">${error}</div>
+    <div id="answer" class='text'><c:out value="${answer}"/></div>
+    <div id="error" class="error-message"><c:out value="${error}"/></div>
     <br/>
     <input type="submit" class="button" value="export"/>
 </form:form>
 <%@ include file="home-link.jsp" %>
+<jsp:include page="../include.jsp" flush="true"/>
 </body>
 </html>

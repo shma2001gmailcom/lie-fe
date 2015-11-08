@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015. Misha's property, all rights reserved.
+ */
+
 package org.misha.algebra.lie.endomorphism;
 
 import org.apache.log4j.xml.DOMConfigurator;
@@ -67,7 +71,7 @@ public class EndoTest {
     }
 
     @Test
-    public void testInvertElementary() {
+    public void testInvertElementary() throws CloneNotSupportedException {
         final Endo e_;
         final Endo e1_;
         final Endo e1;

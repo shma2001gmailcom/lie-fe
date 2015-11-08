@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Misha's property, all rights reserved.
+ */
+
 package org.misha.algebra.lie.dependency;
 
 import org.misha.algebra.lie.endomorphism.Endo;
@@ -15,7 +19,8 @@ import java.util.Set;
 
 public class Checker {
 
-    public Monomial leadMonomialOfSubst(final Monomial monomial, final Monomial... monomials) {
+    public Monomial leadMonomialOfSubst(final Monomial monomial, final Monomial... monomials) throws
+                                                                                              CloneNotSupportedException {
         final Set<Monomial> letters = monomial.letters();
         final Endo endo = new Endo();
         Polynomial polynomial = new Polynomial();
@@ -33,7 +38,7 @@ public class Checker {
         return result;
     }
 
-    public boolean fallIn(final Polynomial p, final Polynomial... generators) {
+    public boolean fallsIn(final Iterable<Monomial> p, final Polynomial... generators) {
         if (!isHomogeneousAll(generators) || !isHomogeneous(p)) {
             throw new IllegalArgumentException("all polynomials must be homogeneous.");
         }

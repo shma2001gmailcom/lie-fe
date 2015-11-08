@@ -1,6 +1,11 @@
+/*
+ * Copyright (c) 2015. Misha's property, all rights reserved.
+ */
+
 package org.misha.algebra.lie.endomorphism;
 
 import org.apache.log4j.Logger;
+import org.misha.algebra.lie.endomorphism.Tuple.Pair;
 import org.misha.algebra.lie.polynomial.Polynomial;
 import org.misha.algebra.lie.polynomial.monomial.Monomial;
 import org.misha.domain.JacobiMatrix;
@@ -8,8 +13,6 @@ import org.misha.domain.JacobiMatrix;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
-import static org.misha.algebra.lie.polynomial.Polynomial.mount;
 
 /**
  * Author: mshevelin
@@ -19,25 +22,25 @@ import static org.misha.algebra.lie.polynomial.Polynomial.mount;
  * Lie algebra endomorphism
  */
 
-public final class Endo implements Iterable<Tuple.Pair<Monomial, Polynomial>> {
-    private final Tuple tuple = new Tuple();
+public final class Endo implements Iterable<Pair<Monomial, Polynomial>>, Cloneable {
+    private Tuple tuple = new Tuple();
     private static final Logger log = Logger.getLogger(Endo.class);
 
     public void mapTo(final Monomial letter, final Polynomial polynomial) {
         try {
             tuple.mapTo(letter, polynomial.hall());
-        } catch (Throwable e) {
+        } catch (final Throwable e) {
             log.trace(e, e);
         }
     }
 
     public Polynomial getAt(final Monomial letter) {
-        return tuple.getAt(letter).hall();
+        return tuple.getAt(letter).copy().hall();
     }
 
     private Endo multiplySimple(final Endo e) {
         final Endo result = new Endo();
-        for (final Tuple.Pair<Monomial, Polynomial> pair : tuple) {
+        for (final Pair<Monomial, Polynomial> pair : tuple) {
             Polynomial value = pair.getValue().hall();
             for (final Monomial letter : tuple.letters()) {
                 value = value.substitute(letter, e.getAt(letter).hall());
@@ -49,7 +52,7 @@ public final class Endo implements Iterable<Tuple.Pair<Monomial, Polynomial>> {
 
     private Endo encodeValues() {
         final Endo result = new Endo();
-        for (final Tuple.Pair<Monomial, Polynomial> pair : tuple) {
+        for (final Pair<Monomial, Polynomial> pair : tuple) {
             result.mapTo(pair.getArgument(), pair.getValue().encode().hall());
         }
         return result;
@@ -57,7 +60,7 @@ public final class Endo implements Iterable<Tuple.Pair<Monomial, Polynomial>> {
 
     private Endo encodeArguments() {
         final Endo result = new Endo();
-        for (final Tuple.Pair<Monomial, Polynomial> pair : tuple) {
+        for (final Pair<Monomial, Polynomial> pair : tuple) {
             result.mapTo(pair.getArgument().encode(), pair.getValue().hall());
         }
         return result;
@@ -72,11 +75,8 @@ public final class Endo implements Iterable<Tuple.Pair<Monomial, Polynomial>> {
         return result;
     }
 
-    /*
-    todo: ought to be done some else way
-     */
     private Polynomial copyClear(final Endo endo, final Monomial letter) {
-        return mount(endo.getAt(letter).toString()).hall();
+        return endo.getAt(letter).clone().hall();
     }
 
     @Override
@@ -103,7 +103,7 @@ public final class Endo implements Iterable<Tuple.Pair<Monomial, Polynomial>> {
             return "[]";
         }
         StringBuilder sb = new StringBuilder("(");
-        for (final Tuple.Pair<Monomial, Polynomial> pair : tuple) {
+        for (final Pair<Monomial, Polynomial> pair : tuple) {
             sb = sb.append(pair.getValue()).append("; ");
         }
         sb = sb.deleteCharAt(sb.length() - 1);
@@ -115,17 +115,24 @@ public final class Endo implements Iterable<Tuple.Pair<Monomial, Polynomial>> {
     public JacobiMatrix fox() {
         final JacobiMatrix result = new JacobiMatrix();
         final Collection<Character> characters = new ArrayList<Character>();
-        for (final Tuple.Pair<Monomial, Polynomial> pair : this) {
+        for (final Pair<Monomial, Polynomial> pair : this) {
             characters.add(pair.getArgument().getSymbol());
         }
-        for (final Tuple.Pair<Monomial, Polynomial> pair : this) {
+        for (final Pair<Monomial, Polynomial> pair : this) {
             result.add(getAt(pair.getArgument()).foxRelative(characters));
         }
         return result;
     }
 
     @Override
-    public Iterator<Tuple.Pair<Monomial, Polynomial>> iterator() {
+    public Iterator<Pair<Monomial, Polynomial>> iterator() {
         return tuple.iterator();
+    }
+
+    @Override
+    public Endo clone() throws CloneNotSupportedException {
+        final Endo clone = (Endo) super.clone();
+        clone.tuple = tuple.clone();
+        return clone;
     }
 }

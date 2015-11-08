@@ -39,7 +39,8 @@ final class ExpandController {
         if (StringUtils.isEmpty(answer)) {
             model.addAttribute("error", inputError);
         } else {
-            model.addAttribute("answer", given + "<br> = " + answer);
+            model.addAttribute("given", given);
+            model.addAttribute("answer", answer);
         }
         return "expand";
     }

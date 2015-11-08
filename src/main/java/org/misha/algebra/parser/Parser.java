@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015. Misha's property, all rights reserved.
+ */
+
 package org.misha.algebra.parser;
 
 import org.apache.commons.lang3.StringUtils;
@@ -7,11 +11,7 @@ import org.misha.algebra.lie.polynomial.monomial.Monomial;
 import org.misha.algebra.lie.polynomial.monomial.MonomialUtils;
 import org.misha.service.validator.Validator;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.regex.Matcher;
 
 import static java.util.regex.Pattern.compile;
@@ -50,7 +50,6 @@ public final class Parser {
                 result = result.plus(m);
             }
         }
-        result.sort();
         return result;
     }
 

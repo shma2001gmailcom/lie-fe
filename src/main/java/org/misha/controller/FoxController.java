@@ -39,7 +39,7 @@ final class FoxController {
         if (StringUtils.isEmpty(answer)) {
             model.addAttribute("error", inputError);
         } else {
-            model.addAttribute("answer", "The Fox Derivative of " + given + " <br> is <br> " + answer);
+            model.addAttribute("answer", "The Fox Derivative of " + given + "\n is \n" + answer);
         }
         return "fox";
     }

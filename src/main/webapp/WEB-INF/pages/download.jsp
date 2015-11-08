@@ -8,6 +8,6 @@
 <body>
 <br>
 <br>
-<jsp:include page="include.txt" flush="true"/>
+<jsp:include page="../include.jsp" flush="true"/>
 </body>
 </html>

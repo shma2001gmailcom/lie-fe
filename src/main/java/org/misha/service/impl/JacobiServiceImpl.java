@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Misha's property, all rights reserved.
+ */
+
 package org.misha.service.impl;
 
 import org.apache.log4j.Logger;
@@ -19,7 +23,7 @@ public final class JacobiServiceImpl implements JacobiService {
     private static final Logger log = Logger.getLogger(JacobiServiceImpl.class);
 
     @Override
-    public String jacobi(final String s) {
+    public String foxToHtml(final String s) {
         try {
             final Endo endo = new Parser("").parseEndo(s);
             return endo.fox().toHtml();
@@ -30,7 +34,7 @@ public final class JacobiServiceImpl implements JacobiService {
     }
 
     @Override
-    public String toTxt(final String s) {
+    public String foxToTxt(final String s) {
         final Endo endo = new Parser("").parseEndo(s);
         return endo.fox().toTxt();
     }

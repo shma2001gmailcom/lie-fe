@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Misha's property, all rights reserved.
+ */
+
 package org.misha.controller;
 
 import org.misha.domain.EndoObject;
@@ -19,6 +23,8 @@ final class InputController {
     private String welcomeMessage;
     @Value("#{applicationProperties['polynomial.message']}")
     private String polynomialMessage;
+    @Value("#{applicationProperties['hall-base']}")
+    private String hallBase;
     @Value("#{applicationProperties['endo.message']}")
     private String endoMessage;
     @Value("#{applicationProperties['expand.message']}")
@@ -39,6 +45,7 @@ final class InputController {
         model.addAttribute("expandMessage", expandMessage);
         model.addAttribute("foxMessage", foxMessage);
         model.addAttribute("jacobiMessage", jacobiMessage);
+        model.addAttribute("hallBase", hallBase);
         return "input";
     }
 }

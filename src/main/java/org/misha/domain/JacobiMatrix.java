@@ -6,8 +6,9 @@ import org.misha.algebra.fox.Derivative;
 import org.misha.utils.MatrixFormatter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * author: misha
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 
 public final class JacobiMatrix implements Iterable<Derivative> {
-    private final ArrayList<Derivative> derivatives = new ArrayList<Derivative>();
+    private final Collection<Derivative> derivatives = new ArrayList<Derivative>();
 
     @SuppressWarnings("unused declaration")
     public String getName() {
@@ -50,7 +51,7 @@ public final class JacobiMatrix implements Iterable<Derivative> {
         );
         for (final Derivative derivative : this) {
             sb = sb.append('\n').append("<tr align=\'center\'>\n");
-            for (final Map.Entry<Monomial, Polynomial> entry : derivative) {
+            for (final Entry<Monomial, Polynomial> entry : derivative) {
                 sb = sb.append("<td>\n");
                 sb.append(entry.getValue().toString());
                 sb = sb.append("</td>\n");

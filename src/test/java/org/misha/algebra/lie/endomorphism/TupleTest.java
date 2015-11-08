@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015. Misha's property, all rights reserved.
+ */
+
 package org.misha.algebra.lie.endomorphism;
 
 import org.apache.log4j.Logger;
@@ -70,8 +74,8 @@ public class TupleTest {
         tuple1.mapTo(a, mount("+a + [b, c]"));
         tuple1.mapTo(b, mount("+b"));
         tuple1.mapTo(c, mount("+c"));
-        Polynomial p = tuple1.getAt(a).substitute(a, mount("+ a + [b, c]"));
-        Polynomial p1 = p.substitute(b, mount("+b"));
+        final Polynomial p = tuple1.getAt(a).substitute(a, mount("+ a + [b, c]"));
+        final Polynomial p1 = p.substitute(b, mount("+b"));
         tuple1.mapTo(
                 a, tuple1.getAt(a).substitute(a, mount("+ a + [b, c]")).substitute(b, mount("+b")).substitute(
                 c, mount("+c")

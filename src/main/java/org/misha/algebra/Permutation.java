@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015. Misha's property, all rights reserved.
+ */
+
 package org.misha.algebra;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;

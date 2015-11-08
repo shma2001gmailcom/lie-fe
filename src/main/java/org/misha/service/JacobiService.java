@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Misha's property, all rights reserved.
+ */
+
 package org.misha.service;
 
 /**
@@ -7,7 +11,7 @@ package org.misha.service;
  */
 public interface JacobiService {
 
-    String jacobi(String endo);
+    String foxToHtml(String endo);
 
-    String toTxt(String given);
+    String foxToTxt(String given);
 }

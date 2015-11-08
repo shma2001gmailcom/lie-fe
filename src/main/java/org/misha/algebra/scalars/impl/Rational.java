@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2014. Misha's property, all rights reserved.
+ */
+
 package org.misha.algebra.scalars.impl;
 
 import org.apache.commons.lang3.StringUtils;
@@ -15,6 +19,7 @@ import java.util.regex.Pattern;
  * Time: 6:03 PM
  */
 
+@SuppressWarnings("ClassWithTooManyMethods")
 @Immutable
 public final class Rational implements Scalar<Rational>, Serializable, Cloneable {
     private static final Logger log = Logger.getLogger(Rational.class);
@@ -209,7 +214,7 @@ public final class Rational implements Scalar<Rational>, Serializable, Cloneable
         Rational clone = null;
         try {
             clone = (Rational) super.clone();
-        } catch (CloneNotSupportedException e) {
+        } catch (final CloneNotSupportedException e) {
             log.error(e);
         }
         return clone;

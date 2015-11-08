@@ -7,14 +7,7 @@ package org.misha.algebra.permutation;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.concurrent.Immutable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,6 +22,7 @@ import java.util.regex.Pattern;
  * acts from right hand side).
  */
 
+@SuppressWarnings("ClassWithTooManyMethods")
 @Immutable //in the case if T is immutable
 public class PermutationG<T extends Comparable<T>> implements Comparable<PermutationG<T>> {
     final Set<T> set;
@@ -132,7 +126,7 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
             return false;
         }
         final PermutationG that = (PermutationG) o;
-        return !(!raw.equals(that.raw));
+        return raw.equals(that.raw);
     }
 
     @Override
@@ -147,9 +141,6 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
 
     @Override
     public int compareTo(final PermutationG<T> o) {
-        if(o == null) {
-            throw new IllegalArgumentException("left hand side of comparison should not be null.");
-        }
         if (!valid(o)) {
             throw new IllegalArgumentException("another permutation must be on same set.");
         }
@@ -163,11 +154,19 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
     }
 
     private T maxValue() {
-        return Collections.max(set);
+        T result = null;
+        for (final T t : set) {
+            result = t;
+        }
+        return result;
     }
 
     private T minValue() {
-        return Collections.min(set);
+        final Iterator<T> it = set.iterator();
+        if (it.hasNext()) {
+            return set.iterator().next();
+        }
+        throw new IllegalStateException("set iterator have to has next");
     }
 
     private PermutationG<T> shift() {
@@ -188,7 +187,7 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
         for (final T key : set) {
             list.add(raw.get(key));
         }
-        return Collections.unmodifiableList(list);
+        return list;
     }
 
     private Collection<PermutationG<T>> sequence() {
@@ -208,7 +207,7 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
             final PermutationG<S> permutation
     ) {
         final PermutationG<S> id = create(permutation.set);
-        return Collections.unmodifiableCollection(id.sequence());
+        return id.sequence();
     }
 
     private void replicate(final List<PermutationG<T>> result, final int bound) {
@@ -243,14 +242,14 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
         tmp = swap(tmp, 0, 1);
         final PermutationG<T> transposition = PermutationG.create(tmp);
         result.add(transposition);
-        return Collections.unmodifiableCollection(result);
+        return result;
     }
 
     private Collection<T> swap(final Collection<T> list, final int i, final int j) {
         final List<T> result = new ArrayList<T>();
         result.addAll(list);
         Collections.swap(result, i, j);
-        return Collections.unmodifiableCollection(result);
+        return result;
     }
 
     public static PermutationG<Integer> parse(final CharSequence s) {
@@ -268,6 +267,6 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
             integers[length + 1] = Integer.parseInt(StringUtils.split(matcher.group(3).trim(), ")")[0]);
             return create(integers);
         }
-        throw new IllegalArgumentException("the char-sequence '" + s + "' is not valid permutation.");
+        return null;
     }
 }

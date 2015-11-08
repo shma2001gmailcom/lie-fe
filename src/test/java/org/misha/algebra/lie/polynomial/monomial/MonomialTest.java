@@ -1,5 +1,10 @@
+/*
+ * Copyright (c) 2015. Misha's property, all rights reserved.
+ */
+
 package org.misha.algebra.lie.polynomial.monomial;
 
+import junit.framework.Assert;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.junit.Before;
@@ -19,6 +24,7 @@ import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.misha.algebra.lie.polynomial.Polynomial.mount;
+import static org.misha.algebra.lie.polynomial.monomial.MonomialUtils.monomial;
 
 /**
  * author: misha
@@ -165,6 +171,10 @@ public class MonomialTest {
         assertTrue(cb.compareTo(ba) > 0);
         assertTrue(cba.compareTo(cab) > 0);
         assertTrue(cba.compareTo(bac) > 0);
+        Assert.assertTrue(MonomialUtils.monomial("- 2[[z, x], y]").compareTo(MonomialUtils.monomial("- [[z, y], [z, x]]"
+                                                                             )
+                          ) < 0
+        );
     }
 
     @Test
@@ -191,18 +201,26 @@ public class MonomialTest {
     }
 
     @Test
-    public void actByTest() {
-        final Monomial monomial = new Parser("").parse("[[[x, y], y], [x, z]]");
+    public void testActBy() throws CloneNotSupportedException {
+        final Polynomial polynomial = mount("+ x - [x,y] + 2[[x, z], y]");
         final Endo endo = new Endo();
-        endo.mapTo(MonomialUtils.monomial("x"), mount("-[[a, b], b]"));
-        endo.mapTo(MonomialUtils.monomial("y"), mount("-[[a, b], [[a, b], b]]"));
-        endo.mapTo(MonomialUtils.monomial("z"), mount("-a"));
-        assertEquals(
-                monomial.actBy(endo), mount(
-                "-[[[[[b, a], b], [b, a]], [[[b, a], a], b]], [[[[b, a], b], [b, a]], [[b, a], b]]] " +
-                        "+ [[[[[[b, a], b], [b, a]], [[b, a], b]], [[[b, a], a], b]], [[[b, a], b], [b, a]]]"
-        )
+        endo.mapTo(monomial("x"), mount("+ x + [y, z]"));
+        endo.mapTo(monomial("y"), mount("+ y + [x, z]"));
+        endo.mapTo(monomial("z"), mount("+ z + [x, y]"));
+        final Polynomial expected = mount("+ x + [y, x] - [z, y] - [[z, x], x] " +
+                                                  "- 2[[z, x], y] + [[z, y], y] " +
+                                                  "- [[z, y], [z, x]] + 2[[[y, x], x], y] " +
+                                                  "- 2[[[y, x], x], [z, x]] - 2[[[y, x], y], [z, y]] " +
+                                                  "- 2[[[z, y], y], z] + 2[[[z, y], y], [y, x]] " +
+                                                  "+ 2[[[z, y], z], [z, x]] - 2[[[z, y], [y, x]], [z, x]]"
         );
+        final Polynomial actual = polynomial.actBy(endo);
+        for (final Monomial m : actual) {
+            assertTrue(expected.contains(m));
+        }
+        for (final Monomial m : expected) {
+            assertTrue(actual.contains(m));
+        }
     }
 
     @Test

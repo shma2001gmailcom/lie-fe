@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="lie-fe:war">
+  <artifact type="war" build-on-make="true" name="lie-fe:war">
     <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="lie-fe-assembla.war">
+    <root id="archive" name="lie-fe.war">
       <element id="artifact" artifact-name="lie-fe:war exploded" />
     </root>
   </artifact>

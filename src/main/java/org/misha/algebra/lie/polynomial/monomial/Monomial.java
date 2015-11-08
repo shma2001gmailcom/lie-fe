@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2015. Misha's property, all rights reserved.
+ */
+
 package org.misha.algebra.lie.polynomial.monomial;
 
 import org.apache.log4j.Logger;
@@ -584,6 +588,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         Monomial clone = null;
         if (isLetter()) {
             clone = MonomialUtils.monomial(Character.toString((getSymbol())));
+            clone.name = name;
         }
         try {
             clone = (Monomial) super.clone();
@@ -594,7 +599,8 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
             clone.deg = deg;
             clone.name = name;
             clone.symbol = symbol;
-        } catch (CloneNotSupportedException e) {
+            assert clone.equals(this) : toString() + " is not equals to" + clone.toString();
+        } catch (final CloneNotSupportedException e) {
             log.error(e);
         }
         return clone;
