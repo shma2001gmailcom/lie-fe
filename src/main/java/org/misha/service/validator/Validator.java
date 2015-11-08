@@ -22,7 +22,7 @@ public final class Validator {
     public static boolean isLieMonomialValid(final String s) {
         final Pattern signsLettersCommasBrackets = Pattern.compile("([-\\+]*)([a-zA-Z0-9, \\Q[\\E\\Q]\\E])*");
         if (!signsLettersCommasBrackets.matcher(s).matches()) {
-            log.error("invalid characters in the expression '" + s + "'.");
+            log.error(String.format("invalid characters in the expression '%s'.", s));
             return false;
         }
         final Collection<Character> queue = new LinkedList<Character>();
@@ -30,18 +30,18 @@ public final class Validator {
             queue.add(c);
         }
         if (!new Parser("").areBracketsCorrect(queue)) {
-            log.error("the expression '" + s + "' has unmatched brackets.");
+            log.error(String.format("the expression '%s' has unmatched brackets.", s));
             return false;
         }
         final Pattern twoLetters = Pattern.compile("(.*)([a-zA-Z]{2})(.*)");
         if (twoLetters.matcher(s).matches()) {
-            log.error("two adjacent letters in the expression '" + s + "' are inadmissible.");
+            log.error(String.format("two adjacent letters in the expression '%s' are inadmissible.", s));
             return false;
         }
         final Pattern emptyLeft = Pattern.compile("(.*)(\\[ *,(.*)])(.*)");
         final Pattern emptyRight = Pattern.compile("(.*)(\\[(.*), *])(.*)");
         if (emptyLeft.matcher(s).matches() || emptyRight.matcher(s).matches()) {
-            log.error("all left and right multipliers in expression '" + s + "' should be non-empty.");
+            log.error(String.format("all left and right multipliers in expression '%s' should be non-empty.", s));
             return false;
         }
         return true;
