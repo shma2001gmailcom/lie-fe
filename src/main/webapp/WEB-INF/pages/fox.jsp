@@ -15,6 +15,6 @@
     <input type="submit" class="button" value="export"/>
 </form:form>
 <%@ include file="home-link.jsp" %>
-<jsp:include page="../include.jsp" flush="true"/>
+<jsp:include page="include.jsp" flush="true"/>
 </body>
 </html>

@@ -37,6 +37,6 @@
 
 <h3 class="color-light-brown"><c:out value="${jacobiMessage}"/></h3>
 <%@include file="jacobi-input-form.jsp" %>
-<jsp:include page="../include.jsp" flush="true"/>
+<jsp:include page="include.jsp" flush="true"/>
 </body>
 </html>
