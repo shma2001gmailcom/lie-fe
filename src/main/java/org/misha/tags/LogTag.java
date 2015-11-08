@@ -49,6 +49,7 @@ public class LogTag extends SimpleTagSupport {
             final Map formMap = describe(req.getAttribute("org.apache.struts.taglib.html.BEAN"));
             if (formMap.isEmpty()) {
                 writer.print("NONE\n");
+                return;
             }
             for (final Object o : formMap.entrySet()) {
                 final Entry e = (Entry) o;
@@ -66,6 +67,7 @@ public class LogTag extends SimpleTagSupport {
         writer.print("\n---------------------PARAMETERS-------------------------------\n");
         if (!params.hasMoreElements()) {
             writer.print("NONE\n");
+            return;
         }
         while (params.hasMoreElements()) {
             final String name = params.nextElement();
@@ -80,6 +82,7 @@ public class LogTag extends SimpleTagSupport {
         writer.print("\n---------------------ATTRIBUTES-------------------------------\n");
         if (!attributeNames.hasMoreElements()) {
             writer.print("NONE\n");
+            return;
         }
         while (attributeNames.hasMoreElements()) {
             final String name = attributeNames.nextElement();
