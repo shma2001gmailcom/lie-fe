@@ -2,7 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+    <title>
+        nn</title>
 </head>
 <body>
 <form:form id="form3" modelAttribute="polynomialObject" action="fox" class="check-me">
