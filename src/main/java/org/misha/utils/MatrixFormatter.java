@@ -26,7 +26,7 @@ public final class MatrixFormatter {
     public MatrixFormatter(final JacobiMatrix matrix) {
         this.matrix = matrix;
         initColumnWidths(matrix);
-        getMaxWidths();
+        columnWidths();
     }
 
     private void initColumnWidths(final Iterable<Derivative> matrix) {
@@ -46,7 +46,7 @@ public final class MatrixFormatter {
         return String.format("%s%s%s", blow, s, blow);
     }
 
-    private void getMaxWidths() {
+    private void columnWidths() {
         for (final Derivative derivative : matrix) {
             int j = 0;
             for (final Entry<Monomial, Polynomial> entry : derivative) {
