@@ -43,7 +43,7 @@ public final class MatrixFormatter {
             sb = sb.append(SPACE);
         }
         final String blow = sb.toString();
-        return blow + s + blow;
+        return String.format("%s%s%s", blow, s, blow);
     }
 
     private void getMaxWidths() {
