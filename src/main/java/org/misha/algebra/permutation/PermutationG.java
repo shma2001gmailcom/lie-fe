@@ -63,7 +63,7 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
      * another static generation method
      *
      * @param objects a collection of permuted objects
-     * @param <S>     type of objects permuted
+     * @param <S>    the type of objects permuted
      * @return new instance
      */
     public static <S extends Comparable<S>> PermutationG<S> create(

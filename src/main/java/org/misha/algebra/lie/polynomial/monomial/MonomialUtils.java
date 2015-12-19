@@ -13,6 +13,9 @@ import java.util.regex.Pattern;
 public final class MonomialUtils {
     private static final String CAN_T_RECOGNIZE_LETTER = "can't recognize valid letter for the String '%s'.";
 
+    private MonomialUtils() {
+    }
+
     /**
      * Static generation method
      *

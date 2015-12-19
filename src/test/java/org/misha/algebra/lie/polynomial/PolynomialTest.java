@@ -12,9 +12,7 @@ import org.misha.algebra.parser.Parser;
 import java.util.Collection;
 import java.util.HashSet;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.misha.algebra.lie.polynomial.Polynomial.mount;
 
 /**
@@ -108,7 +106,7 @@ public class PolynomialTest {
         Polynomial p = new Polynomial();
         p = p.plus(x).plus(x);
         p = p.plus(p);
-        assertEquals(p.toString(), "+ 4x");
+        assertEquals(p, new Polynomial().plus(x.times(4)));
     }
 
     @Test

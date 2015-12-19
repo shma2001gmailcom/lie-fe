@@ -64,14 +64,14 @@ public class MonomialTest {
     @Test
     public void testMonomial() throws Exception {
         final Monomial ab = MonomialUtils.monomial(a, b, 1);
-        assertEquals(
-                MonomialUtils.monomial(a, ab, 7).toString(),
-                "[[[[[[[a, [a, b]], [a, b]], [a, b]], [a, b]], [a, b]], [a, b]], [a, b]]"
+        assertEquals(MonomialUtils.monomial(a, ab, 7).toString(),
+                     "[[[[[[[a, [a, b]], [a, b]], [a, b]], [a, b]], [a, b]], [a, b]], [a, b]]"
         );
     }
 
     @Test
     public void testToString() throws Exception {
+        testMonomial();
     }
 
     @Test
@@ -91,23 +91,20 @@ public class MonomialTest {
         q = q.plus(ba_b_b_a);
         assertEquals(q.hall().toString(), "+ [[[b, a], b], [b, a]] + [[[[b, a], a], b], b]");
         p = mount("+ [[[[[b, a], a], [b, a]], b], b]");
-        assertEquals(
-                p.hall().toString(), "+ 2[[[[b, a], a], b], [[b, a], b]] " +
-                "- [[[[b, a], b], b], [[b, a], a]] " +
-                "+ [[[[[b, a], a], b], b], [b, a]]"
+        assertEquals(p.hall().toString(), "+ 2[[[[b, a], a], b], [[b, a], b]] " +
+                             "- [[[[b, a], b], b], [[b, a], a]] " +
+                             "+ [[[[[b, a], a], b], b], [b, a]]"
         );
         Parser parser = new Parser("+[[[[c, b], a], a], a]");
-        assertEquals(
-                parser.parse().hall().toString(), "- 3[[[b, a], a], [c, a]] " +
-                "+ 3[[[c, a], a], [b, a]] " +
-                "- [[[[b, a], a], a], c] " +
-                "+ [[[[c, a], a], a], b]"
+        assertEquals(parser.parse().hall().toString(), "- 3[[[b, a], a], [c, a]] " +
+                             "+ 3[[[c, a], a], [b, a]] " +
+                             "- [[[[b, a], a], a], c] " +
+                             "+ [[[[c, a], a], a], b]"
         );
         parser = new Parser("+[[[c, b], a], a]");
-        assertEquals(
-                parser.parse().hall().toString(), "+ 2[[c, a], [b, a]] " +
-                "- [[[b, a], a], c] " +
-                "+ [[[c, a], a], b]"
+        assertEquals(parser.parse().hall().toString(), "+ 2[[c, a], [b, a]] " +
+                             "- [[[b, a], a], c] " +
+                             "+ [[[c, a], a], b]"
         );
         parser = new Parser("+[[c, b], a]");
         assertEquals(parser.parse().hall().toString(), "- [[b, a], c] + [[c, a], b]");
@@ -149,9 +146,7 @@ public class MonomialTest {
                 s = StringUtils.removeStart(s, constant + core);
                 constant = StringUtils.replace(constant, SPACE, StringUtils.EMPTY);
                 constant = StringUtils.removeStart(constant, PLUS);
-                final Summand summand = new Summand(
-                        Integer.parseInt(StringUtils.remove(constant, SPACE)), core
-                );
+                final Summand summand = new Summand(Integer.parseInt(StringUtils.remove(constant, SPACE)), core);
                 result.add(summand);
             } else {
                 break;
@@ -171,9 +166,8 @@ public class MonomialTest {
         assertTrue(cb.compareTo(ba) > 0);
         assertTrue(cba.compareTo(cab) > 0);
         assertTrue(cba.compareTo(bac) > 0);
-        Assert.assertTrue(MonomialUtils.monomial("- 2[[z, x], y]").compareTo(MonomialUtils.monomial("- [[z, y], [z, x]]"
-                                                                             )
-                          ) < 0
+        Assert.assertTrue(
+                MonomialUtils.monomial("- 2[[z, x], y]").compareTo(MonomialUtils.monomial("- [[z, y], [z, x]]")) < 0
         );
     }
 
@@ -242,5 +236,17 @@ public class MonomialTest {
         copy = copy.times(100);
         assertEquals(copy.getConst(), 2 * 2 * 3 * 5 * 5);
         assertEquals(monomial.getConst(), 3);
+    }
+
+    @Test
+    public void testIsRoot() throws Exception {
+        final Monomial left = monomial("x");
+        final Monomial right = monomial("z");
+        final Monomial product = monomial(left, right);
+        assertTrue(right.getSymbol() == 'z');
+        assertFalse(left.isRoot());
+        assertTrue(product.isRoot());
+        assertTrue(left.getParent().equals(product));
+        assertTrue(product.left().equals(left));
     }
 }

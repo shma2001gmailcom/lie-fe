@@ -30,6 +30,6 @@ public final class Alphabet {
     }
 
     public Monomial get(final int i) {
-        return monomials.get(i);
+        return monomials.get(i).clone();
     }
 }
