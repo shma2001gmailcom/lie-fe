@@ -144,12 +144,12 @@ public class PolynomialTest {
 
     @Test
     public void decodeEncodeTest() {
-        final Polynomial p1 = mount(
+        final Polynomial original = mount(
                 "+ a - 2[a, b] + 5[[a, b], b] - 3[[[a, b], b], b] + [[[[a, b], b], b], b]"
         );
-        final Polynomial encoded = p1.encode();
+        final Polynomial encoded = original.encode();
         final Polynomial decoded = encoded.decode();
-        assertEquals(decoded, p1);
+        assertEquals(decoded, original);
         assertEquals(decoded.encode(), encoded);
     }
 

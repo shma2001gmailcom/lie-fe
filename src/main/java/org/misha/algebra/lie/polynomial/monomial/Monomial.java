@@ -30,8 +30,7 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 public final class Monomial implements Serializable, Comparable<Monomial>, Cloneable {
     private static final Logger log = Logger.getLogger(Monomial.class);
-    private static final String MUST_BE_A_LETTER =
-            "The %s must be a letter having constant being equal to 1.";
+    private static final String MUST_BE_A_LETTER = "The %s must be a letter having constant equals to 1.";
     private static final String LEFT_BRACKET = "[";
     private static final String RIGHT_BRACKET = "]";
     private static final String MINUS = "-";
@@ -246,7 +245,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
                 final Monomial second = MonomialUtils.monomial(
                         leftLeft, MonomialUtils.monomial(
                         leftRight, right
-                ).times(constant)
+                        ).times(constant)
                 );
                 return result.plus(first).plus(second);
             }
