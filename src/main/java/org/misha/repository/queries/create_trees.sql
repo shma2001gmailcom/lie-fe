@@ -41,10 +41,14 @@ CREATE PROCEDURE new_node_letter(IN node_data VARCHAR(200))
 DROP PROCEDURE IF EXISTS alphabet;
 CREATE PROCEDURE alphabet()
   BEGIN
-    DECLARE v_max INT UNSIGNED DEFAULT 3;
+    DECLARE v_max INT UNSIGNED DEFAULT 26;
     DECLARE v_count INT UNSIGNED DEFAULT 0;
     WHILE (v_count < v_max) DO
-      CALL new_node_letter(ELT(v_count + 1, 'a', 'b', 'c'));
+      CALL new_node_letter(
+          ELT(v_count + 1, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+              's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+              'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+          ));
       SET v_count = v_count + 1;
     END WHILE;
   END;
@@ -153,3 +157,5 @@ SELECT
   d.data_value
 FROM NODES n JOIN NODE_DATA d ON (n.node_id = d.node_id);
 #######################################################################
+SELECT *
+FROM NODES
