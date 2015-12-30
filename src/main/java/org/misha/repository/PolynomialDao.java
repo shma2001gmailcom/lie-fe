@@ -4,16 +4,19 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Repository;
 
+import javax.inject.Inject;
+
 /**
  * author: misha
  * date: 12/27/15 1:05 AM.
  */
 @Repository
 public class PolynomialDao {
-    private final SpringJdbcTemplates springJdbcTemplates;
+    @Inject
+    private SpringJdbcTemplates springJdbcTemplates;
 
-    public PolynomialDao(final SpringJdbcTemplates jdbcDao) {
-        springJdbcTemplates = jdbcDao;
+    public void  setSpringJdbcTemplates(final SpringJdbcTemplates springJdbcTemplates) {
+        this.springJdbcTemplates = springJdbcTemplates;
     }
 
     public void createPolynomial() {

@@ -19,6 +19,7 @@
     <br/>
     <input type="submit" class="button" value="export"/>
 </form:form>
+<div id="monomial" class="text">${monomial}</div>
 <%@ include file="home-link.jsp" %>
 <jsp:include page="include.jsp" flush="true"/>
 </body>

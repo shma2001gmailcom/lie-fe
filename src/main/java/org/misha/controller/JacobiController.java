@@ -5,6 +5,7 @@
 package org.misha.controller;
 
 import org.apache.commons.lang3.StringUtils;
+import org.misha.algebra.lie.polynomial.monomial.MonomialService;
 import org.misha.domain.EndoObject;
 import org.misha.service.JacobiService;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,8 @@ final class JacobiController {
     @Value("#{applicationProperties['input.error']}")
     private String inputError;
 
+    @Inject
+    private MonomialService monomialService;
     /**
      * /input.jsp/form4/@action
      */
@@ -39,6 +42,8 @@ final class JacobiController {
     public String printResult(
             @ModelAttribute("endoObject") final EndoObject endoObject, final ModelMap model
     ) {
+        final String monomial = monomialService.findById(25L).toString();
+        model.addAttribute("monomial", monomial);
         final String given = endoObject.getValue();
         final String answer = service.foxToHtml(given);
         if (StringUtils.isEmpty(answer)) {

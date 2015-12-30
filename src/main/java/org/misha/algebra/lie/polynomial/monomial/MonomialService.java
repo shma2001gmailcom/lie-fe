@@ -22,10 +22,10 @@ public class MonomialService {
     private static final Logger log = Logger.getLogger(MonomialService.class);
     @Inject
     @Named("springJdbcTemplates")
-    private final SpringJdbcTemplates templates;
+    private SpringJdbcTemplates springJdbctemplates;
 
-    public MonomialService(final SpringJdbcTemplates springJdbcTemplates) {
-        templates = springJdbcTemplates;
+    public void setSpringJdbcTemplates(final SpringJdbcTemplates springJdbcTemplates) {
+        this.springJdbctemplates = springJdbcTemplates;
     }
 
     private static final String findById = "SELECT " +
@@ -42,19 +42,21 @@ public class MonomialService {
         if (id < 26L) {
             return findBySmallId(id);
         }
-        final MonomialData data = templates.getTemplate().query(findById, new HashMap<String, Long>() {{
-                                                                    put("nodeId", id);
-                                                                }}, new RowMapper<MonomialData>() {
+        final MonomialData data = springJdbctemplates.getTemplate().query(findById,
+                new HashMap<String, Long>() {{
+                    put("nodeId", id);
+                }},
+                new RowMapper<MonomialData>() {
 
-                                                                    @Override
-                                                                    public MonomialData mapRow(
-                                                                            final ResultSet rs, final int rowNum
-                                                                    ) throws SQLException {
-                                                                        return new MonomialData(rs.getLong("left_id"),
-                                                                                                rs.getLong("right_id")
-                                                                        );
-                                                                    }
-                                                                }
+                    @Override
+                    public MonomialData mapRow(
+                            final ResultSet rs, final int rowNum
+                    ) throws SQLException {
+                        return new MonomialData(rs.getLong("left_id"),
+                                rs.getLong("right_id")
+                        );
+                    }
+                }
         ).get(0);
         return MonomialUtils.monomial(findById(data.leftId), findById(data.rightId));
     }
@@ -90,16 +92,17 @@ public class MonomialService {
     }
 
     private Monomial findBySmallId(final Long id) {
-        return templates.getTemplate().query(findBySmallId, new HashMap<String, Long>() {{
-                                                 put("nodeId", id);
-                                             }}, new RowMapper<Monomial>() {
+        return springJdbctemplates.getTemplate().query(findBySmallId,
+                new HashMap<String, Long>() {{
+                    put("nodeId", id);
+                }},
+                new RowMapper<Monomial>() {
 
-                                                 @Override
-                                                 public Monomial mapRow(final ResultSet rs, final int rowNum) throws
-                                                                                                              SQLException {
-                                                     return MonomialUtils.monomial(rs.getString("data_value"));
-                                                 }
-                                             }
+                    @Override
+                    public Monomial mapRow(final ResultSet rs, final int rowNum) throws SQLException {
+                        return MonomialUtils.monomial(rs.getString("data_value"));
+                    }
+                }
         ).get(0);
     }
 
