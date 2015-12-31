@@ -58,7 +58,9 @@ public class MonomialService {
                     }
                 }
         ).get(0);
-        return MonomialUtils.monomial(findById(data.leftId), findById(data.rightId));
+        Monomial result = MonomialUtils.monomial(findById(data.leftId), findById(data.rightId));
+        result.setId(id);
+        return result;
     }
 
     private static class MonomialData {
@@ -91,7 +93,7 @@ public class MonomialService {
         }
     }
 
-    private Monomial findBySmallId(final Long id) {
+    public Monomial findBySmallId(final Long id) {
         return springJdbctemplates.getTemplate().query(findBySmallId,
                 new HashMap<String, Long>() {{
                     put("nodeId", id);
@@ -100,14 +102,18 @@ public class MonomialService {
 
                     @Override
                     public Monomial mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-                        return MonomialUtils.monomial(rs.getString("data_value"));
+                        Monomial result = MonomialUtils.monomial(rs.getString("data_value"));
+                        result.setId(id);
+                        return result;
                     }
                 }
         ).get(0);
     }
 
-    public static void main(final String... args) {
-        final BeanFactory factory = new ClassPathXmlApplicationContext("applicationContext.xml");
-        log.debug(((MonomialService) factory.getBean("monomialService")).findById(27L));
+
+
+    private static final String writeMonomial = "select new_node(?, ?)";
+    public Long write(final Monomial monomial) {
+        return springJdbctemplates.getJdbcTemplate().queryForLong(writeMonomial, monomial.left().getId(), monomial.right().getId());
     }
 }

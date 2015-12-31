@@ -8,8 +8,8 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="plynomialDao" class="org.misha.repository.PolynomialDao">
-        <constructor-arg ref="springJdbcTemplates"/>
+    <bean id="polynomialDao" class="org.misha.repository.PolynomialDao">
+        <property name="springJdbcTemplates" ref="springJdbcTemplates"/>
     </bean>
 
     <bean id="monomialService" class="org.misha.algebra.lie.polynomial.monomial.MonomialService">

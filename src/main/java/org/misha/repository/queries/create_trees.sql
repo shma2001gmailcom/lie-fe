@@ -46,14 +46,11 @@ CREATE PROCEDURE alphabet()
     WHILE (v_count < v_max) DO
       CALL new_node_letter(
           ELT(v_count + 1, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
-              's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-              'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+              's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
           ));
       SET v_count = v_count + 1;
     END WHILE;
   END;
-
-CALL alphabet();
 
 DROP PROCEDURE IF EXISTS new_node;
 CREATE PROCEDURE new_node(IN left_id INT, IN right_id INT)
@@ -74,13 +71,6 @@ CREATE PROCEDURE new_node(IN left_id INT, IN right_id INT)
     INSERT INTO NODES VALUES (NULL, left_id, right_id, LAST_INSERT_ID());
   END;
 
-########################### TEST ####################################################
-SET @left_id = 2;
-SET @right_id = 1;
-SET @data = NULL;
-CALL new_node(@left_id, @right_id);
-########################################################################################
-
 DROP PROCEDURE IF EXISTS new_polynomial;
 CREATE PROCEDURE new_polynomial()
   BEGIN
@@ -90,7 +80,6 @@ CREATE PROCEDURE new_polynomial()
     INTO polynomial_count;
     INSERT INTO POLYNOMIALS VALUES (polynomial_count + 1, NULL, 0, FALSE);
   END;
-CALL new_polynomial();
 
 DROP PROCEDURE IF EXISTS update_polynomial;
 CREATE PROCEDURE update_polynomial(IN in_polynomial_id BIGINT, IN in_monomial_id BIGINT, IN in_scalar INT)
@@ -132,14 +121,6 @@ CREATE PROCEDURE update_polynomial(IN in_polynomial_id BIGINT, IN in_monomial_id
     END IF;
     CLOSE curs;
   END;
-############################ TEST ########################################
-SET @polynomial_id = 1;
-SET @_monomial_id = 1;
-SET @constant = 1;
-CALL update_polynomial(@polynomial_id, @_monomial_id, @constant);
-SELECT *
-FROM POLYNOMIALS;
-########################################################################
 
 DROP PROCEDURE IF EXISTS finalize_polynomial;
 CREATE PROCEDURE finalize_polynomial(IN in_polynomial_id BIGINT)
@@ -149,13 +130,28 @@ CREATE PROCEDURE finalize_polynomial(IN in_polynomial_id BIGINT)
     WHERE polynomial_id = in_polynomial_id;
   END;
 
-###################### TEST ###########################################
+############################ TEST ########################################
+SET @polynomial_id = 1;
+SET @_monomial_id = 1;
+SET @constant = 1;
+CALL update_polynomial(@polynomial_id, @_monomial_id, @constant);
+SELECT *
+FROM POLYNOMIALS;
+
 SELECT
   n.node_id,
   n.left_id,
   n.right_id,
   d.data_value
 FROM NODES n JOIN NODE_DATA d ON (n.node_id = d.node_id);
-#######################################################################
-SELECT *
-FROM NODES
+
+SELECT * FROM NODES;
+
+CALL alphabet();
+
+SET @left_id = 2;
+SET @right_id = 1;
+SET @data = NULL;
+CALL new_node(@left_id, @right_id);
+
+CALL new_polynomial();

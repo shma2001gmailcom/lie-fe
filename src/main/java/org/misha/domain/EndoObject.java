@@ -6,7 +6,7 @@ package org.misha.domain;
  * Time: 9:07 PM
  */
 
-public final class EndoObject {
+public final class  EndoObject {
     private String value;
 
     @SuppressWarnings("unused declaration")

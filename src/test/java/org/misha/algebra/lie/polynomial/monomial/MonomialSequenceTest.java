@@ -1,5 +1,6 @@
 package org.misha.algebra.lie.polynomial.monomial;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -11,6 +12,7 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class MonomialSequenceTest {
+    private static final Logger log = Logger.getLogger(MonomialSequence.class);
     private static final int nineteen = 19;
     private static final int fifty_nine = 59;
 
@@ -31,6 +33,7 @@ public class MonomialSequenceTest {
         Monomial current = sequence.getLastLetter();
         for (int i = 0; i < number; ++i) {
             current = sequence.getNextMonomial(current);
+            log.debug(current.toString()+'\n');
         }
         return current;
     }

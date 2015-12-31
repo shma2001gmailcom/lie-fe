@@ -49,8 +49,17 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
     private int deg = 1;
     private String name;
     private char symbol;
+    private Long id;
 
     public Monomial() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     protected Monomial(final Monomial left, final Monomial right, final int constant) {
