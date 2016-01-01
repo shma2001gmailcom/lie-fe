@@ -597,6 +597,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         if (isLetter()) {
             clone = MonomialUtils.monomial(Character.toString((getSymbol())));
             clone.name = name;
+            clone.id=id;
         }
         try {
             clone = (Monomial) super.clone();
@@ -607,6 +608,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
             clone.deg = deg;
             clone.name = name;
             clone.symbol = symbol;
+            clone.id = id;
             assert clone.equals(this) : toString() + " is not equals to" + clone.toString();
         } catch (final CloneNotSupportedException e) {
             log.error(e);

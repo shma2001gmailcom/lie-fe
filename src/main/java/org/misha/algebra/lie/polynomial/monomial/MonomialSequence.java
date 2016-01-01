@@ -1,9 +1,11 @@
 package org.misha.algebra.lie.polynomial.monomial;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -13,8 +15,11 @@ import java.util.TreeSet;
  */
 
 public class MonomialSequence {
+    private static final Logger log = Logger.getLogger(MonomialSequence.class);
     private final Collection<Monomial> sequence = new TreeSet<Monomial>();
     private final Monomial lastLetter;
+    final BeanFactory factory = new ClassPathXmlApplicationContext("applicationContext.xml");
+    MonomialService monomialService = (MonomialService) factory.getBean("monomialService");
 
     public MonomialSequence(final String... rawAlphabet) {
         Monomial mLetter = null;
@@ -46,28 +51,27 @@ public class MonomialSequence {
                 product = MonomialUtils.monomial(left, right);
                 if (product.isCorrect() && product.compareTo(m) > 0) {
                     sequence.add(product);
-                    return product.copy();
                 }
             }
         }
         return null;
     }
 
-    public Monomial getNextDbMonomial(final Monomial m) {
-        if (!m.isCorrect()) {
-            throw new IllegalArgumentException("The monomial '" + m + "' must be correct.");
-        }
+    public int getNextDbMonomial() {
+        int result = 0;
         Monomial product;
-        for (final Monomial left : sequence) {
-            for (final Monomial right : sequence) {
+        final Set<Monomial> lefts = new TreeSet<Monomial>(sequence);
+        final Set<Monomial> rights = new TreeSet<Monomial>(sequence);
+        for (final Monomial left : lefts) {
+            for (final Monomial right : rights) {
                 product = MonomialUtils.monomial(left, right);
-                if (product.isCorrect() && product.compareTo(m) > 0) {
-                    sequence.add(product);
-                    return product;
+                if (product.isCorrect() && left.compareTo(right) > 0 && sequence.add(product)) {
+                    product.setId(monomialService.write(product));
+                    result = product.deg();
                 }
             }
         }
-        return null;
+        return result;
     }
 
     public Monomial getLastLetter() {
@@ -75,19 +79,17 @@ public class MonomialSequence {
     }
 
     public static void main(String... args) {
-        final Monomial[] alphabet = new Monomial[3];
         final BeanFactory factory = new ClassPathXmlApplicationContext("applicationContext.xml");
         MonomialService monomialService = (MonomialService) factory.getBean("monomialService");
+        final Monomial[] alphabet = new Monomial[3];
         for (int i = 0; i < 3; ++i) {
             alphabet[i] = monomialService.findBySmallId((long) i + 1);
         }
         final MonomialSequence monomialSequence = new MonomialSequence(alphabet);
         int i = 0;
-        Monomial monomial = monomialSequence.getNextDbMonomial(alphabet[2]);
-        while (i < 1000) {
-            monomial.setId(monomialService.write(monomial));
-            monomial = monomialSequence.getNextDbMonomial(monomial);
-            ++i;
+        while (i < 30) {
+            i = monomialSequence.getNextDbMonomial();
         }
+        log.debug(i);
     }
 }

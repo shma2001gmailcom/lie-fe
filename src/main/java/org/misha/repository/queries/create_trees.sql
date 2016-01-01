@@ -45,8 +45,8 @@ CREATE PROCEDURE alphabet()
     DECLARE v_count INT UNSIGNED DEFAULT 0;
     WHILE (v_count < v_max) DO
       CALL new_node_letter(
-          ELT(v_count + 1, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
-              's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+          ELT(v_count + 1, 'a', 'b', 'c'#, 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+              #'s', 't', 'u', 'v', 'w', 'x', 'y', 'z'
           ));
       SET v_count = v_count + 1;
     END WHILE;
@@ -131,6 +131,9 @@ CREATE PROCEDURE finalize_polynomial(IN in_polynomial_id BIGINT)
   END;
 
 ############################ TEST ########################################
+CALL alphabet();
+
+
 SET @polynomial_id = 1;
 SET @_monomial_id = 1;
 SET @constant = 1;
@@ -146,8 +149,6 @@ SELECT
 FROM NODES n JOIN NODE_DATA d ON (n.node_id = d.node_id);
 
 SELECT * FROM NODES;
-
-CALL alphabet();
 
 SET @left_id = 2;
 SET @right_id = 1;
