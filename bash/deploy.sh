@@ -20,7 +20,7 @@ appname="lie-fe"
 ################################################
 ################ AT HOME #######################
 ################################################
-appfolder="/home/misha/workspace/"${appname}"-assembla"
+appfolder="/home/misha/workspace/"${appname}
 tomcatfolder="/home/misha/workspace/tomcat6"
 M2_HOME='/opt/apache-maven-3.2.2/'
 export M2_HOME
