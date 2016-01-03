@@ -1,6 +1,7 @@
 package org.misha.algebra.lie.polynomial.monomial;
 
 import org.apache.log4j.Logger;
+import org.misha.repository.MonomialService;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -17,9 +18,7 @@ import java.util.TreeSet;
 public class MonomialSequence {
     private static final Logger log = Logger.getLogger(MonomialSequence.class);
     private final Collection<Monomial> sequence = new TreeSet<Monomial>();
-    private final Monomial lastLetter;
-    final BeanFactory factory = new ClassPathXmlApplicationContext("applicationContext.xml");
-    MonomialService monomialService = (MonomialService) factory.getBean("monomialService");
+    private Monomial lastMonomial;
 
     public MonomialSequence(final String... rawAlphabet) {
         Monomial mLetter = null;
@@ -29,7 +28,7 @@ public class MonomialSequence {
                 sequence.add(mLetter);
             }
         }
-        lastLetter = mLetter;
+        lastMonomial = mLetter;
     }
 
     public MonomialSequence(final Monomial... alphabet) {
@@ -38,7 +37,7 @@ public class MonomialSequence {
             sequence.add(letter);
             currentLetter = letter;
         }
-        lastLetter = currentLetter;
+        lastMonomial = currentLetter;
     }
 
     public Monomial getNextMonomial(final Monomial m) {
@@ -46,18 +45,21 @@ public class MonomialSequence {
             throw new IllegalArgumentException("The monomial '" + m + "' must be correct.");
         }
         Monomial product;
-        for (final Monomial left : sequence) {
-            for (final Monomial right : sequence) {
+        final Set<Monomial> lefts = new TreeSet<Monomial>(sequence);
+        final Set<Monomial> rights = new TreeSet<Monomial>(sequence);
+        for (final Monomial left : lefts) {
+            for (final Monomial right : rights) {
                 product = MonomialUtils.monomial(left, right);
                 if (product.isCorrect() && product.compareTo(m) > 0) {
                     sequence.add(product);
+                    return product;
                 }
             }
         }
         return null;
     }
 
-    public int getNextDbMonomial() {
+    public int getNextDbMonomial(final MonomialService monomialService) {
         int result = 0;
         Monomial product;
         final Set<Monomial> lefts = new TreeSet<Monomial>(sequence);
@@ -67,15 +69,16 @@ public class MonomialSequence {
                 product = MonomialUtils.monomial(left, right);
                 if (product.isCorrect() && left.compareTo(right) > 0 && sequence.add(product)) {
                     product.setId(monomialService.write(product));
-                    result = product.deg();
+                    lastMonomial = product;
+                    result = product.deg() > result ? result : product.deg();
                 }
             }
         }
         return result;
     }
 
-    public Monomial getLastLetter() {
-        return lastLetter.copy();
+    public Monomial getLastMonomial() {
+        return lastMonomial.copy();
     }
 
     public static void main(String... args) {
@@ -87,8 +90,8 @@ public class MonomialSequence {
         }
         final MonomialSequence monomialSequence = new MonomialSequence(alphabet);
         int i = 0;
-        while (i < 30) {
-            i = monomialSequence.getNextDbMonomial();
+        while (i < 10) {
+            i = monomialSequence.getNextDbMonomial(monomialService);
         }
         log.debug(i);
     }

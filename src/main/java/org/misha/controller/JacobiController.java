@@ -5,8 +5,8 @@
 package org.misha.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.misha.algebra.lie.polynomial.monomial.MonomialService;
 import org.misha.domain.EndoObject;
+import org.misha.repository.MonomialService;
 import org.misha.service.JacobiService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

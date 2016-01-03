@@ -3,6 +3,7 @@
 #################################################################
 
 DROP DATABASE IF EXISTS TREES;
+commit;
 CREATE DATABASE IF NOT EXISTS TREES;
 USE TREES;
 
@@ -41,7 +42,7 @@ CREATE PROCEDURE new_node_letter(IN node_data VARCHAR(200))
 DROP PROCEDURE IF EXISTS alphabet;
 CREATE PROCEDURE alphabet()
   BEGIN
-    DECLARE v_max INT UNSIGNED DEFAULT 26;
+    DECLARE v_max INT UNSIGNED DEFAULT 3;
     DECLARE v_count INT UNSIGNED DEFAULT 0;
     WHILE (v_count < v_max) DO
       CALL new_node_letter(
@@ -52,8 +53,8 @@ CREATE PROCEDURE alphabet()
     END WHILE;
   END;
 
-DROP PROCEDURE IF EXISTS new_node;
-CREATE PROCEDURE new_node(IN left_id INT, IN right_id INT)
+DROP FUNCTION IF EXISTS new_node;
+CREATE FUNCTION new_node(left_id INT, right_id INT) RETURNS BIGINT
   BEGIN
     DECLARE left_data VARCHAR(200) DEFAULT NULL;
     DECLARE right_data VARCHAR(200) DEFAULT NULL;
@@ -67,18 +68,20 @@ CREATE PROCEDURE new_node(IN left_id INT, IN right_id INT)
     FROM NODE_DATA
     WHERE node_id = right_id;
     SET to_insert = CONCAT(CONCAT(CONCAT(CONCAT('[', left_data), ', '), right_data), ']');
-    INSERT INTO NODE_DATA VALUES (NULL, to_insert);
-    INSERT INTO NODES VALUES (NULL, left_id, right_id, LAST_INSERT_ID());
+    INSERT INTO NODE_DATA VALUES (NULL, to_insert) ON DUPLICATE KEY UPDATE node_id = node_id;
+    INSERT INTO NODES VALUES (NULL, left_id, right_id, LAST_INSERT_ID()) ON DUPLICATE KEY UPDATE node_id = node_id;
+    RETURN LAST_INSERT_ID();
   END;
 
-DROP PROCEDURE IF EXISTS new_polynomial;
-CREATE PROCEDURE new_polynomial()
+DROP FUNCTION IF EXISTS new_polynomial;
+CREATE FUNCTION new_polynomial() RETURNS BIGINT
   BEGIN
     DECLARE polynomial_count BIGINT DEFAULT 0;
     SELECT count(1)
     FROM POLYNOMIALS
     INTO polynomial_count;
     INSERT INTO POLYNOMIALS VALUES (polynomial_count + 1, NULL, 0, FALSE);
+    RETURN polynomial_count + 1;
   END;
 
 DROP PROCEDURE IF EXISTS update_polynomial;
@@ -133,26 +136,12 @@ CREATE PROCEDURE finalize_polynomial(IN in_polynomial_id BIGINT)
 ############################ TEST ########################################
 CALL alphabet();
 
-
-SET @polynomial_id = 1;
-SET @_monomial_id = 1;
-SET @constant = 1;
-CALL update_polynomial(@polynomial_id, @_monomial_id, @constant);
-SELECT *
-FROM POLYNOMIALS;
-
 SELECT
   n.node_id,
   n.left_id,
   n.right_id,
   d.data_value
-FROM NODES n JOIN NODE_DATA d ON (n.node_id = d.node_id);
+FROM NODES n LEFT JOIN NODE_DATA d ON (n.node_id = d.node_id) where right_id = 3 order by n.node_id;
+select new_polynomial();
 
-SELECT * FROM NODES;
-
-SET @left_id = 2;
-SET @right_id = 1;
-SET @data = NULL;
-CALL new_node(@left_id, @right_id);
-
-CALL new_polynomial();
+select * from POLYNOMIALS;

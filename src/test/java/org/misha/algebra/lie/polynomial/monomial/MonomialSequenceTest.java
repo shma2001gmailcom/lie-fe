@@ -30,7 +30,7 @@ public class MonomialSequenceTest {
 
     private Monomial getMonomial(final int number, final String... alphabet) {
         final MonomialSequence sequence = new MonomialSequence(alphabet);
-        Monomial current = sequence.getLastLetter();
+        Monomial current = sequence.getLastMonomial();
         for (int i = 0; i < number; ++i) {
             current = sequence.getNextMonomial(current);
             log.debug(current.toString()+'\n');
