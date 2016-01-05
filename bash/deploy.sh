@@ -13,7 +13,7 @@ appname="lie-fe"
 ############### properties ####################
 ################ AT WORK ######################
 ###############################################
-#appfolder="/home/mshevelin/workspace/"${appname}"-assembla"
+#appfolder="/home/mshevelin/workspace/"${appname}
 #tomcatfolder="/home/mshevelin/workspace/tomcat6"
 #javahome="/usr/lib/jvm/jdk-6-oracle"
 
