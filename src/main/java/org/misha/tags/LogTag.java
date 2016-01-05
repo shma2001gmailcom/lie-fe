@@ -53,7 +53,7 @@ public class LogTag extends SimpleTagSupport {
             }
             for (final Object o : formMap.entrySet()) {
                 final Entry e = (Entry) o;
-                writer.print(String.format("%s=%s\n", e.getKey(), e.getValue()));
+                writer.print(String.format("%s=%s%n", e.getKey(), e.getValue()));
             }
         } catch (final Exception e) {
             //e.printStackTrace();
@@ -71,7 +71,7 @@ public class LogTag extends SimpleTagSupport {
         }
         while (params.hasMoreElements()) {
             final String name = params.nextElement();
-            writer.print(String.format("%s=%s\n", name, StringUtils.join(req.getParameterValues(name), ";")));
+            writer.print(String.format("%s=%s%n", name, StringUtils.join(req.getParameterValues(name), ";")));
         }
         writer.print("--------------------------------------------------------------\n");
     }
@@ -86,7 +86,7 @@ public class LogTag extends SimpleTagSupport {
         }
         while (attributeNames.hasMoreElements()) {
             final String name = attributeNames.nextElement();
-            writer.print(String.format("%s=%s\n", name, req.getAttribute(name)));
+            writer.print(String.format("%s=%s%n", name, req.getAttribute(name)));
         }
         writer.print("--------------------------------------------------------------\n");
     }

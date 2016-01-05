@@ -190,7 +190,7 @@ public final class Parser {
         if ("-".equals(constant)) {
             return -1;
         }
-        if (constant.equals(PLUS) || StringUtils.isBlank(constant)) {
+        if (PLUS.equals(constant) || StringUtils.isBlank(constant)) {
             return 1;
         }
         constant = StringUtils.removeStart(constant, PLUS);

@@ -84,7 +84,7 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
         for (final Monomial m : monomials) {
             sb = sb.append(m.toString());
         }
-        return sb.toString().trim().equals(StringUtils.EMPTY) ? "0" : sb.toString().trim();
+        return StringUtils.EMPTY.equals(sb.toString().trim()) ? "0" : sb.toString().trim();
     }
 
     public Polynomial times(final Polynomial p) {

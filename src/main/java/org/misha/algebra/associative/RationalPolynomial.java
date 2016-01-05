@@ -72,7 +72,7 @@ public final class RationalPolynomial implements Iterable<RationalMonomial>, Ser
         if ("-".equals(constant)) {
             return Rational.rational(-1);
         }
-        if (constant.equals(PLUS) || StringUtils.isBlank(constant)) {
+        if (PLUS.equals(constant) || StringUtils.isBlank(constant)) {
             return Rational.ONE;
         }
         constant = StringUtils.removeStart(constant, PLUS);
@@ -184,7 +184,7 @@ public final class RationalPolynomial implements Iterable<RationalMonomial>, Ser
         for (final RationalMonomial m : monomials) {
             sb = sb.append(m.toString());
         }
-        return sb.toString().trim().equals(StringUtils.EMPTY) ? "0" : sb.toString().trim();
+        return StringUtils.EMPTY.equals(sb.toString().trim()) ? "0" : sb.toString().trim();
     }
 
     @Override
