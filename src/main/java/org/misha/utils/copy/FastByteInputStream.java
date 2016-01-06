@@ -24,8 +24,6 @@ final class FastByteInputStream extends InputStream {
     private int position;
 
     public FastByteInputStream(final byte[] buffer, final int limit) {
-        //noinspection AssignmentToCollectionOrArrayFieldFromParameter,
-        // AssignmentToCollectionOrArrayFieldFromParameter
         //noinspection AssignmentToCollectionOrArrayFieldFromParameter
         bytes = buffer;
         count = limit;
