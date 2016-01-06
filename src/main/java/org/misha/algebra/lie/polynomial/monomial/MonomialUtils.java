@@ -54,7 +54,7 @@ public final class MonomialUtils {
         final Monomial rCopy = right != null ? right.copy() : null;
         final int cL = lCopy != null ? left.getConst() : 1;
         final int cR = rCopy != null ? right.getConst() : 1;
-        if (unify(lCopy, rCopy)) {
+        if (isSimilar(lCopy, rCopy)) {
             return new Monomial(lCopy, rCopy, 0);
         }
         final Monomial result = new Monomial(lCopy, rCopy, cL * cR);
@@ -67,7 +67,7 @@ public final class MonomialUtils {
         return result;
     }
 
-    private static boolean unify(final Monomial left, final Monomial right) {
+    private static boolean isSimilar(final Monomial left, final Monomial right) {
         if (right != null && left != null) {
             right.setConst(1);
             left.setConst(1);
