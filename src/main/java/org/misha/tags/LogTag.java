@@ -33,7 +33,7 @@ public class LogTag extends SimpleTagSupport {
     }
 
     private void logHiddenDiv(
-            final ServletRequest req, final Enumeration<String> attributeNames, final Enumeration<String> params,
+            final ServletRequest req, final Enumeration attributeNames, final Enumeration params,
             final PrintWriter writer
     ) {
         writer.print("<div style=\"display: none;\">");
@@ -62,7 +62,7 @@ public class LogTag extends SimpleTagSupport {
     }
 
     private void logParameters(
-            final ServletRequest req, final Enumeration<String> params, final PrintWriter writer
+            final ServletRequest req, final Enumeration params, final PrintWriter writer
     ) {
         writer.print("\n---------------------PARAMETERS-------------------------------\n");
         if (!params.hasMoreElements()) {
@@ -70,14 +70,14 @@ public class LogTag extends SimpleTagSupport {
             return;
         }
         while (params.hasMoreElements()) {
-            final String name = params.nextElement();
+            final String name = (String) params.nextElement();
             writer.print(String.format("%s=%s%n", name, StringUtils.join(req.getParameterValues(name), ";")));
         }
         writer.print("--------------------------------------------------------------\n");
     }
 
     private void logAttributes(
-            final ServletRequest req, final Enumeration<String> attributeNames, final PrintWriter writer
+            final ServletRequest req, final Enumeration attributeNames, final PrintWriter writer
     ) {
         writer.print("\n---------------------ATTRIBUTES-------------------------------\n");
         if (!attributeNames.hasMoreElements()) {
@@ -85,7 +85,7 @@ public class LogTag extends SimpleTagSupport {
             return;
         }
         while (attributeNames.hasMoreElements()) {
-            final String name = attributeNames.nextElement();
+            final String name = (String) attributeNames.nextElement();
             writer.print(String.format("%s=%s%n", name, req.getAttribute(name)));
         }
         writer.print("--------------------------------------------------------------\n");
