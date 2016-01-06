@@ -1,5 +1,10 @@
 package org.misha.repository;
 
+/**
+ * author: misha
+ * date: 12/27/15 1:38 PM.
+ */
+
 public class Monomial {
     private Long nodeId;
     private String leftId;
