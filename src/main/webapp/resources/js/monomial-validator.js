@@ -16,11 +16,13 @@ var validator = {
     isPolynomial: function (input) {
         var clear = input.replace(/[0-9\(\)\*; ]/g, '');
         var monomials = clear.split(/\+|-/);
+        var message = '';
         for (var i = 1; i < monomials.length; ++i) {
             if (!validator.isMonomial(monomials[i].trim())) {
-                validator.messageData[input] = i;
+                message = message == '' ? i : message + ', ' + i;
             }
         }
+        validator.messageData[input] = message;
     },
 
     checkInputs: function () {
@@ -29,10 +31,10 @@ var validator = {
         input.each(function () {
             validator.isPolynomial($(this).val());
         });
-        message = 'Please, check terms:\n';
+        message = 'Please, check terms:<p>';
         input.each(function (index) {
             if (validator.messageData[$(this).val()])
-                message += ' term #' + validator.messageData[$(this).val()] + ' at input #' + (index + 1) + '\n';
+                message += ' term #' + validator.messageData[$(this).val()] + ' at input #' + (index + 1) + '<p>';
         });
         return message;
     }
@@ -42,7 +44,7 @@ $(document).bind('ready', function () {
     $('form').bind('submit', function (event) {
         var message = validator.checkInputs();
         if (message.indexOf('#') > -1) {
-            $('.error-message').text(message);
+            $('.error-message').html(message);
             event.preventDefault();
             return false;
         }
