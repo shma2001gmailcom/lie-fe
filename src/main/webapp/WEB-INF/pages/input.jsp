@@ -10,6 +10,7 @@
 </head>
 <html>
 <body>
+<div class="error-message"></div>
 <h1 class="color-violet"><c:out value="${welcomeMessage}"/></h1>
 <a class='color-blue' href="http://en.wikipedia.org/wiki/Free_Lie_algebra#Lyndon_basis">
     (click here for explanation)

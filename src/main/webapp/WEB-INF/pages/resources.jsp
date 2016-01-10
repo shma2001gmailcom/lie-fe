@@ -7,6 +7,8 @@
             src="<c:out value="${context}"/>/resources/jquery/jquery-2.1.1.min.js"></script>
     <script type="text/javascript"
             src="<c:out value="${context}"/>/resources/js/bad-input.js"></script>
+    <script type="text/javascript"
+            src="<c:out value="${context}"/>/resources/js/monomial-validator.js"></script>
     <link type="text/css" href="<c:out value="${context}"/>/resources/css/styles.css"
           rel="stylesheet"/>
 </head>

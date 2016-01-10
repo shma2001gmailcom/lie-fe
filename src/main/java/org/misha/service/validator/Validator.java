@@ -5,6 +5,7 @@ import org.misha.algebra.parser.Parser;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -45,5 +46,17 @@ public final class Validator {
             return false;
         }
         return true;
+    }
+
+    public static boolean isMonomial(final String s) {
+        Pattern pattern = Pattern.compile("\\[(\\[.*\\]|[a-z]),(\\[.*\\]|[a-z])\\]");
+        Matcher matcher = pattern.matcher(s);
+        if (!matcher.matches()) {
+            return s.matches("[a-z]");
+        } else {
+            String left = matcher.group(1);
+            String right = matcher.group(2);
+            return isMonomial(left) && isMonomial(right);
+        }
     }
 }

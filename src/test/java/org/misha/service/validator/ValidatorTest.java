@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Author: mshevelin
@@ -29,5 +30,10 @@ public class ValidatorTest {
         assertFalse(Validator.isLieMonomialValid(invalid));
         invalid = "-3[[b  , ], [a, b]]";
         assertFalse(Validator.isLieMonomialValid(invalid));
+    }
+    @Test
+    public void testIsMonomial() {
+        String m = "[[[a,b],[c,d]],[x,e]]";
+        assertTrue(Validator.isMonomial(m));
     }
 }

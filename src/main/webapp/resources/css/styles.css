@@ -4,6 +4,7 @@ input.hidden, span.hidden, div.hidden, button.hidden {
 
 .error-message {
     color: #b44452;
+    font-size: large;
 }
 
 div.grey-div {
