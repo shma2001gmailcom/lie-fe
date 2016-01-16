@@ -23,7 +23,7 @@ public final class MonomialPerformance {
     private MonomialPerformance() {
     }
 
-    public static void main(final String[] args) {
+    public static void main(final String... args) {
         DOMConfigurator.configure("./src/main/resources/log4j.xml");
         final Monomial a = MonomialUtils.monomial("a");
         Polynomial result = mount("+[a, b]");
