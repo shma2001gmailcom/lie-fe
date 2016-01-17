@@ -9,6 +9,7 @@ import org.misha.algebra.lie.polynomial.Polynomial;
 import org.misha.algebra.lie.polynomial.monomial.Monomial;
 import org.misha.algebra.lie.polynomial.monomial.MonomialUtils;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 /**
@@ -150,10 +151,7 @@ final class Tuple implements Iterable<Pair<Monomial, Polynomial>>, Cloneable {
         }
 
         @Override
-        public int compareTo(final Pair<T, S> o) {
-            if (o == null) {
-                throw new IllegalArgumentException("comparing object must be not null");
-            }
+        public int compareTo(@Nonnull final Pair<T, S> o) {
             return argument.compareTo(o.argument);
         }
 

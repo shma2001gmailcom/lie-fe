@@ -6,6 +6,7 @@ package org.misha.algebra.permutation;
 
 import org.apache.commons.lang3.StringUtils;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -29,7 +30,7 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
     private final int degree;
     private final HashMap<T, T> raw;
 
-    private PermutationG(final T[] objects) {
+    private PermutationG(final T... objects) {
         degree = objects.length;
         raw = new HashMap<T, T>(degree);
         set = new TreeSet<T>();
@@ -48,7 +49,7 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
      * @param <S>     type of objects permuted
      * @return new instance
      */
-    public static <S extends Comparable<S>> PermutationG<S> create(final S[] objects) {
+    public static <S extends Comparable<S>> PermutationG<S> create(final S... objects) {
         final PermutationG<S> p = new PermutationG<S>(objects);
         Collections.addAll(p.set, objects);
         int i = 0;
@@ -140,7 +141,7 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
     }
 
     @Override
-    public int compareTo(final PermutationG<T> o) {
+    public int compareTo(@Nonnull final PermutationG<T> o) {
         if (!valid(o)) {
             throw new IllegalArgumentException("another permutation must be on same set.");
         }

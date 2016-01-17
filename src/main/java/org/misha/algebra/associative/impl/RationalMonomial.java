@@ -6,6 +6,7 @@ import org.misha.algebra.associative.RationalPolynomial;
 import org.misha.algebra.fox.RationalDerivative;
 import org.misha.algebra.scalars.impl.Rational;
 
+import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,10 +61,7 @@ public final class RationalMonomial implements MonomialInterface<Rational>, Seri
     }
 
     @Override
-    public int compareTo(final MonomialInterface<Rational> o) {
-        if (o == null) {
-            throw new IllegalArgumentException("comparable object should be not null.");
-        }
+    public int compareTo(@Nonnull final MonomialInterface<Rational> o) {
         if (!(o instanceof RationalMonomial)) {
             throw new IllegalArgumentException("can't compare.");
         }

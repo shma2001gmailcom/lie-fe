@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.misha.algebra.associative.Polynomial;
 import org.misha.algebra.fox.Derivative;
 
+import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -97,10 +98,7 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
     }
 
     @Override
-    public int compareTo(final Monomial o) {
-        if (o == null) {
-            throw new IllegalArgumentException("comparable object should be not null.");
-        }
+    public int compareTo(@Nonnull final Monomial o) {
         if (deg() - o.deg() != 0) {
             return deg() - o.deg();
         }

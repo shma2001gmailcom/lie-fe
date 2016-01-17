@@ -26,16 +26,14 @@ import static org.junit.Assert.assertTrue;
 
 public class PermutationGTest {
     private static final Logger log = Logger.getLogger(PermutationGTest.class);
-    private static final PermutationG<Integer> permutation = PermutationG.create(new Integer[]{0, 2, 1});
-    private static final PermutationG<Integer> another = PermutationG.create(new Integer[]{1, 2, 0});
-    private static final PermutationG<Integer> product = PermutationG.create(new Integer[]{1, 0, 2});
+    private static final PermutationG<Integer> permutation = PermutationG.create(0, 2, 1);
+    private static final PermutationG<Integer> another = PermutationG.create(1, 2, 0);
+    private static final PermutationG<Integer> product = PermutationG.create(1, 0, 2);
     private static final Monomial x = MonomialUtils.monomial("x");
     private static final Monomial y = MonomialUtils.monomial("y");
     private static final Monomial z = MonomialUtils.monomial("z");
-    private static final PermutationG<Monomial> letterPermutation = PermutationG.create(new Monomial[]{y, z, x,}
-    );
-    private static final PermutationG<Monomial> letterPermutationSquared = PermutationG.create(new Monomial[]{z, x, y}
-    );
+    private static final PermutationG<Monomial> letterPermutation = PermutationG.create(y, z, x);
+    private static final PermutationG<Monomial> letterPermutationSquared = PermutationG.create(z, x, y);
 
     @Before
     public void setUp() throws Exception {
@@ -76,18 +74,18 @@ public class PermutationGTest {
 
     @Test
     public void testParse() {
-        final PermutationG<Integer> p = PermutationG.create(new Integer[]{1, 3, 2});
+        final PermutationG<Integer> p = PermutationG.create(1, 3, 2);
         assertEquals(p, PermutationG.parse("(1, 3, 2)"));
     }
 
     @Test
     public void permutationSequenceTest() {
-        final PermutationG<Integer> e = PermutationG.create(new Integer[]{1, 2, 3});
-        final PermutationG<Integer> t23 = PermutationG.create(new Integer[]{1, 3, 2});
-        final PermutationG<Integer> t12 = PermutationG.create(new Integer[]{2, 1, 3});
-        final PermutationG<Integer> c123 = PermutationG.create(new Integer[]{2, 3, 1});
-        final PermutationG<Integer> c132 = PermutationG.create(new Integer[]{3, 1, 2});
-        final PermutationG<Integer> t13 = PermutationG.create(new Integer[]{3, 2, 1});
+        final PermutationG<Integer> e = PermutationG.create(1, 2, 3);
+        final PermutationG<Integer> t23 = PermutationG.create(1, 3, 2);
+        final PermutationG<Integer> t12 = PermutationG.create(2, 1, 3);
+        final PermutationG<Integer> c123 = PermutationG.create(2, 3, 1);
+        final PermutationG<Integer> c132 = PermutationG.create(3, 1, 2);
+        final PermutationG<Integer> t13 = PermutationG.create(3, 2, 1);
         assertTrue(e.compareTo(t23) < 0);
         assertTrue(t23.compareTo(t12) < 0);
         assertTrue(t12.compareTo(c123) < 0);
@@ -110,7 +108,7 @@ public class PermutationGTest {
     @Test
     public void sym3Test() {
         final Collection<PermutationG<Integer>> set = new TreeSet<PermutationG<Integer>>();
-        set.addAll(PermutationG.sequence(PermutationG.create(new Integer[]{1, 2, 3})));
+        set.addAll(PermutationG.sequence(PermutationG.create(1, 2, 3)));
         final Collection<PermutationG<Integer>> expected = new TreeSet<PermutationG<Integer>>();
         expected.add(create(1, 2, 3));
         expected.add(create(1, 3, 2));
@@ -125,7 +123,7 @@ public class PermutationGTest {
     @Test
     public void sym4Test() {
         final Collection<PermutationG<Integer>> set = new TreeSet<PermutationG<Integer>>();
-        set.addAll(PermutationG.sequence(PermutationG.create(new Integer[]{1, 2, 3, 4})));
+        set.addAll(PermutationG.sequence(PermutationG.create(1, 2, 3, 4)));
         final Collection<PermutationG<Integer>> expected = new TreeSet<PermutationG<Integer>>();
         expected.add(create(1, 2, 3, 4));
         expected.add(create(1, 2, 4, 3));
@@ -158,7 +156,7 @@ public class PermutationGTest {
     @Test
     public void sym5Test() {
         final Collection<PermutationG<Integer>> set = new TreeSet<PermutationG<Integer>>();
-        set.addAll(PermutationG.sequence(PermutationG.create(new Integer[]{1, 2, 3, 4, 5})));
+        set.addAll(PermutationG.sequence(PermutationG.create(1, 2, 3, 4, 5)));
         final Collection<PermutationG<Integer>> expected = new TreeSet<PermutationG<Integer>>();
         readSym5To(expected);
         assertTrue(set.size() == expected.size());
