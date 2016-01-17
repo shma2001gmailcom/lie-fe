@@ -9,6 +9,7 @@ import org.misha.algebra.lie.endomorphism.Endo;
 import org.misha.algebra.lie.polynomial.Polynomial;
 import org.misha.algebra.parser.Parser;
 
+import javax.annotation.Nonnull;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
@@ -187,10 +188,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
      * @return int
      */
     @Override
-    public int compareTo(final Monomial m) {
-        if (m == null) {
-            throw new IllegalArgumentException(CAN_T_COMPARE_WITH_NULL_MONOMIAL);
-        }
+    public int compareTo(@Nonnull final Monomial m) {
         if (m.deg() == 1 && deg() == 1) {
             final Monomial m1 = m.copy();
             final Monomial t1 = copy();
