@@ -35,7 +35,6 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
     private static final String LEFT_BRACKET = "[";
     private static final String RIGHT_BRACKET = "]";
     private static final String MINUS = "-";
-    private static final String CAN_T_COMPARE_WITH_NULL_MONOMIAL = "can't compare with null monomial";
     private static final String ISN_T_A_LETTER = "the monomial %s isn't a letter.";
     private static final char SHIFT = '\u0064';
     private static final String TOO_LARGE_VALUE = "too large value for type char: %d";
