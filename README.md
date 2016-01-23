@@ -18,3 +18,5 @@ endomorphisms of free Lie algebra
 Jacobi matrix of the endomorphism
 
 tests
+
+some rudimental front-end
