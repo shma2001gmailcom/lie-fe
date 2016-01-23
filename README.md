@@ -3,7 +3,8 @@ lie-fe
 
 some calculations in free Lie algebra with front-end
 --------------------------------------------------------------------------
-Implemented:\n
+Implemented:
+
 Object representation of Lie and associative polynomials over Z or Q.
 
 parsing strings to objects
