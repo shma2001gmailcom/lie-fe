@@ -3,7 +3,9 @@ input.hidden, span.hidden, div.hidden, button.hidden {
 }
 
 .error-message {
-    color: #d16984;
+    background-color: #621e1e;
+    color: #d1794f;
+    text-align: center;
     font-size: large;
 }
 

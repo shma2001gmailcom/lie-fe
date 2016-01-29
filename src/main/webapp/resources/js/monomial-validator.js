@@ -6,16 +6,12 @@ var validator = {
     isMonomial: function (summand) {
         var pattern = /^\[(\[.*]|[a-z]),\s*(\[.*]|[a-z])]$/;
         var groups = pattern.exec(summand);
-        if (!pattern.test(summand)) {
-            return /^[a-z]$/.test(summand);
-        } else {
-            return validator.isMonomial(groups[1]) && validator.isMonomial(groups[2]);
-        }
+        return !pattern.test(summand) ? /^[a-z]$/.test(summand) :
+        validator.isMonomial(groups[1]) && validator.isMonomial(groups[2]);
     },
 
     isPolynomial: function (input) {
-        var clear = input.replace(/[0-9\(\)\*; ]/g, '');
-        var monomials = clear.split(/\+|-/);
+        var monomials = input.replace(/[0-9\(\)\*; ]/g, '').split(/\+|-/);
         var message = '';
         for (var i = 1; i < monomials.length; ++i) {
             if (!validator.isMonomial(monomials[i].trim())) {
@@ -33,8 +29,9 @@ var validator = {
         });
         message = 'Please, check terms:<p>';
         input.each(function (index) {
-            if (validator.messageData[$(this).val()])
+            if (validator.messageData[$(this).val()]) {
                 message += ' term #' + validator.messageData[$(this).val()] + ' at input #' + (index + 1) + '<p>';
+            }
         });
         return message;
     }
