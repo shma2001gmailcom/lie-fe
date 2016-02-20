@@ -41,11 +41,16 @@ $(document).bind('ready', function () {
     $('form').bind('submit', function (event) {
         var message = validator.checkInputs();
         if (message.indexOf('#') > -1) {
-            $('.error-message').html(message);
+            var error = $('.error-message');
+            error.html(message);
+            error.show();
             event.preventDefault();
             return false;
         }
-    })
+    });
+    $('input[name=value]').bind('click', function(){
+        $('.error-message').hide();
+    });
 });
 
 
