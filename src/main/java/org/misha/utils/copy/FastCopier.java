@@ -15,7 +15,7 @@ import java.io.Serializable;
  * <p/>
  * A cloning tool.
  */
-
+@Deprecated
 public final class FastCopier {
     private static final Logger log = Logger.getLogger(FastCopier.class);
 

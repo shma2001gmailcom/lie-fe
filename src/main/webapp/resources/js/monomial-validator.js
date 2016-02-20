@@ -3,6 +3,7 @@
  */
 var validator = {
     messageData: [],
+
     isMonomial: function (summand) {
         var pattern = /^\[(\[.*]|[a-z]),\s*(\[.*]|[a-z])]$/;
         var groups = pattern.exec(summand);
