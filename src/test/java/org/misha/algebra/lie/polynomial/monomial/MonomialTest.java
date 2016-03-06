@@ -33,8 +33,8 @@ import static org.misha.algebra.lie.polynomial.monomial.MonomialUtils.monomial;
  */
 
 public class MonomialTest {
-    public static final String SPACE = " ";
-    public static final String PLUS = "+";
+    private static final String SPACE = " ";
+    private static final String PLUS = "+";
     private Monomial a;
     private Monomial b;
     private Monomial c;

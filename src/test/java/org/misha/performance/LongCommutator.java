@@ -22,18 +22,18 @@ import java.util.Scanner;
 
 public class LongCommutator {
     private static final Logger log = Logger.getLogger(LongCommutator.class);
-    Endo commutator = new Parser("").parseEndo(
+    final Endo commutator = new Parser("").parseEndo(
             "(+ a - 2[[b, a], b] - 4[[[c, b], b], b]; + b; + c - 2[[c, b], b] + 2[[[b, a], b], b] + 4[[[[c," +
                     " b], b], b], b])"
     );
-    Endo elementary = new Parser("").parseEndo("(+a ; + b - [a, c]; + c)");
-    Endo reversedCommutator = new Parser("").parseEndo(
+    final Endo elementary = new Parser("").parseEndo("(+a ; + b - [a, c]; + c)");
+    final Endo reversedCommutator = new Parser("").parseEndo(
             "(+ a + 2[[b, a], b] + 4[[[c, b], b], b] - 4[[[[b, a], b], b], b]; + b; + c + 2[[c, b], " +
                     "b] - 2[[[b, a], b], b])"
     );
-    Endo reversedElementary = new Parser("").parseEndo("(+a ; + b + [a, c]; + c)");
+    final Endo reversedElementary = new Parser("").parseEndo("(+a ; + b + [a, c]; + c)");
 
-    public void testLongCommutator() throws CloneNotSupportedException {
+    public void testLongCommutator() {
         Endo endo;
         DOMConfigurator.configure("./src/main/resources/log4j.xml");
         log.debug(

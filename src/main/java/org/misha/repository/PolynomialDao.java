@@ -11,7 +11,7 @@ import javax.inject.Inject;
  * date: 12/27/15 1:05 AM.
  */
 @Repository
-public class PolynomialDao {
+class PolynomialDao {
     @Inject
     private SpringJdbcTemplates springJdbcTemplates;
 
@@ -19,7 +19,7 @@ public class PolynomialDao {
         this.springJdbcTemplates = springJdbcTemplates;
     }
 
-    public void createPolynomial() {
+    void createPolynomial() {
         executeCall("new_polynomial");
     }
 

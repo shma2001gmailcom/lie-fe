@@ -30,7 +30,7 @@ public final class Validator {
         for (final Character c : s.toCharArray()) {
             queue.add(c);
         }
-        if (!new Parser("").areBracketsCorrect(queue)) {
+        if (new Parser("").areBracketsIncorrect(queue)) {
             log.error(String.format("the expression '%s' has unmatched brackets.", s));
             return false;
         }

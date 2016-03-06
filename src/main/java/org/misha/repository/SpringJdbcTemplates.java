@@ -15,7 +15,7 @@ import javax.sql.DataSource;
  * date: 12/19/15 2:31 PM.
  */
 @Repository
-public class SpringJdbcTemplates {
+class SpringJdbcTemplates {
     private NamedParameterJdbcTemplate template;
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcCall jdbcCall;

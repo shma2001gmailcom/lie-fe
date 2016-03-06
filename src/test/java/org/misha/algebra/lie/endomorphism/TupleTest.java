@@ -75,7 +75,7 @@ public class TupleTest {
         tuple1.mapTo(b, mount("+b"));
         tuple1.mapTo(c, mount("+c"));
         final Polynomial p = tuple1.getAt(a).substitute(a, mount("+ a + [b, c]"));
-        final Polynomial p1 = p.substitute(b, mount("+b"));
+        p.substitute(b, mount("+b"));
         tuple1.mapTo(
                 a, tuple1.getAt(a).substitute(a, mount("+ a + [b, c]")).substitute(b, mount("+b")).substitute(
                 c, mount("+c")

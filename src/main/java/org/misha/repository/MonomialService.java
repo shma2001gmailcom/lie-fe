@@ -26,7 +26,7 @@ public class MonomialService {
         this.springJdbctemplates = springJdbcTemplates;
     }
 
-    public static final String findById = "SELECT " +
+    private static final String findById = "SELECT " +
             "n.node_id, " +
             "n.left_id, " +
             "n.right_id, " +

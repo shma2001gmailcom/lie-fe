@@ -53,18 +53,18 @@ public final class Parser {
         return result;
     }
 
-    public boolean areBracketsCorrect(final Iterable<Character> queue) {
+    public boolean areBracketsIncorrect(final Iterable<Character> queue) {
         int level = 0;
         for (final Character c : queue) {
             if (c == lBracket) {
                 level++;
             } else if (c == rBracket) {
                 if (--level < 0) {
-                    return false;
+                    return true;
                 }
             }
         }
-        return level == 0;
+        return level != 0;
     }
 
     public Monomial parse(final String summand) throws IllegalArgumentException {
@@ -106,7 +106,7 @@ public final class Parser {
         for (final Character c : summand.toCharArray()) {
             queue.add(c);
         }
-        if (!areBracketsCorrect(queue)) {
+        if (areBracketsIncorrect(queue)) {
             throw new IllegalArgumentException(INCORRECT_BRACKETS);
         }
         if (Validator.isLieMonomialValid(summand)) {

@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 @SuppressWarnings("ClassWithTooManyMethods")
 @Immutable //in the case if T is immutable
 public class PermutationG<T extends Comparable<T>> implements Comparable<PermutationG<T>> {
-    final Set<T> set;
+    private final Set<T> set;
     private final int degree;
     private final HashMap<T, T> raw;
 
@@ -79,8 +79,8 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
         return p;
     }
 
-    private boolean valid(final PermutationG<T> another) {
-        return set.containsAll(another.set) && another.set.containsAll(set);
+    private boolean invalid(final PermutationG<T> another) {
+        return !set.containsAll(another.set) || !another.set.containsAll(set);
     }
 
     /**
@@ -100,7 +100,7 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
      * @return product of this and another
      */
     public PermutationG<T> times(final PermutationG<T> another) {
-        if (!valid(another)) {
+        if (invalid(another)) {
             throw new IllegalArgumentException("another permutation must be on same set.");
         }
         final PermutationG<T> p = new PermutationG<T>(set);
@@ -142,7 +142,7 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
 
     @Override
     public int compareTo(@Nonnull final PermutationG<T> o) {
-        if (!valid(o)) {
+        if (invalid(o)) {
             throw new IllegalArgumentException("another permutation must be on same set.");
         }
         for (final T key : raw.keySet()) {

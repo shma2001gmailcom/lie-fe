@@ -12,7 +12,7 @@ import org.aspectj.lang.annotation.Aspect;
  */
 
 @Aspect
-public class MyLogger {
+class MyLogger {
     private final Logger log = Logger.getLogger(getClass());
 
     @AfterReturning(value = "execution(* org.misha.algebra.*.*(..))", returning = "retVal")

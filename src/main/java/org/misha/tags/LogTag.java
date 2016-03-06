@@ -19,7 +19,7 @@ import static org.apache.commons.beanutils.BeanUtils.describe;
  * author: misha
  * date: 11/7/15 11:35 PM.
  */
-public class LogTag extends SimpleTagSupport {
+class LogTag extends SimpleTagSupport {
 
     @Override
     public void doTag() throws JspException, IOException {

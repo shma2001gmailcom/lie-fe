@@ -14,15 +14,15 @@ import static org.misha.algebra.scalars.impl.Int.newInt;
  */
 
 public class IntTest {
-    public static final int SEVENTY_EIGHT = 78;
-    public static final int ELEVEN = 11;
-    public static final int MINUS_ONE_HUNDRED_THIRTY_ONE = -131;
-    public static final int SIXTY_FIVE = 65;
-    public static final int THIRTEEN = 13;
-    final Int integer0 = newInt(0);
-    final Int integer1 = newInt(1);
-    final Int two = newInt(2);
-    final Int minusTwo = newInt(-2);
+    private static final int SEVENTY_EIGHT = 78;
+    private static final int ELEVEN = 11;
+    private static final int MINUS_ONE_HUNDRED_THIRTY_ONE = -131;
+    private static final int SIXTY_FIVE = 65;
+    private static final int THIRTEEN = 13;
+    private final Int integer0 = newInt(0);
+    private final Int integer1 = newInt(1);
+    private final Int two = newInt(2);
+    private final Int minusTwo = newInt(-2);
 
     @Test
     public void testNewInt() throws Exception {
@@ -47,10 +47,6 @@ public class IntTest {
         assertEquals(two.add(minusTwo), Int.ZERO);
     }
 
-    @Test
-    public void testMultiply() throws Exception {
-    }
-
     @Test(expected = IllegalArgumentException.class)
     public void testReverse() throws Exception {
         Int.ONE.reverse();
@@ -64,10 +60,6 @@ public class IntTest {
     @Test
     public void testNegate() throws Exception {
         assertEquals(minusTwo, two.negate());
-    }
-
-    @Test
-    public void testMinus() throws Exception {
     }
 
     @Test

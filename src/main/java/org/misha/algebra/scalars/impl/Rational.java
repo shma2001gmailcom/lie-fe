@@ -23,12 +23,12 @@ import java.util.regex.Pattern;
 @Immutable
 public final class Rational implements Scalar<Rational>, Serializable, Cloneable {
     private static final Logger log = Logger.getLogger(Rational.class);
-    public static final String EMPTY_NUMERATOR = "a fraction must have some numerator: ";
-    public static final String EMPTY_DENOMINATOR = "a fraction must have the denominator: ";
-    public static final String ZERO_DENOMINATOR = "a fraction can't have zero as a denominator: ";
-    public static final String CAN_T_PARSE = "can't parse:";
-    public static final String CAN_T_REVERSE_ZERO = "Can't reverse zero.";
-    public static final String EUCLID_REJECTS_BOTH_ZEROS =
+    private static final String EMPTY_NUMERATOR = "a fraction must have some numerator: ";
+    private static final String EMPTY_DENOMINATOR = "a fraction must have the denominator: ";
+    private static final String ZERO_DENOMINATOR = "a fraction can't have zero as a denominator: ";
+    private static final String CAN_T_PARSE = "can't parse:";
+    private static final String CAN_T_REVERSE_ZERO = "Can't reverse zero.";
+    private static final String EUCLID_REJECTS_BOTH_ZEROS =
             "At least one number in Euclidean algorithm must be non-zero.";
     private static final long serialVersionUID = -2176000802033967957L;
     private final int numerator;

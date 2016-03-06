@@ -176,7 +176,7 @@ public final class RationalMonomial implements MonomialInterface<Rational>, Seri
         return new RationalMonomial("", Rational.ONE);
     }
 
-    public static RationalMonomial rationalMonomial(final String s, final Rational constant) {
+    private static RationalMonomial rationalMonomial(final String s, final Rational constant) {
         return new RationalMonomial(s, constant);
     }
 

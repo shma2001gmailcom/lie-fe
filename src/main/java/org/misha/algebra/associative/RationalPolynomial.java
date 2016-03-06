@@ -105,7 +105,7 @@ public final class RationalPolynomial implements Iterable<RationalMonomial>, Ser
         monomials.add(copy);
     }
 
-    public RationalPolynomial copy() {
+    RationalPolynomial copy() {
         return clone();
     }
 

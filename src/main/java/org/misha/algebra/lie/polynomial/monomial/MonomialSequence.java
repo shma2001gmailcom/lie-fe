@@ -15,7 +15,7 @@ import java.util.TreeSet;
  * Time: 1:13 PM
  */
 
-public class MonomialSequence {
+class MonomialSequence {
     private static final Logger log = Logger.getLogger(MonomialSequence.class);
     private final Collection<Monomial> sequence = new TreeSet<Monomial>();
     private Monomial lastMonomial;
@@ -59,7 +59,7 @@ public class MonomialSequence {
         return null;
     }
 
-    public int getNextDbMonomial(final MonomialService monomialService) {
+    int getNextDbMonomial(final MonomialService monomialService) {
         int result = 0;
         Monomial product;
         final Set<Monomial> lefts = new TreeSet<Monomial>(sequence);

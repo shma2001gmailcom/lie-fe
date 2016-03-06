@@ -18,14 +18,14 @@ import static org.misha.algebra.associative.impl.Monomial.monomial;
  * Time: 2:34 PM
  */
 
-public final class PolynomialUtils {
+final class PolynomialUtils {
     private static final String SPACE = " ";
     private static final String PLUS = "+";
 
     private PolynomialUtils() {
     }
 
-    static Iterable<Summand> getSummands(final String expression) {
+    private static Iterable<Summand> getSummands(final String expression) {
         String summands = StringUtils.remove(expression, " ");
         final Collection<Summand> result = new ArrayList<Summand>();
         String pattern = "(\\+|\\-)([0-9]*)([a-zA-Z]*)(-|\\+)";

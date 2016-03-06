@@ -32,7 +32,7 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
         return monomials.size();
     }
 
-    protected void sort() {
+    void sort() {
         Collections.sort(monomials);
     }
 
@@ -62,7 +62,7 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
         monomials.add(copy);
     }
 
-    public Polynomial copy() {
+    Polynomial copy() {
         return clone();
     }
 

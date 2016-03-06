@@ -17,7 +17,7 @@ import java.util.Set;
  * Time: 1:15 PM
  */
 
-public class Checker {
+class Checker {
 
     public Monomial leadMonomialOfSubst(final Monomial monomial, final Monomial... monomials) throws
                                                                                               CloneNotSupportedException {
@@ -46,7 +46,7 @@ public class Checker {
         return false;
     }
 
-    public boolean isHomogeneous(final Iterable<Monomial> p) {
+    boolean isHomogeneous(final Iterable<Monomial> p) {
         int previousDeg = -1;
         int i = 0;
         for (final Monomial mono : p) {
@@ -65,7 +65,7 @@ public class Checker {
         return true;
     }
 
-    public boolean isHomogeneousAll(final Polynomial... polynomials) {
+    boolean isHomogeneousAll(final Polynomial... polynomials) {
         for (final Polynomial p : polynomials) {
             if (!isHomogeneous(p)) {
                 return false;

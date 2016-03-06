@@ -16,7 +16,7 @@ import static org.misha.algebra.lie.polynomial.Polynomial.mount;
  * Time: 2:41 PM
  */
 
-public final class MonomialPerformance {
+final class MonomialPerformance {
     private static final Logger log = Logger.getLogger(MonomialPerformance.class);
     private static final int times = 8;
 

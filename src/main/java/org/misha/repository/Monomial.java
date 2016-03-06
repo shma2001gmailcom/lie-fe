@@ -1,6 +1,6 @@
 package org.misha.repository;
 
-public class Monomial {
+class Monomial {
     private Long nodeId;
     private String leftId;
     private String rightId;

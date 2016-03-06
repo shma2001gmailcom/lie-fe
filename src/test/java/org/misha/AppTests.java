@@ -16,6 +16,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+/**
+ * Use JDK 1.7 for this module
+ */
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration("file:src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml")
 @ContextConfiguration("file:src/main/webapp/WEB-INF/applicationContext.xml")

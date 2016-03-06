@@ -62,7 +62,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         this.id = id;
     }
 
-    protected Monomial(final Monomial left, final Monomial right, final int constant) {
+    Monomial(final Monomial left, final Monomial right, final int constant) {
         this.left = left;
         this.right = right;
         if (left != null) {
@@ -81,7 +81,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
      *
      * @param s a letter leaded with coefficient
      */
-    protected Monomial(final String s) {
+    Monomial(final String s) {
         right = null;
         left = null;
         name = s;
