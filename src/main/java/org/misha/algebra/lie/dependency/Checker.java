@@ -39,7 +39,7 @@ class Checker {
     }
 
     public boolean fallsIn(final Iterable<Monomial> p, final Polynomial... generators) {
-        if (!isHomogeneousAll(generators) || !isHomogeneous(p)) {
+        if (!areHomogeneous(generators) || !isHomogeneous(p)) {
             throw new IllegalArgumentException("all polynomials must be homogeneous.");
         }
         //Polynomial evaluation = new Polynomial();
@@ -65,7 +65,7 @@ class Checker {
         return true;
     }
 
-    boolean isHomogeneousAll(final Polynomial... polynomials) {
+    boolean areHomogeneous(final Polynomial... polynomials) {
         for (final Polynomial p : polynomials) {
             if (!isHomogeneous(p)) {
                 return false;
