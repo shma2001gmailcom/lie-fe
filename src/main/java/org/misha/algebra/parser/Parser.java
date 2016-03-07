@@ -41,6 +41,10 @@ public final class Parser {
         summands = getSummands();
     }
 
+    public Parser() {
+        expression = StringUtils.EMPTY;
+    }
+
     public Polynomial parse() throws IllegalArgumentException {
         Polynomial result = new Polynomial();
         for (final Summand summand : summands) {

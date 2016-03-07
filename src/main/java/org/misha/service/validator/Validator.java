@@ -30,7 +30,7 @@ public final class Validator {
         for (final Character c : s.toCharArray()) {
             queue.add(c);
         }
-        if (new Parser("").areBracketsIncorrect(queue)) {
+        if (new Parser().areBracketsIncorrect(queue)) {
             log.error(String.format("the expression '%s' has unmatched brackets.", s));
             return false;
         }
@@ -49,8 +49,8 @@ public final class Validator {
     }
 
     public static boolean isMonomial(final String s) {
-        Pattern pattern = Pattern.compile("\\[(\\[.*\\]|[a-z]),(\\[.*\\]|[a-z])\\]");
-        Matcher matcher = pattern.matcher(s);
+        final Pattern pattern = Pattern.compile("\\[(\\[.*\\]|[a-z]),(\\[.*\\]|[a-z])\\]");
+        final Matcher matcher = pattern.matcher(s);
         if (!matcher.matches()) {
             return s.matches("[a-z]");
         } else {

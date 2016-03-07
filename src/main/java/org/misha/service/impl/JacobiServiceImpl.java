@@ -25,7 +25,7 @@ public final class JacobiServiceImpl implements JacobiService {
     @Override
     public String foxToHtml(final String s) {
         try {
-            final Endo endo = new Parser("").parseEndo(s);
+            final Endo endo = new Parser().parseEndo(s);
             return endo.fox().toHtml();
         } catch (final Exception e) {
             log.error(e.getMessage());
@@ -35,7 +35,7 @@ public final class JacobiServiceImpl implements JacobiService {
 
     @Override
     public String foxToTxt(final String s) {
-        final Endo endo = new Parser("").parseEndo(s);
+        final Endo endo = new Parser().parseEndo(s);
         return endo.fox().toTxt();
     }
 }

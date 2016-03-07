@@ -183,14 +183,14 @@ public class MonomialTest {
 
     @Test
     public void fakeDeFakeTest() {
-        final Monomial monomial = new Parser("").parse("[a, b]");
+        final Monomial monomial = new Parser().parse("[a, b]");
         final Monomial faked = monomial.encode();
         assertEquals(faked.decode(), monomial);
     }
 
     @Test
     public void findLettersTest() {
-        final Monomial monomial = new Parser("").parse("[[[a, b], x],[c, b]]");
+        final Monomial monomial = new Parser().parse("[[[a, b], x],[c, b]]");
         assertEquals(Arrays.asList(monomial.letters().toArray()).toString(), "[a, b, c, x]");
     }
 
@@ -219,16 +219,16 @@ public class MonomialTest {
 
     @Test
     public void cloneTest() {
-        Monomial monomial = new Parser("").parse("[[[x, y], y], [x, z]]");
+        Monomial monomial = new Parser().parse("[[[x, y], y], [x, z]]");
         final Monomial copy = monomial.clone();
         assertEquals(monomial, copy);
-        monomial = new Parser("").parse("[x, a]");
+        monomial = new Parser().parse("[x, a]");
         assertFalse(monomial.equals(copy));
     }
 
     @Test
     public void getConstantTest() {
-        final Monomial monomial = new Parser("").parse("[x, a]");
+        final Monomial monomial = new Parser().parse("[x, a]");
         monomial.setConst(3);
         assertEquals(monomial.getConst(), 3);
         Monomial copy = monomial.copy();

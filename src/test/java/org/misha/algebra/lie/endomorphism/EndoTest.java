@@ -105,7 +105,7 @@ public class EndoTest {
     @Test
     public void testParseEndo() {
         final String s = "(+ a + [b, c]; + c - [a, b]; - b + [a, c])";
-        assertEquals(new Parser("").parseEndo(s).toString(), "(+ a - [c, b]; + c + [b, a]; - b - [c, a])");
+        assertEquals(new Parser().parseEndo(s).toString(), "(+ a - [c, b]; + c + [b, a]; - b - [c, a])");
     }
 
     @Test

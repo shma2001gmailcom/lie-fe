@@ -25,7 +25,7 @@ public class CheckerTest {
 
     @Test
     public void testLeadMonomialOfSubst() throws Exception {
-        final Parser parser = new Parser("");
+        final Parser parser = new Parser();
         final Monomial m = monomial("a");
         assertEquals(
                 new Checker().leadMonomialOfSubst(

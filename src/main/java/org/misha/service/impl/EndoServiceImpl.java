@@ -34,10 +34,10 @@ public final class EndoServiceImpl implements EndoService {
 
     private String multiplyFactors(final String[] factors) {
         try {
-            Endo leftFactor = new Parser("").parseEndo(factors[0]);
+            Endo leftFactor = new Parser().parseEndo(factors[0]);
             final int count = factors.length;
             for (int i = 1; i < count; ++i) {
-                final Endo rightFactor = new Parser("").parseEndo(factors[i]);
+                final Endo rightFactor = new Parser().parseEndo(factors[i]);
                 leftFactor = leftFactor.times(rightFactor);
             }
             return leftFactor.toString();
