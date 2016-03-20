@@ -15,7 +15,7 @@ import org.aspectj.lang.annotation.Aspect;
 class MyLogger {
     private final Logger log = Logger.getLogger(getClass());
 
-    @AfterReturning(value = "execution(* org.misha.algebra.*.*(..))", returning = "retVal")
+    @AfterReturning(value = "execution(* org.misha.domain.algebra.*.*(..))", returning = "retVal")
     public Object log(final JoinPoint point, final Object retVal) {
         log.info(point.getSignature().getName() + " called...");
         return retVal;

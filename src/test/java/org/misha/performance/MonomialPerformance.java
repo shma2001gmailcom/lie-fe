@@ -2,13 +2,13 @@ package org.misha.performance;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
-import org.misha.algebra.lie.polynomial.Polynomial;
-import org.misha.algebra.lie.polynomial.monomial.Monomial;
-import org.misha.algebra.lie.polynomial.monomial.MonomialUtils;
+import org.misha.domain.algebra.lie.polynomial.Polynomial;
+import org.misha.domain.algebra.lie.polynomial.monomial.Monomial;
+import org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils;
 
 import java.util.Date;
 
-import static org.misha.algebra.lie.polynomial.Polynomial.mount;
+import static org.misha.domain.algebra.lie.polynomial.Polynomial.mount;
 
 /**
  * Author: mshevelin

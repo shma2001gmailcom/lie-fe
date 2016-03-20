@@ -5,8 +5,8 @@
 package org.misha.service.impl;
 
 import org.apache.log4j.Logger;
-import org.misha.algebra.lie.endomorphism.Endo;
-import org.misha.algebra.parser.Parser;
+import org.misha.domain.algebra.lie.endomorphism.Endo;
+import org.misha.domain.algebra.parser.Parser;
 import org.misha.service.JacobiService;
 import org.misha.utils.ErrorMessage;
 

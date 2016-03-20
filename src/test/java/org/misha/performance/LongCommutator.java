@@ -6,9 +6,9 @@ package org.misha.performance;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
-import org.misha.algebra.lie.endomorphism.Endo;
-import org.misha.algebra.lie.polynomial.Polynomial;
-import org.misha.algebra.parser.Parser;
+import org.misha.domain.algebra.lie.endomorphism.Endo;
+import org.misha.domain.algebra.lie.polynomial.Polynomial;
+import org.misha.domain.algebra.parser.Parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;

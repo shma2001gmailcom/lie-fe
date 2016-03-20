@@ -1,7 +1,7 @@
 package org.misha.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.misha.domain.PolynomialObject;
+import org.misha.views.PolynomialObject;
 import org.misha.service.ExpandService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

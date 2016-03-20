@@ -1,7 +1,7 @@
 package org.misha.controller;
 
 import org.apache.log4j.Logger;
-import org.misha.domain.PolynomialObject;
+import org.misha.views.PolynomialObject;
 import org.misha.service.DownloadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

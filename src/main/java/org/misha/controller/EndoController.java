@@ -5,7 +5,7 @@
 package org.misha.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.misha.domain.EndoObject;
+import org.misha.views.EndoObject;
 import org.misha.service.EndoService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

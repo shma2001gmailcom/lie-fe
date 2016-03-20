@@ -1,9 +1,9 @@
 package org.misha.utils;
 
-import org.misha.algebra.associative.Polynomial;
-import org.misha.algebra.associative.impl.Monomial;
-import org.misha.algebra.fox.Derivative;
-import org.misha.domain.JacobiMatrix;
+import org.misha.domain.algebra.associative.Polynomial;
+import org.misha.domain.algebra.associative.impl.Monomial;
+import org.misha.domain.algebra.fox.Derivative;
+import org.misha.views.JacobiMatrix;
 
 import java.util.ArrayList;
 import java.util.List;

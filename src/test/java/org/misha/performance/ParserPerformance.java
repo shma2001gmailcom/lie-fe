@@ -1,7 +1,7 @@
 package org.misha.performance;
 
 import org.apache.log4j.xml.DOMConfigurator;
-import org.misha.algebra.parser.Parser;
+import org.misha.domain.algebra.parser.Parser;
 
 /**
  * Author: mshevelin

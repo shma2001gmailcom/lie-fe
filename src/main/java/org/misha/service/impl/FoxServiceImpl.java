@@ -6,7 +6,7 @@ import org.misha.utils.ErrorMessage;
 
 import javax.inject.Named;
 
-import static org.misha.algebra.lie.polynomial.Polynomial.mount;
+import static org.misha.domain.algebra.lie.polynomial.Polynomial.mount;
 
 /**
  * author: misha

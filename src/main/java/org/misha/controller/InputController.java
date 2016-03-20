@@ -4,8 +4,8 @@
 
 package org.misha.controller;
 
-import org.misha.domain.EndoObject;
-import org.misha.domain.PolynomialObject;
+import org.misha.views.EndoObject;
+import org.misha.views.PolynomialObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

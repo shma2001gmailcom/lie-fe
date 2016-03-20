@@ -1,7 +1,7 @@
 package org.misha.service.impl;
 
 import org.apache.log4j.Logger;
-import org.misha.algebra.parser.Parser;
+import org.misha.domain.algebra.parser.Parser;
 import org.misha.service.ExpandService;
 import org.misha.utils.ErrorMessage;
 

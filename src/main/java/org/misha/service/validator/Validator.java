@@ -1,7 +1,7 @@
 package org.misha.service.validator;
 
 import org.apache.log4j.Logger;
-import org.misha.algebra.parser.Parser;
+import org.misha.domain.algebra.parser.Parser;
 
 import java.util.Collection;
 import java.util.LinkedList;
