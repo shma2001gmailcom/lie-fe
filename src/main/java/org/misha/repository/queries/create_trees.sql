@@ -3,7 +3,7 @@
 #################################################################
 
 DROP DATABASE IF EXISTS TREES;
-commit;
+COMMIT;
 CREATE DATABASE IF NOT EXISTS TREES;
 USE TREES;
 
@@ -54,7 +54,8 @@ CREATE PROCEDURE alphabet()
   END;
 
 DROP FUNCTION IF EXISTS new_node;
-CREATE FUNCTION new_node(left_id INT, right_id INT) RETURNS BIGINT
+CREATE FUNCTION new_node(left_id INT, right_id INT)
+  RETURNS BIGINT
   BEGIN
     DECLARE left_data VARCHAR(200) DEFAULT NULL;
     DECLARE right_data VARCHAR(200) DEFAULT NULL;
@@ -68,13 +69,16 @@ CREATE FUNCTION new_node(left_id INT, right_id INT) RETURNS BIGINT
     FROM NODE_DATA
     WHERE node_id = right_id;
     SET to_insert = CONCAT(CONCAT(CONCAT(CONCAT('[', left_data), ', '), right_data), ']');
-    INSERT INTO NODE_DATA VALUES (NULL, to_insert) ON DUPLICATE KEY UPDATE node_id = node_id;
-    INSERT INTO NODES VALUES (NULL, left_id, right_id, LAST_INSERT_ID()) ON DUPLICATE KEY UPDATE node_id = node_id;
+    INSERT INTO NODE_DATA VALUES (NULL, to_insert)
+    ON DUPLICATE KEY UPDATE node_id = node_id;
+    INSERT INTO NODES VALUES (NULL, left_id, right_id, LAST_INSERT_ID())
+    ON DUPLICATE KEY UPDATE node_id = node_id;
     RETURN LAST_INSERT_ID();
   END;
 
 DROP FUNCTION IF EXISTS new_polynomial;
-CREATE FUNCTION new_polynomial() RETURNS BIGINT
+CREATE FUNCTION new_polynomial()
+  RETURNS BIGINT
   BEGIN
     DECLARE polynomial_count BIGINT DEFAULT 0;
     SELECT count(1)
@@ -141,7 +145,10 @@ SELECT
   n.left_id,
   n.right_id,
   d.data_value
-FROM NODES n LEFT JOIN NODE_DATA d ON (n.node_id = d.node_id) where right_id = 3 order by n.node_id;
-select new_polynomial();
+FROM NODES n LEFT JOIN NODE_DATA d ON (n.node_id = d.node_id)
+WHERE right_id = 3
+ORDER BY n.node_id;
+SELECT new_polynomial();
 
-select * from POLYNOMIALS;
+SELECT *
+FROM POLYNOMIALS;

@@ -15,7 +15,7 @@ class PolynomialDao {
     @Inject
     private SpringJdbcTemplates springJdbcTemplates;
 
-    public void  setSpringJdbcTemplates(final SpringJdbcTemplates springJdbcTemplates) {
+    public void setSpringJdbcTemplates(final SpringJdbcTemplates springJdbcTemplates) {
         this.springJdbcTemplates = springJdbcTemplates;
     }
 

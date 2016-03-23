@@ -1,5 +1,6 @@
 package org.misha.repository;
 
+import org.misha.domain.algebra.lie.polynomial.monomial.Monomial;
 import org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -34,7 +35,7 @@ public class MonomialService {
             "WHERE n.node_id = :nodeId";
     private static final String findBySmallId = "SELECT d.data_value FROM NODE_DATA d WHERE d.node_id = :nodeId";
 
-    public org.misha.domain.algebra.lie.polynomial.monomial.Monomial findById(final Long id) {
+    public Monomial findById(final Long id) {
         if (id < 26L) {
             return findBySmallId(id);
         }
@@ -54,8 +55,7 @@ public class MonomialService {
                     }
                 }
         ).get(0);
-        org.misha.domain.algebra.lie.polynomial.monomial.Monomial
-                result = MonomialUtils.monomial(findById(data.leftId), findById(data.rightId));
+        Monomial result = MonomialUtils.monomial(findById(data.leftId), findById(data.rightId));
         result.setId(id);
         return result;
     }
@@ -90,28 +90,27 @@ public class MonomialService {
         }
     }
 
-    public org.misha.domain.algebra.lie.polynomial.monomial.Monomial findBySmallId(final Long id) {
+    public Monomial findBySmallId(final Long id) {
         return springJdbctemplates.getTemplate().query(findBySmallId,
-                new HashMap<String, Long>() {{
-                    put("nodeId", id);
-                }},
-                new RowMapper<org.misha.domain.algebra.lie.polynomial.monomial.Monomial>() {
+                                                       new HashMap<String, Long>() {{
+                                                           put("nodeId", id);
+                                                       }},
+                                                       new RowMapper<Monomial>() {
 
-                    @Override
-                    public org.misha.domain.algebra.lie.polynomial.monomial.Monomial mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-                        org.misha.domain.algebra.lie.polynomial.monomial.Monomial result = MonomialUtils.monomial(rs.getString("data_value"));
-                        result.setId(id);
-                        return result;
-                    }
+                                                            @Override
+                                                            public org.misha.domain.algebra.lie.polynomial.monomial.Monomial mapRow(final ResultSet rs, final int rowNum) throws SQLException {
+                                                                org.misha.domain.algebra.lie.polynomial.monomial.Monomial result = MonomialUtils.monomial(rs.getString("data_value"));
+                                                                result.setId(id);
+                                                                return result;
+                                                            }
                 }
         ).get(0);
     }
 
+    private static final String writeMonomial = "SELECT new_node(?, ?)";
 
-
-    private static final String writeMonomial = "select new_node(?, ?)";
-
-    public Long write(final org.misha.domain.algebra.lie.polynomial.monomial.Monomial monomial) {
-        return springJdbctemplates.getJdbcTemplate().queryForLong(writeMonomial, monomial.left().getId(), monomial.right().getId());
+    public Long write(final Monomial monomial) {
+        return springJdbctemplates.getJdbcTemplate()
+                                  .queryForLong(writeMonomial, monomial.left().getId(), monomial.right().getId());
     }
 }

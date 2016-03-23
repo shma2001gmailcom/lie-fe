@@ -41,6 +41,14 @@ public final class Rational implements Scalar<Rational>, Serializable, Cloneable
         this.denominator = denominator;
     }
 
+    /**
+     * public factory method
+     * @param numerator numerator
+     * @param denominator denominator
+     * @return new rational with numerator and denominator are given, if possible,
+     * elsewhere
+     * @throws IllegalArgumentException
+     */
     public static Rational rational(final int numerator, final int denominator) throws IllegalArgumentException {
         if (denominator == 0) {
             throw new IllegalArgumentException(ZERO_DENOMINATOR);
@@ -172,6 +180,12 @@ public final class Rational implements Scalar<Rational>, Serializable, Cloneable
         return result;
     }
 
+    /**
+     * factory method
+     * @param s a String potentially representing a rational
+     * @return a rational if possible, elsewhere
+     * @throws IllegalStateException
+     */
     @Override
     public Rational parse(final String s) throws IllegalStateException {
         if (StringUtils.isEmpty(s)) {

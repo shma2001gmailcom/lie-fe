@@ -196,9 +196,8 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
         if (degree == 2) {
             return makeForDegreeTwo(result);
         }
-        final PermutationG<T> shifted = shift();
         final Collection<T> pattern = new ArrayList<T>(degree);
-        makeFirstBlock(result, shifted, pattern);
+        makeFirstBlock(result, shift(), pattern);
         final int bound = result.size();
         replicate(result, bound);
         return Collections.unmodifiableCollection(result);
