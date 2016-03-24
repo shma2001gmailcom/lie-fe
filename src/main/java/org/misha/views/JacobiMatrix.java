@@ -1,14 +1,11 @@
 package org.misha.views;
 
-import org.misha.domain.algebra.associative.Polynomial;
-import org.misha.domain.algebra.associative.impl.Monomial;
 import org.misha.domain.algebra.fox.Derivative;
 import org.misha.utils.MatrixFormatter;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map.Entry;
 
 /**
  * author: misha
@@ -43,27 +40,11 @@ public final class JacobiMatrix implements Iterable<Derivative> {
     }
 
     public String toHtml() {
-        StringBuilder sb = new StringBuilder(
-                "<table align=\'center\' cellpadding=\'3\' frame='vsides'>\n" +
-                        "<tr>\n" +
-                        "<td>" +
-                        "<table align=\'center\' cellpadding=\'12\' frame=\'vsides\'>"
-        );
-        for (final Derivative derivative : this) {
-            sb = sb.append('\n').append("<tr align=\'center\'>\n");
-            for (final Entry<Monomial, Polynomial> entry : derivative) {
-                sb = sb.append("<td>\n");
-                sb.append(entry.getValue().toString());
-                sb = sb.append("</td>\n");
-            }
-            sb = sb.append('\n').append("</tr>");
-        }
-        sb = sb.append("</table></tr>\n</td></table>");
-        return sb.toString();
+        return MatrixFormatter.get(this).toHtml();
     }
 
     public String toTxt() {
-        return new MatrixFormatter(this).format();
+        return MatrixFormatter.get(this).toTxt();
     }
 
     public String getValue() {

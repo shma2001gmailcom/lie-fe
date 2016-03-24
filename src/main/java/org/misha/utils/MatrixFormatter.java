@@ -21,15 +21,22 @@ public final class MatrixFormatter {
     private static final String SPACE = " ";
     private static final String BORDER_FRAGMENT = "||";
     private final JacobiMatrix matrix;
-    private final List<Integer> columnWidths = new ArrayList<Integer>();
+    private final List<Integer> columnWidths;
 
-    public MatrixFormatter(final JacobiMatrix matrix) {
-        this.matrix = matrix;
-        initColumnWidths(matrix);
-        columnWidths();
+    private MatrixFormatter(final JacobiMatrix m) {
+        matrix = m;
+        columnWidths = new ArrayList<Integer>();
     }
 
-    private void initColumnWidths(final Iterable<Derivative> matrix) {
+    public static MatrixFormatter get(final JacobiMatrix matrix) {
+        final MatrixFormatter result = new MatrixFormatter(matrix);
+        final List<Integer> columnWidths = result.columnWidths;
+        initColumnWidths(matrix, columnWidths);
+        columnWidths(matrix, columnWidths);
+        return result;
+    }
+
+    private static void initColumnWidths(final Iterable<Derivative> matrix, List<Integer> columnWidths) {
         if (matrix.iterator().hasNext()) {
             for (final Entry<Monomial, Polynomial> ignored : matrix.iterator().next()) {
                 columnWidths.add(2);
@@ -46,7 +53,7 @@ public final class MatrixFormatter {
         return String.format("%s%s%s", blow, s, blow);
     }
 
-    private void columnWidths() {
+    private static void columnWidths(final JacobiMatrix matrix, final List<Integer> columnWidths) {
         for (final Derivative derivative : matrix) {
             int j = 0;
             for (final Entry<Monomial, Polynomial> entry : derivative) {
@@ -59,7 +66,7 @@ public final class MatrixFormatter {
         }
     }
 
-    public String format() {
+    public String toTxt() {
         StringBuilder sb = new StringBuilder(LINE_BREAK);
         final int maxRowWidth = findMaxRowWidth();
         for (final Derivative derivative : matrix) {
@@ -96,5 +103,25 @@ public final class MatrixFormatter {
         }
         sbRow = sbRow.append(BORDER_FRAGMENT);
         return sbRow;
+    }
+
+    public String toHtml() {
+        StringBuilder sb = new StringBuilder(
+                "<table align=\'center\' cellpadding=\'3\' frame='vsides'>\n" +
+                        "<tr>\n" +
+                        "<td>" +
+                        "<table align=\'center\' cellpadding=\'12\' frame=\'vsides\'>"
+        );
+        for (final Derivative derivative : matrix) {
+            sb = sb.append('\n').append("<tr align=\'center\'>\n");
+            for (final Entry<Monomial, Polynomial> entry : derivative) {
+                sb = sb.append("<td>\n");
+                sb.append(entry.getValue().toString());
+                sb = sb.append("</td>\n");
+            }
+            sb = sb.append('\n').append("</tr>");
+        }
+        sb = sb.append("</table></tr>\n</td></table>");
+        return sb.toString();
     }
 }
