@@ -72,5 +72,5 @@ echo         starting tomcat...
 echo ///////////////////////////
 bash startup.sh
 sleep 5
-firefox "http://localhost:8080/"${appname}
-#chromium-browser "http://localhost:8080/"${appname}
+#firefox "http://localhost:8080/"${appname}
+chromium-browser "http://localhost:8080/"${appname}

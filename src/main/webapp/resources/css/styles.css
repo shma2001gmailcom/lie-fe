@@ -53,6 +53,12 @@ input.text-field {
     border: 0;
 }
 
+.contains-error {
+    background-color: rgba(35, 10, 17, 0.95);
+    color: #a6a28c;
+    border: 1px solid #d1794f;
+}
+
 a:link {
     color: #937a57;
 }
