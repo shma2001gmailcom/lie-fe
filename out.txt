@@ -1,0 +1,94 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building lie-fe 1.0-SNAPSHOT
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.4.1:clean (default-clean) @ lie-fe ---
+[INFO] Deleting D:\work\my-prj\lie-fe\target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:resources (default-resources) @ lie-fe ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 5 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:compile (default-compile) @ lie-fe ---
+[INFO] Compiling 61 source files to D:\work\my-prj\lie-fe\target\classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.4.3:testResources (default-testResources) @ lie-fe ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory D:\work\my-prj\lie-fe\src\test\resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:2.3.2:testCompile (default-testCompile) @ lie-fe ---
+[INFO] Compiling 19 source files to D:\work\my-prj\lie-fe\target\test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.4.3:test (default-test) @ lie-fe ---
+[INFO] Surefire report directory: D:\work\my-prj\lie-fe\target\surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running org.misha.domain.algebra.lie.polynomial.monomial.MonomialSequenceTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.688 sec
+Running org.misha.AppTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.942 sec
+Running org.misha.domain.algebra.scalars.impl.RationalTest
+Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.024 sec
+Running org.misha.domain.algebra.associative.PolynomialTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.197 sec
+Running org.misha.domain.algebra.permutation.PermutationTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 sec
+Running org.misha.domain.algebra.lie.polynomial.monomial.MonomialTest
+Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.699 sec
+Running org.misha.domain.algebra.associative.RationalPolynomialTest
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.101 sec
+Running org.misha.domain.algebra.lie.polynomial.PolynomialTest
+[2016-04-04 17:20:38,377] ERROR [org.misha.domain.algebra.lie.polynomial.PolynomialTest:161] java.lang.IllegalArgumentException: can't parse expression having incorrect brackets. 
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.144 sec
+Running org.misha.domain.algebra.permutation.PermutationGTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.108 sec
+Running org.misha.domain.algebra.PermutationTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 sec
+Running org.misha.service.validator.ValidatorTest
+[2016-04-04 17:20:39,496] ERROR [org.misha.service.validator.Validator:39] two adjacent letters in the expression '-[ab,c]' are inadmissible. 
+[2016-04-04 17:20:39,496] ERROR [org.misha.service.validator.Validator:34] the expression '-[a, b]]' has unmatched brackets. 
+[2016-04-04 17:20:39,497] ERROR [org.misha.service.validator.Validator:34] the expression '-3][' has unmatched brackets. 
+[2016-04-04 17:20:39,497] ERROR [org.misha.service.validator.Validator:45] all left and right multipliers in expression '-3[[  ,b ], [a, b]]' should be non-empty. 
+[2016-04-04 17:20:39,497] ERROR [org.misha.service.validator.Validator:45] all left and right multipliers in expression '-3[[b  , ], [a, b]]' should be non-empty. 
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 sec
+Running org.misha.domain.algebra.lie.endomorphism.TupleTest
+[2016-04-04 17:20:39,672] DEBUG [org.misha.domain.algebra.lie.endomorphism.TupleTest:63]  
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.474 sec
+Running org.misha.domain.algebra.scalars.impl.IntTest
+Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 sec
+Running org.misha.domain.algebra.lie.endomorphism.EndoTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.869 sec
+Running org.misha.domain.algebra.associative.impl.MonomialTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 sec
+Running org.misha.domain.algebra.lie.dependency.CheckerTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.977 sec
+
+Results :
+
+Tests run: 106, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] 
+[INFO] --- maven-war-plugin:2.1.1:war (default-war) @ lie-fe ---
+[INFO] Packaging webapp
+[INFO] Assembling webapp [lie-fe] in [D:\work\my-prj\lie-fe\target\lie-fe]
+[INFO] Processing war project
+[INFO] Copying webapp resources [D:\work\my-prj\lie-fe\src\main\webapp]
+[INFO] Webapp assembled in [280 msecs]
+[INFO] Building war: D:\work\my-prj\lie-fe\target\lie-fe.war
+[WARNING] Warning: selected war files include a WEB-INF/web.xml which will be ignored 
+(webxml attribute is missing from war task, or ignoreWebxml attribute is specified as 'true')
+[INFO] 
+[INFO] --- maven-install-plugin:2.3.1:install (default-install) @ lie-fe ---
+[INFO] Installing D:\work\my-prj\lie-fe\target\lie-fe.war to C:\Users\sbt-shevelin-ma\.m2\repository\org\misha\lie-fe\1.0-SNAPSHOT\lie-fe-1.0-SNAPSHOT.war
+[INFO] Installing D:\work\my-prj\lie-fe\pom.xml to C:\Users\sbt-shevelin-ma\.m2\repository\org\misha\lie-fe\1.0-SNAPSHOT\lie-fe-1.0-SNAPSHOT.pom
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 32.302s
+[INFO] Finished at: Mon Apr 04 17:20:54 NOVT 2016
+[INFO] Final Memory: 16M/233M
+[INFO] ------------------------------------------------------------------------

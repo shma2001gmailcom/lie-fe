@@ -13,31 +13,35 @@ appname="lie-fe"
 ############### properties ####################
 ################ AT WORK ######################
 ###############################################
-#appfolder="/home/mshevelin/workspace/"${appname}"-assembla"
-#tomcatfolder="/home/mshevelin/workspace/tomcat6"
-#javahome="/usr/lib/jvm/jdk-6-oracle"
+appfolder="D:/work/my-prj/"${appname}
+tomcatfolder="D:/work/tomcat6"
+javahome="C:/work/Java/jdk1.6.0_45"
+M2_HOME='D:/work/maven/'
+export M2_HOME
+M2=${M2_HOME}/bin
+export M2
 
 ################################################
 ################ AT HOME #######################
 ################################################
-appfolder="/home/misha/workspace/"${appname}
-tomcatfolder="/home/misha/workspace/tomcat6"
-M2_HOME='/opt/apache-maven-3.2.2/'
-export M2_HOME
-M2=${M2_HOME}/bin
-export M2
-PATH=${PATH}:${M2}
-export PATH
-logfile='./1'
+#appfolder="/home/misha/workspace/"${appname}
+#tomcatfolder="/home/misha/workspace/tomcat6"
+#M2_HOME='/opt/apache-maven-3.2.2/'
+#export M2_HOME
+#M2=${M2_HOME}/bin
+#export M2
+#PATH=${PATH}:${M2}
+#export PATH
+#logfile='./1'
 
 ################################################
-#export JAVA_HOME=${javahome}
+export JAVA_HOME=${javahome}
 tomcatbin=${tomcatfolder}/bin
 tomcatwebapps=${tomcatfolder}/webapps
 if [ ! -e ${appfolder} ]; then echo 'ERROR: no appfolder' ${appfolder} 'found';exit 1; fi
 if [ ! -e ${tomcatbin} ]; then echo 'ERROR: no tomcatbin found';exit 1; fi
 cd ${appfolder}
-mvn clean install $@ | tee out.txt ; test ${PIPESTATUS[0]} -eq 0
+D:/work/maven/bin/mvn.bat clean install $@ | tee out.txt ; test ${PIPESTATUS[0]} -eq 0
 if [ ${PIPESTATUS[0]} -ne "0" ]; then
     echo ===================================================
     echo maven build failed, see output for details;exit 1;
@@ -73,4 +77,4 @@ echo ///////////////////////////
 bash startup.sh
 sleep 5
 #firefox "http://localhost:8080/"${appname}
-chromium-browser "http://localhost:8080/"${appname}
+"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" "http://localhost:8080/"${appname}
