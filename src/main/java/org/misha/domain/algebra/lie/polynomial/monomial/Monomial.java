@@ -196,7 +196,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
             return t1.name.compareTo(m1.name);
         }
         return deg() != m.deg() ? deg() - m.deg() : left.compareTo(m.left()) != 0 ? left.compareTo(m.left()) :
-                                                    right.compareTo(m.right());
+                right.compareTo(m.right());
     }
 
     public String toString() {
@@ -250,7 +250,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
                 ).times(constant);
                 final Monomial second = MonomialUtils.monomial(
                         leftLeft, MonomialUtils.monomial(
-                        leftRight, right
+                                leftRight, right
                         ).times(constant)
                 );
                 return result.plus(first).plus(second);
@@ -269,7 +269,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
     public String getString() {
         final Matcher matcher = compile("(-|\\+)([0-9]*)(.*)").matcher(toString());
         return matcher.find() ? format(" %s %s%s", matcher.group(1), matcher.group(2), matcher.group(3)) :
-               EMPTY;
+                EMPTY;
     }
 
     public org.misha.domain.algebra.associative.Polynomial expand() {
@@ -283,12 +283,10 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
             );
         } else {
             result = result.plus(
-                    left().copy().expand().times(right().copy().expand()).plus(
-                            (right().copy().expand().times(
-                                    left().copy().expand()
-                            )
-                            ).times(-1)
-                    ).times(copy.getConst())
+                    left().copy().expand().times(right().copy().expand())
+                            .plus(right().copy().expand()
+                                    .times(left().copy().expand())
+                                    .times(-1)).times(copy.getConst())
             );
         }
         return result;
@@ -594,7 +592,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         if (isLetter()) {
             clone = MonomialUtils.monomial(Character.toString((getSymbol())));
             clone.name = name;
-            clone.id=id;
+            clone.id = id;
         }
         try {
             clone = (Monomial) super.clone();
