@@ -99,7 +99,6 @@ public final class Endo implements Iterable<Pair<Monomial, Polynomial>>, Cloneab
     @Override
     public String toString() {
         if (!tuple.iterator().hasNext()) {
-            //throw new IllegalArgumentException("an endomorphism should contain at least one mapping");
             return "[]";
         }
         StringBuilder sb = new StringBuilder("(");
