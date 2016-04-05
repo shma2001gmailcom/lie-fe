@@ -4,6 +4,8 @@ package org.misha.domain.algebra.parser;
  * Author: mshevelin
  * Date: 8/26/14
  * Time: 11:48 AM
+ * For spelling questions see
+ * http://www.dictionary.com/browse/summand
  */
 
 public final class Summand {
