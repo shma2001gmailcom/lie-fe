@@ -31,7 +31,6 @@ public class MonomialSequenceTest {
         Monomial current = sequence.getLastMonomial();
         for (int i = 0; i < number; ++i) {
             current = sequence.getNextMonomial(current);
-            //log.debug(current.toString()+'\n');
         }
         return current;
     }
