@@ -19,8 +19,7 @@ import java.util.regex.Pattern;
  * <p/>
  * This class represents the notion of permutation of objects of the type T;
  * the multiplication is implemented as follows: if permutation x maps A to B and
- * permutation y maps B to C then permutation x.times(y) maps A to C (permutation
- * acts from right hand side).
+ * permutation y maps B to C then permutation x.times(y) maps A to C.
  */
 
 @SuppressWarnings("ClassWithTooManyMethods")
