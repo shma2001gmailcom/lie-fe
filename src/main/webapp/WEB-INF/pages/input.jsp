@@ -15,7 +15,8 @@
 <a class='color-blue' href="http://en.wikipedia.org/wiki/Free_Lie_algebra#Lyndon_basis">
     (click here for explanation)
 </a>
-
+<p/>
+<a href="https://github.com/shma2001gmailcom/lie-fe" style="color: #858585">LINK TO GIT REPO CONTAINING THIS PROJECT</a>
 <h3 class="color-light-brown"><c:out value="${polynomialMessage}"/>
     <a href="http://en.wikipedia.org/wiki/Free_Lie_algebra#Lyndon_basis">
         <c:out value="${hallBase}"/>

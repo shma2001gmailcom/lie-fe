@@ -28,44 +28,44 @@
  T E S T S
 -------------------------------------------------------
 Running org.misha.domain.algebra.lie.polynomial.monomial.MonomialSequenceTest
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.716 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.578 sec
 Running org.misha.AppTests
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.081 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.068 sec
 Running org.misha.domain.algebra.scalars.impl.RationalTest
-Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.022 sec
+Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 sec
 Running org.misha.domain.algebra.associative.PolynomialTest
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.193 sec
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.246 sec
 Running org.misha.domain.algebra.permutation.PermutationTest
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 sec
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 sec
 Running org.misha.domain.algebra.lie.polynomial.monomial.MonomialTest
-Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.657 sec
+Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.398 sec
 Running org.misha.domain.algebra.associative.RationalPolynomialTest
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.095 sec
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.112 sec
 Running org.misha.domain.algebra.lie.polynomial.PolynomialTest
-[2016-04-05 15:15:31,160] ERROR [org.misha.domain.algebra.lie.polynomial.PolynomialTest:161] java.lang.IllegalArgumentException: can't parse expression having incorrect brackets. 
-Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.162 sec
+[2016-04-06 10:49:33,097] ERROR [org.misha.domain.algebra.lie.polynomial.PolynomialTest:161] java.lang.IllegalArgumentException: can't parse expression having incorrect brackets. 
+Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.189 sec
 Running org.misha.domain.algebra.permutation.PermutationGTest
-Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.123 sec
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.241 sec
 Running org.misha.domain.algebra.PermutationTest
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 sec
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 sec
 Running org.misha.service.validator.ValidatorTest
-[2016-04-05 15:15:32,294] ERROR [org.misha.service.validator.Validator:39] two adjacent letters in the expression '-[ab,c]' are inadmissible. 
-[2016-04-05 15:15:32,295] ERROR [org.misha.service.validator.Validator:34] the expression '-[a, b]]' has unmatched brackets. 
-[2016-04-05 15:15:32,295] ERROR [org.misha.service.validator.Validator:34] the expression '-3][' has unmatched brackets. 
-[2016-04-05 15:15:32,295] ERROR [org.misha.service.validator.Validator:45] all left and right multipliers in expression '-3[[  ,b ], [a, b]]' should be non-empty. 
-[2016-04-05 15:15:32,296] ERROR [org.misha.service.validator.Validator:45] all left and right multipliers in expression '-3[[b  , ], [a, b]]' should be non-empty. 
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 sec
+[2016-04-06 10:49:34,348] ERROR [org.misha.service.validator.Validator:39] two adjacent letters in the expression '-[ab,c]' are inadmissible. 
+[2016-04-06 10:49:34,348] ERROR [org.misha.service.validator.Validator:34] the expression '-[a, b]]' has unmatched brackets. 
+[2016-04-06 10:49:34,349] ERROR [org.misha.service.validator.Validator:34] the expression '-3][' has unmatched brackets. 
+[2016-04-06 10:49:34,349] ERROR [org.misha.service.validator.Validator:45] all left and right multipliers in expression '-3[[  ,b ], [a, b]]' should be non-empty. 
+[2016-04-06 10:49:34,349] ERROR [org.misha.service.validator.Validator:45] all left and right multipliers in expression '-3[[b  , ], [a, b]]' should be non-empty. 
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 sec
 Running org.misha.domain.algebra.lie.endomorphism.TupleTest
-[2016-04-05 15:15:32,471] DEBUG [org.misha.domain.algebra.lie.endomorphism.TupleTest:63]  
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.488 sec
+[2016-04-06 10:49:34,536] DEBUG [org.misha.domain.algebra.lie.endomorphism.TupleTest:63]  
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.512 sec
 Running org.misha.domain.algebra.scalars.impl.IntTest
 Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.009 sec
 Running org.misha.domain.algebra.lie.endomorphism.EndoTest
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.801 sec
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.714 sec
 Running org.misha.domain.algebra.associative.impl.MonomialTest
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 sec
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 sec
 Running org.misha.domain.algebra.lie.dependency.CheckerTest
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.907 sec
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.575 sec
 
 Results :
 
@@ -77,7 +77,7 @@ Tests run: 106, Failures: 0, Errors: 0, Skipped: 0
 [INFO] Assembling webapp [lie-fe] in [D:\work\my-prj\lie-fe\target\lie-fe]
 [INFO] Processing war project
 [INFO] Copying webapp resources [D:\work\my-prj\lie-fe\src\main\webapp]
-[INFO] Webapp assembled in [410 msecs]
+[INFO] Webapp assembled in [326 msecs]
 [INFO] Building war: D:\work\my-prj\lie-fe\target\lie-fe.war
 [WARNING] Warning: selected war files include a WEB-INF/web.xml which will be ignored 
 (webxml attribute is missing from war task, or ignoreWebxml attribute is specified as 'true')
@@ -88,7 +88,7 @@ Tests run: 106, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 33.391s
-[INFO] Finished at: Tue Apr 05 15:15:47 NOVT 2016
-[INFO] Final Memory: 17M/233M
+[INFO] Total time: 36.381s
+[INFO] Finished at: Wed Apr 06 10:49:51 NOVT 2016
+[INFO] Final Memory: 16M/233M
 [INFO] ------------------------------------------------------------------------

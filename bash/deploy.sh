@@ -14,12 +14,13 @@ appname="lie-fe"
 ################ AT WORK ######################
 ###############################################
 appfolder="D:/work/my-prj/"${appname}
-tomcatfolder="D:/work/tomcat6"
+tomcatfolder="C:/work/tomcat6"
 javahome="C:/work/Java/jdk1.6.0_45"
 M2_HOME='D:/work/maven/'
 export M2_HOME
 M2=${M2_HOME}/bin
 export M2
+mvn='D:/work/maven/bin/mvn.bat'
 
 ################################################
 ################ AT HOME #######################
@@ -35,13 +36,14 @@ export M2
 #logfile='./1'
 
 ################################################
+
 export JAVA_HOME=${javahome}
 tomcatbin=${tomcatfolder}/bin
 tomcatwebapps=${tomcatfolder}/webapps
 if [ ! -e ${appfolder} ]; then echo 'ERROR: no appfolder' ${appfolder} 'found';exit 1; fi
 if [ ! -e ${tomcatbin} ]; then echo 'ERROR: no tomcatbin found';exit 1; fi
 cd ${appfolder}
-D:/work/maven/bin/mvn.bat clean install $@ | tee out.txt ; test ${PIPESTATUS[0]} -eq 0
+${mvn} clean install $@ | tee out.txt ; test ${PIPESTATUS[0]} -eq 0
 if [ ${PIPESTATUS[0]} -ne "0" ]; then
     echo ===================================================
     echo maven build failed, see output for details;exit 1;
