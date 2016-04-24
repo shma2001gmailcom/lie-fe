@@ -3,7 +3,6 @@ package org.misha.tags;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
@@ -19,28 +18,24 @@ import static org.apache.commons.beanutils.BeanUtils.describe;
  * author: misha
  * date: 11/7/15 11:35 PM.
  */
-class LogTag extends SimpleTagSupport {
+public class LogTag extends SimpleTagSupport {
 
     @Override
     public void doTag() throws JspException, IOException {
-        final PageContext context = (PageContext) getJspContext();
-        final ServletRequest req = context.getRequest();
-        final ServletResponse response = context.getResponse();
-        final Enumeration attributeNames = req.getAttributeNames();
-        final Enumeration params = req.getParameterNames();
-        final PrintWriter writer = response.getWriter();
-        logHiddenDiv(req, attributeNames, params, writer);
+        logHiddenDiv((PageContext) getJspContext());
     }
 
-    private void logHiddenDiv(
-            final ServletRequest req, final Enumeration attributeNames, final Enumeration params,
-            final PrintWriter writer
-    ) {
-        writer.print("<div style=\"display: none;\">");
-        logAttributes(req, attributeNames, writer);
-        logParameters(req, params, writer);
-        logFormBean(req, writer);
-        writer.print(" </div>");
+    private void logHiddenDiv(PageContext context) {
+        PrintWriter writer;
+        try {
+            writer = context.getResponse().getWriter();
+            writer.print("<div style=\"display: none;\">");
+            final ServletRequest req = context.getRequest();
+            logAttributes(req, req.getAttributeNames(), writer);
+            logParameters(req, req.getParameterNames(), writer);
+            logFormBean(req, writer);
+            writer.print(" </div>");
+        } catch (IOException ignored) {}
     }
 
     private void logFormBean(final ServletRequest req, final PrintWriter writer) {
@@ -55,9 +50,7 @@ class LogTag extends SimpleTagSupport {
                 final Entry e = (Entry) o;
                 writer.print(String.format("%s=%s%n", e.getKey(), e.getValue()));
             }
-        } catch (final Exception e) {
-            //e.printStackTrace();
-        }
+        } catch (final Exception ignored) {}
         writer.print("--------------------------------------------------------------\n");
     }
 
