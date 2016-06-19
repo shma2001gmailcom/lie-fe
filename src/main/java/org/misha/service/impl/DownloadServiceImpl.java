@@ -24,12 +24,18 @@ public final class DownloadServiceImpl implements DownloadService {
 
     @Override
     public void sendToUser(
-            final HttpServletResponse response, final File file, final ServletContext application
+            final HttpServletResponse response,
+            final File file,
+            final ServletContext application
     ) {
         final String mimeType = application.getMimeType(file.getAbsolutePath());
         response.setContentType(mimeType != null ? mimeType : "application/octet-stream");
         response.setContentLength((int) file.length());
         response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+        writeBytes(response, file);
+    }
+
+    private void writeBytes(final HttpServletResponse response, final File file) {
         OutputStream out = null;
         InputStream in = null;
         try {
