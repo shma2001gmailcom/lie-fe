@@ -32,7 +32,8 @@ final class FoxController {
      */
     @RequestMapping("/fox")
     public String printResult(
-            @ModelAttribute("polynomialObject") final PolynomialObject polynomialObject, final ModelMap model
+            @ModelAttribute("polynomialObject") final PolynomialObject polynomialObject,
+            final ModelMap model
     ) {
         final String given = polynomialObject.getValue().trim();
         final String answer = foxService.fox(given);

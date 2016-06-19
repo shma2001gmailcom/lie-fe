@@ -31,7 +31,8 @@ final class HallController {
      */
     @RequestMapping("/hall-result")
     public String printResult(
-            @ModelAttribute("polynomialObject") final PolynomialObject polynomialObject, final ModelMap model
+            @ModelAttribute("polynomialObject") final PolynomialObject polynomialObject,
+            final ModelMap model
     ) {
         polynomialObject.correctLeadingSign();
         final String given = polynomialObject.getValue().trim();

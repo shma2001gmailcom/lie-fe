@@ -32,7 +32,8 @@ final class ExpandController {
      */
     @RequestMapping("/expand")
     public String printResult(
-            @ModelAttribute("polynomialObject") final PolynomialObject polynomialObject, final ModelMap model
+            @ModelAttribute("polynomialObject") final PolynomialObject polynomialObject,
+            final ModelMap model
     ) {
         final String given = polynomialObject.getValue().trim();
         final String answer = expandService.expand(given);
