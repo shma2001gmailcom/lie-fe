@@ -1,3 +1,6 @@
+<%--
+  ~ Copyright (c) 2014. Misha's property, all rights reserved.
+  --%>
 <br>
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <div>

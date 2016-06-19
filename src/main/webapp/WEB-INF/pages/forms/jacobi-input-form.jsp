@@ -1,5 +1,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--
+  ~ Copyright (c) 2014. Misha's property, all rights reserved.
+  --%>
 <html>
 <head>
     <title></title>

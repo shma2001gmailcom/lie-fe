@@ -2,6 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="resources.jsp" %>
+<%--
+  ~ Copyright (c) 2014. Misha's property, all rights reserved.
+  --%>
 <html>
 <head>
     <title>hall-result</title>

@@ -21,23 +21,23 @@
         <c:out value="${hallBase}"/>
     </a>
 </h3>
-<%@include file="polynomial-input-form.jsp" %>
+<%@include file="forms/polynomial-input-form.jsp" %>
 <br/>
 
 <h3 class="color-light-brown"><c:out value="${endoMessage}"/> (see <a href="https://en.wikipedia.org/wiki/Endomorphism">wiki</a>) </h3>
-<%@include file="endo-input-form.jsp" %>
+<%@include file="forms/endo-input-form.jsp" %>
 <br/>
 
 <h3 class="color-light-brown"><c:out value="${expandMessage}"/></h3>
-<%@include file="expand-input-form.jsp" %>
+<%@include file="forms/expand-input-form.jsp" %>
 <br/>
 
 <h3 class="color-light-brown"><c:out value="${foxMessage}"/>&nbsp;<a href="http://www.mathnet.ru/php/archive.phtml?wshow=paper&jrnid=smj&paperid=822&option_lang=eng">Fox Derivative</a></h3>
-<%@include file="fox-input-form.jsp" %>
+<%@include file="forms/fox-input-form.jsp" %>
 <br/>
 
 <h3 class="color-light-brown"><c:out value="${jacobiMessage}"/></h3>
-<%@include file="jacobi-input-form.jsp" %>
+<%@include file="forms/jacobi-input-form.jsp" %>
 <jsp:include page="include.jsp" flush="true"/>
 </body>
 </html>

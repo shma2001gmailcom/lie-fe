@@ -1,4 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
+  ~ Copyright (c) 2014. Misha's property, all rights reserved.
+  --%>
 <!DOCTYPE html>
 <html>
 <head>
