@@ -20,12 +20,13 @@ import javax.inject.Named;
 @Controller
 @RequestMapping("/")
 final class ExpandController {
-    @Inject
-    @Named("expandService")
-    private ExpandService expandService;
-
+    private final ExpandService expandService;
     @Value("#{applicationProperties['input.error']}")
     private String inputError;
+    @Inject
+    public ExpandController(@Named("expandService") ExpandService expandService) {
+        this.expandService = expandService;
+    }
 
     /**
      * /input.jsp/form2/@action

@@ -1,8 +1,8 @@
 package org.misha.controller;
 
 import org.apache.log4j.Logger;
-import org.misha.views.PolynomialObject;
 import org.misha.service.DownloadService;
+import org.misha.views.PolynomialObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
@@ -25,15 +24,18 @@ import java.io.File;
 @RequestMapping("/")
 final class DownloadResultController {
     private static final Logger log = Logger.getLogger(DownloadResultController.class);
-    @Autowired
-    private ServletContext application;
-
-    @Inject
-    @Named("downloadService")
-    private DownloadService downloadService;
-
+    private final ServletContext application;
+    private final DownloadService downloadService;
     @Value("#{applicationProperties['temp.folder']}")
     private String tempFolder;
+
+    @Autowired
+    public DownloadResultController(ServletContext application,
+                                    @Named("downloadService") DownloadService downloadService
+    ) {
+        this.application = application;
+        this.downloadService = downloadService;
+    }
 
     @RequestMapping(value = "/download", method = RequestMethod.POST)//*-result.jsp/form/@action
     private String saveResult(

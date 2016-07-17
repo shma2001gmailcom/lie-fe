@@ -1,7 +1,9 @@
 /**
- * Created by misha on 1/9/16.
+ * author: misha
+ * date: 1/9/16
+ * time: 1:43 PM
  */
-var validator = {
+    var validator = {
     messageData: [],
 
     isMonomial: function (summand) {
@@ -12,7 +14,7 @@ var validator = {
     },
 
     isPolynomial: function (input) {
-        var monomials = input.replace(/[0-9\(\)\*; ]/g, '').split(/\+|-/);
+        var monomials = input.replace(/[0-9()*; ]/g, '').split(/\+|-/);
         var message = '';
         for (var i = 1; i < monomials.length; ++i) {
             if (!validator.isMonomial(monomials[i].trim())) {
@@ -22,11 +24,17 @@ var validator = {
         validator.messageData[input] = message;
     },
 
+    isEndomorphism: function(input) {
+        var pattern = /^\((.*;)+(.*)\)$/;
+        return !pattern.test(input);
+    },
+
     checkInputs: function () {
         var input = $('input[id=value]');
         input.each(function () {
             validator.isPolynomial($(this).val());
         });
+        validator.isEndomorphism($('.endo'));
         var message = 'Please, check terms:<p>';
         input.each(function (index) {
             if (validator.messageData[$(this).val()]) {

@@ -11,7 +11,7 @@
 <form:form id="form1" modelAttribute="endoObject" action="endo-result" class="check-me">
     <div>
         <label>
-            <form:input type="text" class="text-field" width="150" size="150px" path="value"
+            <form:input type="text" class="text-field endo" width="150" size="150px" path="value"
                         value="(- a - 2[b, c] + 2[c ,[a, c]]; + b + 2[a, c] - 2[c, [b, c]] + 2[c, [c, [a, c]]]; + c) * (- a - 2[b, c] + 2[c ,[a, c]]; + b + 2[a, c] - 2[c, [b, c]] + 2[c, [c, [a, c]]]; + c)"/>
         </label>
     </div>

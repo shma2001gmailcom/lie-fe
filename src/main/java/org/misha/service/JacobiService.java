@@ -13,5 +13,5 @@ public interface JacobiService {
 
     String foxToHtml(String endo);
 
-    String foxToTxt(String given);
+    String foxToTxt(String given) throws IllegalArgumentException;
 }

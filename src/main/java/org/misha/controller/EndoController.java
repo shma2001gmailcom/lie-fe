@@ -5,8 +5,8 @@
 package org.misha.controller;
 
 import org.apache.commons.lang3.StringUtils;
-import org.misha.views.EndoObject;
 import org.misha.service.EndoService;
+import org.misha.views.EndoObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,12 +24,13 @@ import javax.inject.Named;
 @Controller
 @RequestMapping("/")
 final class EndoController {
-    @Inject
-    @Named("endoService")
-    private EndoService service;
-
+    private final EndoService service;
     @Value("#{applicationProperties['input.error']}")
     private String inputError;
+    @Inject
+    public EndoController(@Named("endoService") EndoService service) {
+        this.service = service;
+    }
 
     /**
      * /input.jsp/form1/@action
@@ -42,7 +43,12 @@ final class EndoController {
     ) {
         model.addAttribute("serviceName", "endoService");
         final String given = endoObject.getValue();
-        final String answer = service.getProductOf(given);
+        String answer = null;
+        try {
+           answer = service.getProductOf(given);
+        } catch (Exception e) {
+            model.addAttribute("error", "unable to parse: " + given + " as an endomorphism.");
+        }
         if (StringUtils.isEmpty(answer)) {
             model.addAttribute("error", inputError);
         } else {

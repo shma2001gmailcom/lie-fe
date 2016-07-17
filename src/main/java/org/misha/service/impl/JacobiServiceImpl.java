@@ -34,7 +34,7 @@ public final class JacobiServiceImpl implements JacobiService {
     }
 
     @Override
-    public String foxToTxt(final String s) {
+    public String foxToTxt(final String s) throws IllegalArgumentException {
         final Endo endo = new Parser().parseEndo(s);
         return endo.fox().toTxt();
     }

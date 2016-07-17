@@ -7,5 +7,5 @@ package org.misha.service;
  */
 public interface EndoService {
 
-    String getProductOf(String factors);
+    String getProductOf(String factors) throws IllegalArgumentException;
 }

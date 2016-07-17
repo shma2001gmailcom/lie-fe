@@ -1,9 +1,4 @@
 package org.misha.controller;
-/**
- * Author: mshevelin
- * Date: 5/19/14
- * Time: 11:48 AM
- */
 
 import org.apache.commons.lang3.StringUtils;
 import org.misha.views.PolynomialObject;
@@ -17,14 +12,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+/**
+ * Author: mshevelin
+ * Date: 5/19/14
+ * Time: 11:48 AM
+ */
+
 @Controller
 @RequestMapping("/")
 final class HallController {
-    @Inject
-    @Named("hallService")
-    private HallService service;
+    private final HallService service;
     @Value("#{applicationProperties['input.error']}")
     private String inputError;
+    @Inject
+    public HallController(@Named("hallService") HallService service) {
+        this.service = service;
+    }
 
     /**
      * /input.jsp/form/@action
@@ -40,7 +43,7 @@ final class HallController {
         if (StringUtils.isEmpty(answer)) {
             model.addAttribute("error", inputError);
         } else {
-            model.addAttribute("answer", given + "<br> = " + answer);
+            model.addAttribute("answer", given + "&lt;br&gt; = " + answer);
         }
         return "hall-result";
     }

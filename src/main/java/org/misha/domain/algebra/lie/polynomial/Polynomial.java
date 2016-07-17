@@ -46,8 +46,7 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
         final Polynomial result = new Polynomial();
         result.addAll(monomials);//add clones
         final Monomial copy = m.copy();//m should be cloned
-        final TreeSet<Monomial> resultMonomials = result.monomials;
-        for (final Iterator<Monomial> it = resultMonomials.iterator(); it.hasNext(); ) {
+        for (final Iterator<Monomial> it = result.monomials.iterator(); it.hasNext(); ) {
             final Monomial monomial = it.next();
             if (monomial.isSimilar(m)) {
                 return result.collectSimilar(copy, it, monomial);
@@ -59,7 +58,7 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
         return result;
     }
 
-    Polynomial collectSimilar(
+    private Polynomial collectSimilar(
             final Monomial m, final Iterator<Monomial> iterator, final Monomial monomial
     ) {
         final int mConst = monomial.getConst();
@@ -113,7 +112,7 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
      *         Should return such a reference to integer which does not
      *         contained neither in some monomial of this polynomial nor in m
      */
-    public int getConstant(final Monomial m) {
+    int getConstant(final Monomial m) {
         for (final Monomial monomial : monomials) {
             //final Monomial copy = monomial.copy();
             if (monomial.isSimilar(m)) {
@@ -261,7 +260,7 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
         return result;
     }
 
-    public Polynomial decode() {
+    Polynomial decode() {
         Polynomial result = new Polynomial();
         for (final Monomial monomial : this) {
             result = result.plus(monomial.decode());
@@ -307,7 +306,7 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
         return clone;
     }
 
-    public Polynomial actBy(final Endo endo) {
+    public Polynomial actBy(final Endo endo) throws IllegalArgumentException {
         Polynomial result = new Polynomial();
         for (final Monomial m : copy()) {
             result = result.plus(m.actBy(endo));

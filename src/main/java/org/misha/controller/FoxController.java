@@ -20,12 +20,13 @@ import javax.inject.Named;
 @Controller
 @RequestMapping("/")
 final class FoxController {
-    @Inject
-    @Named("foxService")
-    private FoxService foxService;
-
+    private final FoxService foxService;
     @Value("#{applicationProperties['input.error']}")
     private String inputError;
+    @Inject
+    public FoxController(@Named("foxService") FoxService foxService) {
+        this.foxService = foxService;
+    }
 
     /**
      * /input.jsp/form3/@action

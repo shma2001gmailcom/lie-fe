@@ -34,11 +34,11 @@ public final class Endo implements Iterable<Pair<Monomial, Polynomial>>, Cloneab
         }
     }
 
-    public Polynomial getAt(final Monomial letter) {
+    public Polynomial getAt(final Monomial letter) throws IllegalArgumentException {
         return tuple.getAt(letter).copy().hall();
     }
 
-    private Endo multiplySimple(final Endo e) {
+    private Endo multiplySimple(final Endo e) throws IllegalArgumentException {
         final Endo result = new Endo();
         for (final Pair<Monomial, Polynomial> pair : tuple) {
             Polynomial value = pair.getValue().hall();
@@ -66,7 +66,7 @@ public final class Endo implements Iterable<Pair<Monomial, Polynomial>>, Cloneab
         return result;
     }
 
-    public Endo times(final Endo e) {
+    public Endo times(final Endo e) throws IllegalArgumentException {
         final Endo result = new Endo();
         final Endo product = encodeValues().multiplySimple(e.encodeArguments());
         for (final Monomial letter : tuple.letters()) {
@@ -75,7 +75,7 @@ public final class Endo implements Iterable<Pair<Monomial, Polynomial>>, Cloneab
         return result;
     }
 
-    private Polynomial copyClear(final Endo endo, final Monomial letter) {
+    private Polynomial copyClear(final Endo endo, final Monomial letter) throws IllegalArgumentException {
         return endo.getAt(letter).clone().hall();
     }
 
@@ -112,7 +112,7 @@ public final class Endo implements Iterable<Pair<Monomial, Polynomial>>, Cloneab
         return sb.toString();
     }
 
-    public JacobiMatrix fox() {
+    public JacobiMatrix fox() throws IllegalArgumentException {
         final JacobiMatrix result = new JacobiMatrix();
         final Collection<Character> characters = new ArrayList<Character>();
         for (final Pair<Monomial, Polynomial> pair : this) {

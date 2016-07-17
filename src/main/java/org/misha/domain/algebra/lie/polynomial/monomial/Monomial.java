@@ -487,7 +487,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         return result[0];
     }
 
-    Monomial encodeLetter() throws IllegalArgumentException {
+    private Monomial encodeLetter() throws IllegalArgumentException {
         if (!isLetter()) {
             throw new IllegalArgumentException(String.format(CAN_T_ENCODE, this));
         }
@@ -499,7 +499,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         return result;
     }
 
-    Monomial decodeLetter(final Monomial letter) {
+    private Monomial decodeLetter(final Monomial letter) {
         if (!letter.isLetter()) {
             throw new IllegalArgumentException(String.format(CAN_T_DECODE, letter));
         }
@@ -567,7 +567,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         return letters;
     }
 
-    public Iterable<Monomial> actBy(final Endo endo) {
+    public Iterable<Monomial> actBy(final Endo endo) throws IllegalArgumentException {
         final Endo fake = new Endo();
         int i = 0;
         Monomial firstLetter = null;

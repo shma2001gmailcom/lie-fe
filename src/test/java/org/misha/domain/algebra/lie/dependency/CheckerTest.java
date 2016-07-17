@@ -37,7 +37,7 @@ public class CheckerTest {
     }
 
     @Test
-    public void testActBy() throws CloneNotSupportedException {
+    public void testActBy() throws CloneNotSupportedException, IllegalArgumentException {
         final Polynomial polynomial = mount("+ x - [x,y] + 2[[x, z], y]");
         final Endo endo = new Endo();
         endo.mapTo(monomial("x"), mount("+ x + [y, z]"));

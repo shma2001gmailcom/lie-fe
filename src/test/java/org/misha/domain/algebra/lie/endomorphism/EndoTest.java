@@ -71,7 +71,7 @@ public class EndoTest {
     }
 
     @Test
-    public void testInvertElementary() throws CloneNotSupportedException {
+    public void testInvertElementary() throws CloneNotSupportedException, IllegalArgumentException {
         final Endo e_;
         final Endo e1_;
         final Endo e1;
@@ -109,7 +109,7 @@ public class EndoTest {
     }
 
     @Test
-    public void testMultiply() {
+    public void testMultiply() throws IllegalArgumentException {
         final String input = "(- a - 2[b, c] + 2[c ,[a, c]]; + b + 2[a, c] - 2[c, [b, c]] + 2[c, [c, [a, " +
                 "c]]]; + c) * (- a - 2[b, c] + 2[c ,[a, c]]; + b + 2[a, c] - 2[c, [b, c]] + 2[c, " +
                 "[c, [a, c]]]; + c)";
@@ -118,7 +118,7 @@ public class EndoTest {
     }
 
     @Test
-    public void testJacobiMatrix() {
+    public void testJacobiMatrix() throws IllegalArgumentException {
         e.mapTo(a, mount("-2a + [b, c]"));
         e.mapTo(b, mount("+ b"));
         e.mapTo(c, mount("+ c"));

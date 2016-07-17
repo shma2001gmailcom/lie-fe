@@ -26,15 +26,17 @@ import javax.inject.Named;
 @RequestMapping("/")
 final class JacobiController {
     private static final String JACOBI_MATRIX_OF = "Jacobi matrix for endomorphism ";
-    @Inject
-    @Named("jacobiService")
-    private JacobiService service;
-
+    private final JacobiService service;
     @Value("#{applicationProperties['input.error']}")
     private String inputError;
+    private final MonomialService monomialService;
 
     @Inject
-    private MonomialService monomialService;
+    public JacobiController(@Named("jacobiService") JacobiService service, MonomialService monomialService) {
+        this.service = service;
+        this.monomialService = monomialService;
+    }
+
     /**
      * /input.jsp/form4/@action
      */
@@ -50,8 +52,12 @@ final class JacobiController {
             model.addAttribute("error", inputError);
         } else {
             model.addAttribute("answer", JACOBI_MATRIX_OF + given + " is <br>" + answer);
-            model.addAttribute("txtAnswer", JACOBI_MATRIX_OF + given + " is \n\n" + service.foxToTxt(given)
-            );
+            try {
+                model.addAttribute("txtAnswer", JACOBI_MATRIX_OF + given + " is \n\n" + service.foxToTxt(given)
+                );
+            } catch (IllegalArgumentException e) {
+                model.addAttribute("error", inputError);
+            }
         }
         return "jacobi-result";
     }
