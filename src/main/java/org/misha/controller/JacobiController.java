@@ -44,8 +44,8 @@ final class JacobiController {
     public String printResult(
             @ModelAttribute("endoObject") final EndoObject endoObject, final ModelMap model
     ) {
-        final String monomial = monomialService.findById(25L).toString();
-        model.addAttribute("monomial", monomial);
+        //final String monomial = monomialService.findById(25L).toString();
+        //model.addAttribute("monomial", monomial);
         final String given = endoObject.getValue();
         final String answer = service.foxToHtml(given);
         if (StringUtils.isEmpty(answer)) {

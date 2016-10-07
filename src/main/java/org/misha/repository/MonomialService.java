@@ -25,14 +25,8 @@ public class MonomialService {
         this.springJdbctemplates = springJdbcTemplates;
     }
 
-    private static final String findById = "SELECT " +
-            "n.node_id, " +
-            "n.left_id, " +
-            "n.right_id, " +
-            "d.data_value " +
-            "FROM NODES n " +
-            "JOIN NODE_DATA d ON (n.node_id = d.node_id) " +
-            "WHERE n.node_id = :nodeId";
+    private static final String findById =
+            "SELECT " + "n.node_id, " + "n.left_id, " + "n.right_id, " + "d.data_value " + "FROM NODES n " + "JOIN NODE_DATA d ON (n.node_id = d.node_id) " + "WHERE n.node_id = :nodeId";
     private static final String findBySmallId = "SELECT d.data_value FROM NODE_DATA d WHERE d.node_id = :nodeId";
 
     public Monomial findById(final Long id) {
@@ -40,21 +34,16 @@ public class MonomialService {
             return findBySmallId(id);
         }
         final MonomialData data = springJdbctemplates.getTemplate().query(findById, new HashMap<String, Long>() {{
-                                                                              put("nodeId", id);
-                                                                          }}, new RowMapper<MonomialData>() {
+            put("nodeId", id);
+        }}, new RowMapper<MonomialData>() {
 
-                                                                              @Override
-                                                                              public MonomialData mapRow(
-                                                                                      final ResultSet rs,
-                                                                                      final int rowNum
-                                                                              ) throws SQLException {
-                                                                                  return new MonomialData(
-                                                                                          rs.getLong("left_id"),
-                                                                                          rs.getLong("right_id")
-                                                                                  );
-                                                                              }
-                                                                          }
-        ).get(0);
+            @Override
+            public MonomialData mapRow(
+                    final ResultSet rs, final int rowNum
+            ) throws SQLException {
+                return new MonomialData(rs.getLong("left_id"), rs.getLong("right_id"));
+            }
+        }).get(0);
         Monomial result = MonomialUtils.monomial(findById(data.leftId), findById(data.rightId));
         result.setId(id);
         return result;
@@ -92,21 +81,19 @@ public class MonomialService {
 
     public Monomial findBySmallId(final Long id) {
         return springJdbctemplates.getTemplate().query(findBySmallId, new HashMap<String, Long>() {{
-                                                           put("nodeId", id);
-                                                       }}, new RowMapper<Monomial>() {
+            put("nodeId", id);
+        }}, new RowMapper<Monomial>() {
 
-                                                           @Override
-                                                           public org.misha.domain.algebra.lie.polynomial.monomial.Monomial mapRow(
-                                                                   final ResultSet rs, final int rowNum
-                                                           ) throws SQLException {
-                                                               org.misha.domain.algebra.lie.polynomial.monomial.Monomial
-                                                                       result = MonomialUtils
-                                                                       .monomial(rs.getString("data_value"));
-                                                               result.setId(id);
-                                                               return result;
-                                                           }
-                                                       }
-        ).get(0);
+            @Override
+            public org.misha.domain.algebra.lie.polynomial.monomial.Monomial mapRow(
+                    final ResultSet rs, final int rowNum
+            ) throws SQLException {
+                org.misha.domain.algebra.lie.polynomial.monomial.Monomial result =
+                        MonomialUtils.monomial(rs.getString("data_value"));
+                result.setId(id);
+                return result;
+            }
+        }).get(0);
     }
 
     private static final String writeMonomial = "SELECT new_node(?, ?)";
