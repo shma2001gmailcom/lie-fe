@@ -36,7 +36,7 @@ final class DownloadResultController {
         this.application = application;
         this.downloadService = downloadService;
     }
-
+    @SuppressWarnings("unused declaration")
     @RequestMapping(value = "/download", method = RequestMethod.POST)//*-result.jsp/form/@action
     private String saveResult(
             final HttpServletResponse response,

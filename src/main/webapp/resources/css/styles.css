@@ -51,6 +51,7 @@ input.text-field {
     background-color: rgba(32, 32, 39, 0.95);
     color: #a6a28c;
     border: 0;
+    font-family: "Times New Roman", Times, serif ;
 }
 
 .contains-error {
