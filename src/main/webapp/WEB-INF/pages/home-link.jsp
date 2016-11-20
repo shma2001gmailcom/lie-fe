@@ -6,7 +6,7 @@
 <div>
     <a href="/lie-fe">
         <span>
-            <img alt="home" src="<c:out value="${context}"/>/resources/pictures/home.jpg"> Home
+            <img class="home" alt="home" src="<c:out value="${context}"/>/resources/pictures/home.jpg"> Home
         </span>
     </a>
 </div>

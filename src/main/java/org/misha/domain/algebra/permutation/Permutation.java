@@ -12,7 +12,7 @@ import java.util.TreeSet;
  * Time: 4:40 PM
  */
 
-public final class Permutation {
+final class Permutation {
     private final int degree;
     private final int[] values;
 
@@ -21,7 +21,7 @@ public final class Permutation {
         degree = values.length;
     }
 
-    public static Permutation create(final int... values) {
+    static Permutation create(final int... values) {
         return new Permutation(values);
     }
 

@@ -48,7 +48,7 @@ public final class Validator {
         return true;
     }
 
-    public static boolean isMonomial(final String s) {
+    static boolean isMonomial(final String s) {
         final Pattern pattern = Pattern.compile("\\[(\\[.*\\]|[a-z]),(\\[.*\\]|[a-z])\\]");
         final Matcher matcher = pattern.matcher(s);
         if (!matcher.matches()) {

@@ -79,7 +79,7 @@ public final class MonomialUtils {
     }
 
     static MatchResult getMatcher(final String s) throws IllegalArgumentException {
-        final Pattern pattern = Pattern.compile("(\\+|\\-)*([0-9 ])*([\\u0001-\\u2000])");
+        final Pattern pattern = Pattern.compile("(\\+|-)*([0-9 ])*([\\u0001-\\u2000])");
         final Matcher matcher = pattern.matcher(s);
         if (!matcher.find()) {
             throw new IllegalArgumentException(String.format(CAN_T_RECOGNIZE_LETTER, s));

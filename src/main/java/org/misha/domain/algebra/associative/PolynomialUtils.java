@@ -18,7 +18,7 @@ import static org.misha.domain.algebra.associative.impl.Monomial.monomial;
  * Time: 2:34 PM
  */
 
-final class PolynomialUtils {
+public final class PolynomialUtils {
     private static final String SPACE = " ";
     private static final String PLUS = "+";
 
@@ -47,7 +47,7 @@ final class PolynomialUtils {
         return result;
     }
 
-    private static String findNextSummand(
+    public static String findNextSummand(
             final String pattern, String s, final Collection<Summand> result
     ) {
         Matcher matcher;

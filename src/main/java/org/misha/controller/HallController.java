@@ -43,7 +43,7 @@ final class HallController {
         if (StringUtils.isEmpty(answer)) {
             model.addAttribute("error", inputError);
         } else {
-            model.addAttribute("answer", given + "&lt;br&gt; = " + answer);
+            model.addAttribute("answer", given + " = " + answer);
         }
         return "hall-result";
     }

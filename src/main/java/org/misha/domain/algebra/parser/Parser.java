@@ -5,6 +5,7 @@
 package org.misha.domain.algebra.parser;
 
 import org.apache.commons.lang3.StringUtils;
+import org.misha.domain.algebra.associative.PolynomialUtils;
 import org.misha.domain.algebra.lie.endomorphism.Endo;
 import org.misha.domain.algebra.lie.polynomial.Polynomial;
 import org.misha.domain.algebra.lie.polynomial.monomial.Monomial;
@@ -16,7 +17,6 @@ import java.util.regex.Matcher;
 
 import static java.util.regex.Pattern.compile;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
-import static org.apache.commons.lang3.StringUtils.remove;
 
 /**
  * author: misha
@@ -28,9 +28,7 @@ import static org.apache.commons.lang3.StringUtils.remove;
 
 public final class Parser {
     private static final String INCORRECT_BRACKETS = "can't parse expression having incorrect brackets.";
-    private static final String SPACE = " ";
     private static final String CAN_T_OBTAIN_ROOT_FOR_NULL = "can't obtain root for null monomial.";
-    private static final String PLUS = "+";
     private final String expression;
     private List<Summand> summands = new ArrayList<Summand>();
     private static final char lBracket = '[';
@@ -171,34 +169,7 @@ public final class Parser {
     private String findNextSummand(
             final String pattern, String s, final Collection<Summand> result
     ) {
-        Matcher matcher;
-        String core;
-        String constant;
-        while (StringUtils.isNotEmpty(s)) {
-            matcher = compile(pattern).matcher(s);
-            if (matcher.find()) {
-                core = matcher.group(3);
-                constant = matcher.group(1) + matcher.group(2);
-                final Summand summand = new Summand(constant(constant), core);
-                result.add(summand);
-                s = StringUtils.removeStart(s, constant + core);
-            } else {
-                break;
-            }
-        }
-        return s;
-    }
-
-    private int constant(String constant) {
-        constant = remove(constant, SPACE);
-        if ("-".equals(constant)) {
-            return -1;
-        }
-        if (PLUS.equals(constant) || StringUtils.isBlank(constant)) {
-            return 1;
-        }
-        constant = StringUtils.removeStart(constant, PLUS);
-        return Integer.parseInt(constant);
+        return PolynomialUtils.findNextSummand(pattern, s, result);
     }
 
     public Endo parseEndo(String s) throws IllegalArgumentException {

@@ -20,7 +20,7 @@ class MonomialSequence {
     private final Collection<Monomial> sequence = new TreeSet<Monomial>();
     private Monomial lastMonomial;
 
-    public MonomialSequence(final String... rawAlphabet) {
+    MonomialSequence(final String... rawAlphabet) {
         Monomial mLetter = null;
         for (final String letter : rawAlphabet) {
             if (letter.length() == 1) {
@@ -31,7 +31,7 @@ class MonomialSequence {
         lastMonomial = mLetter;
     }
 
-    public MonomialSequence(final Monomial... alphabet) {
+    private MonomialSequence(final Monomial... alphabet) {
         Monomial currentLetter = null;
         for (final Monomial letter : alphabet) {
             sequence.add(letter);
@@ -40,7 +40,7 @@ class MonomialSequence {
         lastMonomial = currentLetter;
     }
 
-    public Monomial getNextMonomial(final Monomial m) {
+    Monomial getNextMonomial(final Monomial m) {
         if (!m.isCorrect()) {
             throw new IllegalArgumentException("The monomial '" + m + "' must be correct.");
         }
@@ -59,7 +59,7 @@ class MonomialSequence {
         return null;
     }
 
-    int getNextDbMonomial(final MonomialService monomialService) {
+    private int getNextDbMonomial(final MonomialService monomialService) {
         int result = 0;
         Monomial product;
         final Set<Monomial> lefts = new TreeSet<Monomial>(sequence);
@@ -77,7 +77,7 @@ class MonomialSequence {
         return result;
     }
 
-    public Monomial getLastMonomial() {
+    Monomial getLastMonomial() {
         return lastMonomial.copy();
     }
 

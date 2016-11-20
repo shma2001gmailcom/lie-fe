@@ -38,7 +38,7 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
         return sequence.iterator();
     }
 
-    public int getConstant() {
+    int getConstant() {
         return constant;
     }
 
@@ -48,7 +48,7 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
     }
 
     public static Monomial monomial(final String s) {
-        final Pattern pattern = Pattern.compile("(\\+|\\-)( *)([0-9]*)([a-zA-Z]*)");
+        final Pattern pattern = Pattern.compile("(\\+|-)( *)([0-9]*)([a-zA-Z]*)");
         final Matcher matcher = pattern.matcher(s.trim());
         final String lead;
         if (matcher.find()) {
@@ -58,9 +58,8 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
             } else {
                 lead = matcher.group(3).trim();
             }
-            final int constant = Integer.parseInt(lead);
             final String core = matcher.group(4).trim();
-            return new Monomial(core, constant);
+            return new Monomial(core, Integer.parseInt(lead));
         }
         return new Monomial("", 1);
     }
@@ -91,7 +90,7 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
         return copy;
     }
 
-    public Monomial unify() {
+    Monomial unify() {
         final Monomial copy = copy();
         copy.constant = 1;
         return copy;

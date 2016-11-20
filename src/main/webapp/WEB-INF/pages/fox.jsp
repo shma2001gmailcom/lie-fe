@@ -12,7 +12,7 @@
 <body>
 <form:form id="form" modelAttribute="polynomialObject" action="download" class="check-me">
     <form:input type="hidden" id="answer" path="value" value="${answer}"/>
-    <div id="answer" class='text'><c:out value="${answer}"/></div>
+    <div id="answer" class='text'>${answer}</div>
     <div id="error" class="error-message"><c:out value="${error}"/></div>
     <br/>
     <input type="submit" class="button" value="export"/>

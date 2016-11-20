@@ -13,11 +13,11 @@
 <form:form id="form" modelAttribute="polynomialObject" action="download" class="check-me">
     <%--put ${answer} into DownloadService scope--%>
     <form:input type="hidden" id="answer" path="value" value="${given}=${answer}"/>
-    <div id="given" class='text'><c:out value="${given}"/></div>
+    <div id="given" class='text'>${given}</div>
     <br>
 
     <div class='text'>=</div>
-    <div id="answer" class='text'><c:out value="${answer}"/></div>
+    <div id="answer" class='text'>${answer}</div>
     <div id="error" class="error-message"><c:out value="${error}"/></div>
 
     <input type="submit" class="button" value="export"/>

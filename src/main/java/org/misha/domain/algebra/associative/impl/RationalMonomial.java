@@ -159,7 +159,7 @@ public final class RationalMonomial implements MonomialInterface<Rational>, Seri
     }
 
     public static RationalMonomial rationalMonomial(final String s) {
-        final Pattern pattern = Pattern.compile("(\\+|\\-)( *)([0-9]*/?[0-9]*)([a-zA-Z]*)");
+        final Pattern pattern = Pattern.compile("(\\+|-)( *)([0-9]*/?[0-9]*)([a-zA-Z]*)");
         final Matcher matcher = pattern.matcher(s.trim());
         final String lead;
         if (matcher.find()) {

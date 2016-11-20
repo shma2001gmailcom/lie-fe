@@ -62,7 +62,7 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
         monomials.add(copy);
     }
 
-    Polynomial copy() {
+    private Polynomial copy() {
         return clone();
     }
 
@@ -84,6 +84,7 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
         for (final Monomial m : monomials) {
             sb = sb.append(m.toString());
         }
+        log.debug(sb.toString());
         return StringUtils.EMPTY.equals(sb.toString().trim()) ? "0" : sb.toString().trim();
     }
 

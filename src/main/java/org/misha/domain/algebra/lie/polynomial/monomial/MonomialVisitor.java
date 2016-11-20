@@ -8,7 +8,7 @@ package org.misha.domain.algebra.lie.polynomial.monomial;
 
 abstract class MonomialVisitor {
 
-    public void visit(final Monomial m) {
+    void visit(final Monomial m) {
         if (m.isLetter()) {
             doSomethingWith(m);
             return;

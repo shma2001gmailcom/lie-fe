@@ -21,10 +21,6 @@ public final class ThatSummand<T extends Scalar> {
         return core;
     }
 
-    public T getConstant() {
-        return constant;
-    }
-
     @Override
     public String toString() {
         return (constant.isPositive() ? "+ " + constant : constant.toString()) + core;

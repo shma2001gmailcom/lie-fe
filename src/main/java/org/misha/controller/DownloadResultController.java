@@ -42,7 +42,7 @@ final class DownloadResultController {
             final HttpServletResponse response,
             @ModelAttribute("polynomialObject") final PolynomialObject polynomialObject
     ) {
-        final String text = polynomialObject.getValue().replaceAll("<br>", "\n");
+        final String text = polynomialObject.getValue();
         String filePath = application.getRealPath(tempFolder);
         log.debug("Path to file: " + filePath);
         filePath += "/" + polynomialObject.getName() + downloadService.currentTime() + ".txt";

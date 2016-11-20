@@ -1,6 +1,7 @@
 package org.misha.tags;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.jsp.JspException;
@@ -19,6 +20,7 @@ import static org.apache.commons.beanutils.BeanUtils.describe;
  * date: 11/7/15 11:35 PM.
  */
 public class LogTag extends SimpleTagSupport {
+    private static final Logger log = Logger.getLogger(LogTag.class);
 
     @Override
     public void doTag() throws JspException, IOException {
@@ -35,7 +37,9 @@ public class LogTag extends SimpleTagSupport {
             logParameters(req, req.getParameterNames(), writer);
             logFormBean(req, writer);
             writer.print(" </div>");
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+            log.error(ignored);
+        }
     }
 
     private void logFormBean(final ServletRequest req, final PrintWriter writer) {

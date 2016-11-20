@@ -3,8 +3,8 @@ input.hidden, span.hidden, div.hidden, button.hidden {
 }
 
 .error-message {
-    background-color: #621e1e;
-    color: #d1794f;
+    background-color: #63373d;
+    color: #d17375;
     text-align: center;
     font-size: large;
 }
@@ -85,4 +85,13 @@ a:active {
     box-shadow: 10px 5px 5px rgba(0,0,0,0.6);
     -moz-box-shadow: 10px 5px 5px rgba(0,0,0,0.6);
     -webkit-box-shadow: 10px 5px 5px rgba(0,0,0,0.6);
+    cursor: pointer;
+}
+
+.button:hover{
+    color: darkgoldenrod;
+}
+
+.home {
+    width:23px;
 }

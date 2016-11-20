@@ -14,10 +14,10 @@ import java.io.Serializable;
  */
 
 @Immutable
-public final class Int implements Serializable, Scalar<Int>, Cloneable {
+final class Int implements Serializable, Scalar<Int>, Cloneable {
     private static final Logger log = Logger.getLogger(Int.class);
-    public static final Int ZERO = new Int(0);
-    public static final Int ONE = new Int(1);
+    static final Int ZERO = new Int(0);
+    static final Int ONE = new Int(1);
     private static final long serialVersionUID = -4640317405606449771L;
     private final int value;
 
@@ -25,7 +25,7 @@ public final class Int implements Serializable, Scalar<Int>, Cloneable {
         value = i;
     }
 
-    public static Int newInt(final int i) {
+    static Int newInt(final int i) {
         return new Int(i);
     }
 
@@ -137,7 +137,7 @@ public final class Int implements Serializable, Scalar<Int>, Cloneable {
         return multiply(this, i);
     }
 
-    public Int mod(final Int modulo) {
+    Int mod(final Int modulo) {
         return reminder(this, modulo);
     }
 
@@ -146,7 +146,7 @@ public final class Int implements Serializable, Scalar<Int>, Cloneable {
         return String.valueOf(value);
     }
 
-    public Int gcdWith(final Int i) {
+    Int gcdWith(final Int i) {
         return gcd(this, i);
     }
 

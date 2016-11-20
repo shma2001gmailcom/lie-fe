@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings("ClassWithTooManyMethods")
 @Immutable //in the case if T is immutable
-public class PermutationG<T extends Comparable<T>> implements Comparable<PermutationG<T>> {
+class PermutationG<T extends Comparable<T>> implements Comparable<PermutationG<T>> {
     private final Set<T> set;
     private final int degree;
     private final HashMap<T, T> raw;
@@ -49,7 +49,7 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
      * @param <S>     type of objects permuted
      * @return new instance
      */
-    public static <S extends Comparable<S>> PermutationG<S> create(final S... objects) {
+    static <S extends Comparable<S>> PermutationG<S> create(final S... objects) {
         final PermutationG<S> p = new PermutationG<S>(objects);
         Collections.addAll(p.set, objects);
         int i = 0;
@@ -67,7 +67,7 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
      * @param <S>    the type of objects permuted
      * @return new instance
      */
-    public static <S extends Comparable<S>> PermutationG<S> create(
+    static <S extends Comparable<S>> PermutationG<S> create(
             final Collection<S> objects
     ) {
         final PermutationG<S> p = new PermutationG<S>(objects);
@@ -203,7 +203,7 @@ public class PermutationG<T extends Comparable<T>> implements Comparable<Permuta
         return Collections.unmodifiableCollection(result);
     }
 
-    public static <S extends Comparable<S>> Collection<PermutationG<S>> sequence(
+    static <S extends Comparable<S>> Collection<PermutationG<S>> sequence(
             final PermutationG<S> permutation
     ) {
         final PermutationG<S> id = create(permutation.set);

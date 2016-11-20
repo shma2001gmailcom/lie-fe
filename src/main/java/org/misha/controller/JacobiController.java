@@ -51,7 +51,7 @@ final class JacobiController {
         if (StringUtils.isEmpty(answer)) {
             model.addAttribute("error", inputError);
         } else {
-            model.addAttribute("answer", JACOBI_MATRIX_OF + given + " is <br>" + answer);
+            model.addAttribute("answer", JACOBI_MATRIX_OF + given + " is " + answer);
             try {
                 model.addAttribute("txtAnswer", JACOBI_MATRIX_OF + given + " is \n\n" + service.foxToTxt(given)
                 );

@@ -13,7 +13,7 @@
 <form:form id="form" modelAttribute="endoObject" action="download" class="check-me">
     <%--<jsp:useBean id="answer" scope="request" type="java.lang.String"/>--%>
     <form:input type="hidden" id="answer" path="value" value="${answer}" name="answer"/>
-    <div id="answer" class='text'><c:out value="${answer}"/></div>
+    <div id="answer" class='text'>${answer}</div>
     <div id="error" class="error-message"><c:out value="${error}"/></div>
     <br/>
     <input type="submit" class="button" value="export"/>

@@ -83,8 +83,7 @@ public final class RationalPolynomial implements Iterable<RationalMonomial>, Ser
         final RationalPolynomial result = new RationalPolynomial();
         result.addAll(monomials);//add clones
         final RationalMonomial copy = m.copy();//m should be cloned
-        final List<RationalMonomial> resultMonomials = result.monomials;
-        for (final Iterator<RationalMonomial> it = resultMonomials.iterator(); it.hasNext(); ) {
+        for (final Iterator<RationalMonomial> it = result.monomials.iterator(); it.hasNext(); ) {
             final RationalMonomial monomial = it.next();
             if (monomial.isSimilar(m)) {
                 return result.collectSimilar(copy, it, monomial);
@@ -105,7 +104,7 @@ public final class RationalPolynomial implements Iterable<RationalMonomial>, Ser
         monomials.add(copy);
     }
 
-    RationalPolynomial copy() {
+    private RationalPolynomial copy() {
         return clone();
     }
 

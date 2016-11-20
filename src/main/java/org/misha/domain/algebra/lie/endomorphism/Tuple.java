@@ -38,7 +38,7 @@ final class Tuple implements Iterable<Pair<Monomial, Polynomial>>, Cloneable {
         return false;
     }
 
-    public void mapTo(final Monomial letter, final Polynomial p) throws IllegalArgumentException {
+    void mapTo(final Monomial letter, final Polynomial p) throws IllegalArgumentException {
         checkIfLetter(letter);
         if (containsArgument(letter)) {
             for (final Pair<Monomial, Polynomial> pair : mappings) {
@@ -141,7 +141,7 @@ final class Tuple implements Iterable<Pair<Monomial, Polynomial>>, Cloneable {
         return clone;
     }
 
-    public static class Pair<T extends Comparable<T>, S> implements Comparable<Pair<T, S>> {
+    static class Pair<T extends Comparable<T>, S> implements Comparable<Pair<T, S>> {
         private final T argument;
         private S value;
 
@@ -155,7 +155,7 @@ final class Tuple implements Iterable<Pair<Monomial, Polynomial>>, Cloneable {
             return argument.compareTo(o.argument);
         }
 
-        public T getArgument() {
+        T getArgument() {
             return argument;
         }
 

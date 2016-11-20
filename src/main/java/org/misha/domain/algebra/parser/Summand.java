@@ -19,7 +19,7 @@ public final class Summand {
         return core;
     }
 
-    public int getConstant() {
+    int getConstant() {
         return constant;
     }
 

@@ -26,7 +26,7 @@ public final class PolynomialObject {
     }
 
     public void correctLeadingSign() {
-        final Pattern pattern = Pattern.compile("([\\+\\-])+(.*)");
+        final Pattern pattern = Pattern.compile("([+\\-])+(.*)");
         final Matcher matcher = pattern.matcher(value);
         if (!matcher.matches()) {
             value = "+" + value;
