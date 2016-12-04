@@ -1,6 +1,7 @@
 package org.misha;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,13 +20,13 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 /**
  * Use JDK 1.7 for this module
  */
-
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration("file:src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml")
 @ContextConfiguration("file:src/main/webapp/WEB-INF/applicationContext.xml")
 public class AppTests {
     @Inject
-    protected WebApplicationContext wac;
+    private WebApplicationContext wac;
     private MockMvc mockMvc;
 
     @Before
