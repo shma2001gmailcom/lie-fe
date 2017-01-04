@@ -92,6 +92,7 @@ class MonomialSequence {
         int i = 0;
         while (i < 10) {
             i = monomialSequence.getNextDbMonomial(monomialService);
+            ++i;
         }
         log.debug(i);
     }

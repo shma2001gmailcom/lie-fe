@@ -44,10 +44,15 @@ public class MonomialTest {
     private Monomial cb;
     private Monomial ca;
     private Polynomial q;
-    private final Monomial ba_b = MonomialUtils.monomial(ba, b);
+    private  Monomial ba_b;
+
+    public MonomialTest() {
+
+    }
 
     @Before
     public void init() {
+        ba_b = MonomialUtils.monomial(ba, b);
         DOMConfigurator.configure("./src/main/resources/log4j.xml");
         q = new Polynomial();
         final Alphabet alphabet = Alphabet.getInstance("a", "b", "c");

@@ -165,7 +165,7 @@ public class PermutationGTest {
     private void readSym5To(final Collection<PermutationG<Integer>> expected) {
         Scanner sc = null;
         try {
-            sc = new Scanner(new File("./sym5.txt"));
+            sc = new Scanner(new File("./sym5.txt"), "UTF-8");
             String line;
             while (sc.hasNextLine()) {
                 line = sc.nextLine();
