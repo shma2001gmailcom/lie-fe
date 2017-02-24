@@ -20,6 +20,8 @@ import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static java.util.regex.Pattern.compile;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
+import static org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils.getMatcher;
+import static org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils.monomial;
 
 /**
  * author: misha
@@ -54,14 +56,6 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
     public Monomial() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     Monomial(final Monomial left, final Monomial right, final int constant) {
         this.left = left;
         this.right = right;
@@ -86,8 +80,16 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         left = null;
         name = s;
         deg = 1;
-        final String letter = MonomialUtils.getMatcher(name).group(3);
+        final String letter = getMatcher(name).group(3);
         symbol = letter.charAt(0);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     /**
@@ -97,7 +99,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         if (!isLetter()) {
             throw new IllegalStateException(String.format(ISN_T_A_LETTER, this));
         }
-        final String letter = MonomialUtils.getMatcher(name).group(3);
+        final String letter = getMatcher(name).group(3);
         symbol = letter.charAt(0);
         return symbol;
     }
@@ -235,7 +237,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         final Monomial left = left().copy();
         if (left.isCorrect() && right.isCorrect()) {
             if (left.compareTo(right) < 0) {
-                final Monomial answer = MonomialUtils.monomial(right, left);
+                final Monomial answer = monomial(right, left);
                 answer.setConst(-constant);
                 return result.plus(answer);
             }
@@ -245,11 +247,11 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
             if (!left.isLetter()) {
                 final Monomial leftRight = left.right();
                 final Monomial leftLeft = left.left();
-                final Monomial first = MonomialUtils.monomial(
-                        MonomialUtils.monomial(leftLeft, right), leftRight
+                final Monomial first = monomial(
+                        monomial(leftLeft, right), leftRight
                 ).times(constant);
-                final Monomial second = MonomialUtils.monomial(
-                        leftLeft, MonomialUtils.monomial(
+                final Monomial second = monomial(
+                        leftLeft, monomial(
                         leftRight, right
                         ).times(constant)
                 );
@@ -391,6 +393,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
     }
 
     /*
+        todo ms: problem is here monomial has been changed!
         m is a current monomial while visiting some tree;
         letter is that letter instead of which it is needed to substitute substitution
     */
@@ -403,7 +406,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         final Monomial parent = m.parent;
         if (m.isLetter() && m.isSimilar(letter)) {
             if (parent != null && !isNullLetter(parent)) {
-                substituteWithParent(m, subst, parent);
+                substituteWithParent(m, subst, parent.copy());
             } else {
                 substituteWithoutParent(m, subst);
             }
@@ -426,6 +429,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         }
     }
 
+    //todo ms: problem!
     private void substituteWithParent(final Monomial m, final Monomial subst, final Monomial parent) {
         if (parent.left.isSimilar(m)) {
             parent.setLeft(subst);
@@ -436,6 +440,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
     }
 
     /**
+     * todo ms: problem!
      * IMPORTANT NOTE: This method changes this. So it may be more preferable to use
      * Polynomial.substitute() which clones original before substitution.
      * <p/>
@@ -445,7 +450,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
      * @param substitution the monomial that will be substituted instead of the letter
      */
     public void subst(final Monomial letter, final Monomial substitution) {
-        final Monomial fake = MonomialUtils.monomial(Character.toString((char) (SHIFT + letter.getSymbol())));
+        final Monomial fake = monomial(Character.toString((char) (SHIFT + letter.getSymbol())));
         new MonomialVisitor() {
 
             @Override
@@ -491,7 +496,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         if (!isLetter()) {
             throw new IllegalArgumentException(String.format(CAN_T_ENCODE, this));
         }
-        final Monomial result = MonomialUtils.monomial(Character.toString((char) (SHIFT + getSymbol())));
+        final Monomial result = monomial(Character.toString((char) (SHIFT + getSymbol())));
         if (SHIFT + getSymbol() > Character.MAX_VALUE) {
             throw new IllegalArgumentException(String.format(TOO_LARGE_VALUE, SHIFT + getSymbol()));
         }
@@ -508,7 +513,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
                     String.format(CAN_NOT_BE_DECODED, Character.toString(letter.getSymbol()))
             );
         }
-        final Monomial result = MonomialUtils.monomial(
+        final Monomial result = monomial(
                 Character.toString(
                         (char) (letter.getSymbol() - SHIFT)
                 )
@@ -525,7 +530,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
             @Override
             protected void doSomethingWith(final Monomial m) {
                 if (m.isLetter()) {
-                    symbols.add(MonomialUtils.monomial(Character.toString(m.getSymbol())));
+                    symbols.add(monomial(Character.toString(m.getSymbol())));
                 }
             }
         }.visit(copy);
@@ -543,7 +548,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
             @Override
             protected void doSomethingWith(final Monomial m) {
                 if (m.isLetter()) {
-                    symbols.add(MonomialUtils.monomial(Character.toString(m.getSymbol())));
+                    symbols.add(monomial(Character.toString(m.getSymbol())));
                 }
             }
         }.visit(copy);
@@ -567,7 +572,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         return letters;
     }
 
-    public Iterable<Monomial> actBy(final Endo endo) throws IllegalArgumentException {
+    public Iterable<Monomial> actBy(final Endo endo) throws IllegalArgumentException, CloneNotSupportedException {
         final Endo fake = new Endo();
         int i = 0;
         Monomial firstLetter = null;
@@ -592,21 +597,21 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
     public Monomial clone() {
         Monomial clone = null;
         if (isLetter()) {
-            clone = MonomialUtils.monomial(Character.toString((getSymbol())));
+            clone = monomial(Character.toString((getSymbol())));
             clone.name = name;
-            clone.id=id;
+            clone.id = id;
         }
         try {
             clone = (Monomial) super.clone();
             clone.left = left == null ? null : left.clone();
             clone.right = right == null ? null : right.clone();
-            clone.parent = parent == null ? null : MonomialUtils.monomial(left, right);
+            clone.parent = parent == null ? null : monomial(left, right);
             clone.constant = constant;
             clone.deg = deg;
             clone.name = name;
             clone.symbol = symbol;
             clone.id = id;
-            assert clone.equals(this) : toString() + " is not equals to" + clone.toString();
+            assert clone.equals(this) : toString() + " is not equals to " + clone.toString();
         } catch (final CloneNotSupportedException e) {
             log.error(e);
         }

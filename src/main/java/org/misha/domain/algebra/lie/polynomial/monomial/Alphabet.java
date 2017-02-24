@@ -11,6 +11,7 @@ import java.util.List;
  */
 
 public final class Alphabet {
+    //todo ms: make configurable context instead
     private static final List<Monomial> monomials = new ArrayList<Monomial>();
     private static Alphabet instance;
 

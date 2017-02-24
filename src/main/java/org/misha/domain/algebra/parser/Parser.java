@@ -29,10 +29,10 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 public final class Parser {
     private static final String INCORRECT_BRACKETS = "can't parse expression having incorrect brackets.";
     private static final String CAN_T_OBTAIN_ROOT_FOR_NULL = "can't obtain root for null monomial.";
-    private final String expression;
-    private List<Summand> summands = new ArrayList<Summand>();
     private static final char lBracket = '[';
     private static final char rBracket = ']';
+    private final String expression;
+    private List<Summand> summands = new ArrayList<Summand>();
 
     public Parser(final String expression) {
         this.expression = expression;
@@ -41,6 +41,25 @@ public final class Parser {
 
     public Parser() {
         expression = StringUtils.EMPTY;
+    }
+
+    public static String getCore(final String s) {
+        final Matcher matcher = compile("(-|\\+)([0-9 ]*)(.*)").matcher(s);
+        return matcher.find() ? matcher.group(3) : compile("(-|\\+)([0-9 ]*)(a-zA-Z)").matcher(s).find() ?
+                matcher.group(3) : s;
+    }
+
+    public static Endo parseEndo(String s) throws IllegalArgumentException {
+        final Endo endo = new Endo();
+        s = StringUtils.remove(s, ')');
+        s = StringUtils.remove(s, '(');
+        final String[] array = StringUtils.split(s, ";");
+        char a = 'a';
+        for (final String term : array) {
+            final Polynomial polynomial = new Parser(term.trim()).parse();
+            endo.mapTo(MonomialUtils.monomial(Character.toString(a++)), polynomial);
+        }
+        return endo;
     }
 
     public Polynomial parse() throws IllegalArgumentException {
@@ -150,12 +169,6 @@ public final class Parser {
         return monomial;
     }
 
-    public static String getCore(final String s) {
-        final Matcher matcher = compile("(-|\\+)([0-9 ]*)(.*)").matcher(s);
-        return matcher.find() ? matcher.group(3) : compile("(-|\\+)([0-9 ]*)(a-zA-Z)").matcher(s).find() ?
-                                                   matcher.group(3) : s;
-    }
-
     private List<Summand> getSummands() {
         String summands = expression;
         final List<Summand> result = new ArrayList<Summand>();
@@ -170,18 +183,5 @@ public final class Parser {
             final String pattern, String s, final Collection<Summand> result
     ) {
         return PolynomialUtils.findNextSummand(pattern, s, result);
-    }
-
-    public Endo parseEndo(String s) throws IllegalArgumentException {
-        final Endo endo = new Endo();
-        s = StringUtils.remove(s, ')');
-        s = StringUtils.remove(s, '(');
-        final String[] array = StringUtils.split(s, ";");
-        char a = 'a';
-        for (final String term : array) {
-            final Polynomial polynomial = new Parser(term.trim()).parse();
-            endo.mapTo(MonomialUtils.monomial(Character.toString(a++)), polynomial);
-        }
-        return endo;
     }
 }

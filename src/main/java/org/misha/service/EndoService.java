@@ -7,5 +7,5 @@ package org.misha.service;
  */
 public interface EndoService {
 
-    String getProductOf(String factors) throws IllegalArgumentException;
+    String getProductOf(String factors) throws IllegalArgumentException, CloneNotSupportedException;
 }

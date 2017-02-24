@@ -9,11 +9,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.misha.domain.algebra.lie.polynomial.monomial.Monomial;
 import org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils;
-import org.misha.domain.algebra.parser.Parser;
 import org.misha.service.impl.EndoServiceImpl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.misha.domain.algebra.lie.polynomial.Polynomial.mount;
+import static org.misha.domain.algebra.parser.Parser.parseEndo;
 
 /**
  * Author: mshevelin
@@ -105,14 +106,13 @@ public class EndoTest {
     @Test
     public void testParseEndo() {
         final String s = "(+ a + [b, c]; + c - [a, b]; - b + [a, c])";
-        assertEquals(new Parser().parseEndo(s).toString(), "(+ a - [c, b]; + c + [b, a]; - b - [c, a])");
+        assertEquals(parseEndo(s).toString(), "(+ a - [c, b]; + c + [b, a]; - b - [c, a])");
     }
 
     @Test
-    public void testMultiply() throws IllegalArgumentException {
+    public void testMultiply() throws IllegalArgumentException, CloneNotSupportedException {
         final String input = "(- a - 2[b, c] + 2[c ,[a, c]]; + b + 2[a, c] - 2[c, [b, c]] + 2[c, [c, [a, " +
-                "c]]]; + c) * (- a - 2[b, c] + 2[c ,[a, c]]; + b + 2[a, c] - 2[c, [b, c]] + 2[c, " +
-                "[c, [a, c]]]; + c)";
+                "c]]]; + c) * (- a - 2[b, c] + 2[c ,[a, c]]; + b + 2[a, c] - 2[c, [b, c]] + 2[c, [c, [a, c]]]; + c)";
         final String result = new EndoServiceImpl().getProductOf(input);
         assertEquals(result, "(+ a; + b; + c)");
     }
@@ -123,5 +123,44 @@ public class EndoTest {
         e.mapTo(b, mount("+ b"));
         e.mapTo(c, mount("+ c"));
         assertEquals(e.fox().toString(), "(-2; + c; - b)\n(0; 1; 0)\n(0; 0; 1)\n");
+    }
+
+    @Test
+    public void testTimes() throws CloneNotSupportedException {
+        /*  (+ a; + b; + c + 3[b, a])
+        * * (+ a; + b - [c, a]; + c)
+        * * (+ a + 3[c, b]; + b; + c)
+        * * (+ a - 3[c, b]; + b; + c)
+        * * (+ a; + b + [c, a]; + c)
+        * * (+ a; + b; + c - 3[b, a])
+        * */
+        Endo e = parseEndo("(+ a; + b; + c + [b, a])");
+        Endo e1 = e.clone();
+        Endo f = parseEndo("(+ a; + b - [c, a]; + c)");
+        Endo g = parseEndo("(+ a + 2[c, b]; + b; + c)");
+        Endo g_ = parseEndo("(+ a - 2[c, b]; + b; + c)");
+        Endo f_ = parseEndo("(+ a; + b + [c, a]; + c)");
+        Endo e_ = parseEndo("(+ a; + b; + c - [b, a])");
+        Endo ef = e.times(f);
+        Endo efg = ef.times(g);
+        Endo efgg_ = efg.times(g_);
+        Endo efgg_f_ = efgg_.times(f_);
+        Endo efgg_f_e_ = efgg_f_.times(e_);
+        Endo fg = f.times(g);
+        Endo fgg_ = fg.times(g_);
+        Endo fgg_f_ = fgg_.times(f_);
+        Endo g_f_ = g_.times(f_);
+        Endo g_f_e_ = g_f_.times(e_);
+        //assertTrue(mutuallyReversed(e, e_) && mutuallyReversed(f,f_) && mutuallyReversed(g, g_));
+        //assertTrue(mutuallyReversed(fg, g_f_));
+        //assertTrue(mutuallyReversed(efg, g_f_e_));
+        //System.out.println(efgg_);
+        assertTrue(ef.equals(e.times(f).times(g).times(g_)));
+        assertTrue(ef.equals(e.times(f.times(g)).times(g_)));
+
+    }
+
+    private boolean mutuallyReversed(Endo e, Endo e_) throws CloneNotSupportedException {
+        return e.times(e_).equals(Elementary.id) && e_.times(e).equals(Elementary.id);
     }
 }

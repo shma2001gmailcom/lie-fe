@@ -22,16 +22,22 @@ import java.util.Scanner;
 
 public class LongCommutator {
     private static final Logger log = Logger.getLogger(LongCommutator.class);
-    private final Endo commutator = new Parser().parseEndo(
+    private final Endo commutator = Parser.parseEndo(
             "(+ a - 2[[b, a], b] - 4[[[c, b], b], b]; + b; + c - 2[[c, b], b] + 2[[[b, a], b], b] + 4[[[[c," +
                     " b], b], b], b])"
     );
-    private final Endo elementary = new Parser().parseEndo("(+a ; + b - [a, c]; + c)");
-    private final Endo reversedCommutator = new Parser().parseEndo(
+    private final Endo elementary = Parser.parseEndo("(+a ; + b - [a, c]; + c)");
+    private final Endo reversedCommutator = Parser.parseEndo(
             "(+ a + 2[[b, a], b] + 4[[[c, b], b], b] - 4[[[[b, a], b], b], b]; + b; + c + 2[[c, b], " +
                     "b] - 2[[[b, a], b], b])"
     );
-    private final Endo reversedElementary = new Parser().parseEndo("(+a ; + b + [a, c]; + c)");
+    private final Endo reversedElementary = Parser.parseEndo("(+a ; + b + [a, c]; + c)");
+
+    public static void main(final String[] args) throws CloneNotSupportedException, IllegalArgumentException {
+        final LongCommutator longCommutator = new LongCommutator();
+        longCommutator.testLongCommutator();
+        longCommutator.testLongJacobi();
+    }
 
     private void testLongCommutator() throws IllegalArgumentException {
         Endo endo;
@@ -92,11 +98,5 @@ public class LongCommutator {
                 sc.close();
             }
         }
-    }
-
-    public static void main(final String[] args) throws CloneNotSupportedException, IllegalArgumentException {
-        final LongCommutator longCommutator = new LongCommutator();
-        longCommutator.testLongCommutator();
-        longCommutator.testLongJacobi();
     }
 }

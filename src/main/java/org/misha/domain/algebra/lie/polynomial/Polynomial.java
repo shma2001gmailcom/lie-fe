@@ -209,7 +209,7 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
             if (m.contains(letter)) {
                 for (final Monomial n : p) {
                     final Monomial mCopy = m.copy();
-                    mCopy.subst(letter, n.copy());
+                    mCopy.subst(letter, n);
                     result = result.plus(mCopy);
                 }
             } else {
@@ -254,7 +254,7 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
 
     public Polynomial encode() {
         Polynomial result = new Polynomial();
-        for (final Monomial monomial : this) {
+        for (final Monomial monomial : this.clone()) {
             result = result.plus(monomial.encode());
         }
         return result;
@@ -262,7 +262,7 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
 
     Polynomial decode() {
         Polynomial result = new Polynomial();
-        for (final Monomial monomial : this) {
+        for (final Monomial monomial : this.clone()) {
             result = result.plus(monomial.decode());
         }
         return result;
@@ -306,10 +306,19 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
         return clone;
     }
 
-    public Polynomial actBy(final Endo endo) throws IllegalArgumentException {
+    public Polynomial actBy(final Endo endo) throws IllegalArgumentException, CloneNotSupportedException {
         Polynomial result = new Polynomial();
         for (final Monomial m : copy()) {
             result = result.plus(m.actBy(endo));
+        }
+        return result;
+    }
+
+    public int deg() {
+        int result = 0;
+        for (Monomial m : this) {
+            int deg = m.deg();
+            if (deg > result) result = deg;
         }
         return result;
     }

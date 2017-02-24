@@ -24,6 +24,7 @@ import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.misha.domain.algebra.lie.polynomial.Polynomial.mount;
+import static org.misha.domain.algebra.lie.polynomial.monomial.Alphabet.getInstance;
 import static org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils.monomial;
 
 /**
@@ -39,32 +40,32 @@ public class MonomialTest {
     private Monomial b;
     private Monomial c;
     private Monomial ba;
+    private final Monomial ba_b = monomial(ba, b);
     private Monomial ba_b_a;
     private Monomial ba_b_b_a;
     private Monomial cb;
     private Monomial ca;
     private Polynomial q;
-    private final Monomial ba_b = MonomialUtils.monomial(ba, b);
 
     @Before
     public void init() {
         DOMConfigurator.configure("./src/main/resources/log4j.xml");
         q = new Polynomial();
-        final Alphabet alphabet = Alphabet.getInstance("a", "b", "c");
+        final Alphabet alphabet = getInstance("a", "b", "c");
         a = alphabet.get(0);
         b = alphabet.get(1);
         c = alphabet.get(2);
-        ba = MonomialUtils.monomial(b, a);
-        ca = MonomialUtils.monomial(c, a);
-        cb = MonomialUtils.monomial(c, b);
-        ba_b_a = MonomialUtils.monomial(MonomialUtils.monomial(MonomialUtils.monomial(b, a), b), a);
-        ba_b_b_a = MonomialUtils.monomial(MonomialUtils.monomial(MonomialUtils.monomial(ba, b), b), a);
+        ba = monomial(b, a);
+        ca = monomial(c, a);
+        cb = monomial(c, b);
+        ba_b_a = monomial(monomial(monomial(b, a), b), a);
+        ba_b_b_a = monomial(monomial(monomial(ba, b), b), a);
     }
 
     @Test
     public void testMonomial() throws Exception {
-        final Monomial ab = MonomialUtils.monomial(a, b, 1);
-        assertEquals(MonomialUtils.monomial(a, ab, 7).toString(),
+        final Monomial ab = monomial(a, b, 1);
+        assertEquals(monomial(a, ab, 7).toString(),
                      "[[[[[[[a, [a, b]], [a, b]], [a, b]], [a, b]], [a, b]], [a, b]], [a, b]]"
         );
     }
@@ -157,9 +158,9 @@ public class MonomialTest {
 
     @Test
     public void testCompareTo() {
-        final Monomial cba = MonomialUtils.monomial(cb, a);
-        final Monomial cab = MonomialUtils.monomial(ca, b);
-        final Monomial bac = MonomialUtils.monomial(ba, c);
+        final Monomial cba = monomial(cb, a);
+        final Monomial cab = monomial(ca, b);
+        final Monomial bac = monomial(ba, c);
         assertTrue(a.compareTo(b) < 0);
         assertTrue(b.compareTo(c) < 0);
         assertTrue(cb.compareTo(ca) > 0);
@@ -167,15 +168,15 @@ public class MonomialTest {
         assertTrue(cba.compareTo(cab) > 0);
         assertTrue(cba.compareTo(bac) > 0);
         Assert.assertTrue(
-                MonomialUtils.monomial("- 2[[z, x], y]").compareTo(MonomialUtils.monomial("- [[z, y], [z, x]]")) < 0
+                monomial("- 2[[z, x], y]").compareTo(monomial("- [[z, y], [z, x]]")) < 0
         );
     }
 
     @Test
     public void testSymbol() {
-        final Monomial one = MonomialUtils.monomial("-3x");
-        final Monomial two = MonomialUtils.monomial("+ 13y");
-        final Monomial three = MonomialUtils.monomial("123z");
+        final Monomial one = monomial("-3x");
+        final Monomial two = monomial("+ 13y");
+        final Monomial three = monomial("123z");
         assertEquals(one.getSymbol(), 'x');
         assertEquals(two.getSymbol(), 'y');
         assertEquals(three.getSymbol(), 'z');

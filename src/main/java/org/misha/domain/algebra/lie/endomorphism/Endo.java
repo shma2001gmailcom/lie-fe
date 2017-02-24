@@ -23,8 +23,8 @@ import java.util.Iterator;
  */
 
 public final class Endo implements Iterable<Pair<Monomial, Polynomial>>, Cloneable {
-    private Tuple tuple = new Tuple();
     private static final Logger log = Logger.getLogger(Endo.class);
+    private Tuple tuple = new Tuple();
 
     public void mapTo(final Monomial letter, final Polynomial polynomial) {
         try {
@@ -41,7 +41,7 @@ public final class Endo implements Iterable<Pair<Monomial, Polynomial>>, Cloneab
     private Endo multiplySimple(final Endo e) throws IllegalArgumentException {
         final Endo result = new Endo();
         for (final Pair<Monomial, Polynomial> pair : tuple) {
-            Polynomial value = pair.getValue().hall();
+            Polynomial value = pair.getValue().clone().hall();
             for (final Monomial letter : tuple.letters()) {
                 value = value.substitute(letter, e.getAt(letter).hall());
             }
@@ -53,7 +53,7 @@ public final class Endo implements Iterable<Pair<Monomial, Polynomial>>, Cloneab
     private Endo encodeValues() {
         final Endo result = new Endo();
         for (final Pair<Monomial, Polynomial> pair : tuple) {
-            result.mapTo(pair.getArgument(), pair.getValue().encode().hall());
+            result.mapTo(pair.getArgument(), pair.getValue().encode().clone().hall());
         }
         return result;
     }
@@ -70,13 +70,13 @@ public final class Endo implements Iterable<Pair<Monomial, Polynomial>>, Cloneab
         final Endo result = new Endo();
         final Endo product = encodeValues().multiplySimple(e.encodeArguments());
         for (final Monomial letter : tuple.letters()) {
-            result.mapTo(letter, copyClear(product, letter).hall());
+            result.mapTo(letter, product.copyClear(letter).hall());
         }
         return result;
     }
 
-    private Polynomial copyClear(final Endo endo, final Monomial letter) throws IllegalArgumentException {
-        return endo.getAt(letter).clone().hall();
+    private Polynomial copyClear(final Monomial letter) throws IllegalArgumentException {
+        return getAt(letter).clone().hall();
     }
 
     @Override
