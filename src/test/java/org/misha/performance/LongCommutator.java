@@ -65,7 +65,7 @@ public class LongCommutator {
     private void testLongJacobi() {
         Scanner sc = null;
         try {
-            sc = new Scanner(new File("./long-comm.txt"));
+            sc = new Scanner(new File("./long-comm.txt"), "UTF-8");
             final String line = sc.nextLine();
             final String[] polynomials = line.split("\\(|\\)")[1].split(";");
             log.debug(polynomials[0].trim());

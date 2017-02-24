@@ -21,7 +21,7 @@ public final class Validator {
     }
 
     public static boolean isLieMonomialValid(final String s) {
-        final Pattern signsLettersCommasBrackets = Pattern.compile("([-\\+]*)([a-zA-Z0-9, \\Q[\\E\\Q]\\E])*");
+        final Pattern signsLettersCommasBrackets = Pattern.compile("([-+]*)([a-zA-Z0-9, \\Q[\\E\\Q]\\E])*");
         if (!signsLettersCommasBrackets.matcher(s).matches()) {
             log.error(String.format("invalid characters in the expression '%s'.", s));
             return false;

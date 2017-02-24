@@ -3,6 +3,8 @@ package org.misha.performance;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.misha.domain.algebra.parser.Parser;
 
+import java.text.MessageFormat;
+
 /**
  * Author: mshevelin
  * Date: 5/16/14
@@ -17,7 +19,7 @@ final class ParserPerformance {
         DOMConfigurator.configure("./src/main/resources/log4j.xml");
         String s = "";
         for (int i = 0; i < 3 * 10; ++i) {
-            s = s + "+ " + ad(i) + " ";
+            s = MessageFormat.format("{0}+ {1} ", s, ad(i));
         }
         new Parser(s).parse();
     }
