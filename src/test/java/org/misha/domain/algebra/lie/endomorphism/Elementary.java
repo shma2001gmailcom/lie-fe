@@ -123,6 +123,8 @@ public class Elementary {
             reversed = reversed.times(reverse);
         }
         Endo product = id;
+
+
         for (Endo e : list) {
             product = product.times(e);
         }
