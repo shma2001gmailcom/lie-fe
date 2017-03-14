@@ -4,15 +4,16 @@
 
 package org.misha.domain.algebra.lie.endomorphism;
 
+import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.misha.domain.algebra.lie.polynomial.monomial.Monomial;
 import org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils;
 import org.misha.service.impl.EndoServiceImpl;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.misha.domain.algebra.lie.polynomial.Polynomial.mount;
 import static org.misha.domain.algebra.parser.Parser.parseEndo;
 
@@ -23,6 +24,7 @@ import static org.misha.domain.algebra.parser.Parser.parseEndo;
  */
 
 public class EndoTest {
+    private static final Logger log = Logger.getLogger(EndoTest.class);
     private Endo e;
     private Endo f;
     private Endo s;
@@ -135,28 +137,18 @@ public class EndoTest {
         * * (+ a; + b; + c - 3[b, a])
         * */
         Endo e = parseEndo("(+ a; + b; + c + [b, a])");
-        Endo e1 = e.clone();
-        Endo f = parseEndo("(+ a; + b - [c, a]; + c)");
-        Endo g = parseEndo("(+ a + 2[c, b]; + b; + c)");
-        Endo g_ = parseEndo("(+ a - 2[c, b]; + b; + c)");
-        Endo f_ = parseEndo("(+ a; + b + [c, a]; + c)");
+        Endo f = parseEndo("(+ a; + b + [c, a]; + c)");
+        Endo g = parseEndo("(+ a + [c, b]; + b; + c)");
+        Endo g_ = parseEndo("(+ a - [c, b]; + b; + c)");
+        Endo f_ = parseEndo("(+ a; + b - [c, a]; + c)");
         Endo e_ = parseEndo("(+ a; + b; + c - [b, a])");
         Endo ef = e.times(f);
-        Endo efg = ef.times(g);
-        Endo efgg_ = efg.times(g_);
-        Endo efgg_f_ = efgg_.times(f_);
-        Endo efgg_f_e_ = efgg_f_.times(e_);
-        Endo fg = f.times(g);
-        Endo fgg_ = fg.times(g_);
-        Endo fgg_f_ = fgg_.times(f_);
-        Endo g_f_ = g_.times(f_);
-        Endo g_f_e_ = g_f_.times(e_);
-        //assertTrue(mutuallyReversed(e, e_) && mutuallyReversed(f,f_) && mutuallyReversed(g, g_));
-        //assertTrue(mutuallyReversed(fg, g_f_));
-        //assertTrue(mutuallyReversed(efg, g_f_e_));
-        //System.out.println(efgg_);
-        assertTrue(ef.equals(e.times(f).times(g).times(g_)));
-        assertTrue(ef.equals(e.times(f.times(g)).times(g_)));
+
+//        assertTrue(mutuallyReversed(e, e_) && mutuallyReversed(f, f_) && mutuallyReversed(g, g_));
+        assertEquals(ef, e.times(f).times(g).times(g_));
+        log.debug("ef=" + ef + " against " + e.times(f).times(g).times(g_));
+        assertEquals(ef, e.times(f.times(g)).times(g_));
+        log.debug("ef=" + ef + " against " + e.times(f.times(g)).times(g_));
 
     }
 

@@ -21,12 +21,12 @@ appname="lie-fe"
 ################ AT HOME #######################
 ################################################
 appfolder="/home/misha/workspace/"${appname}/lie-fe
-tomcatfolder="/home/misha/workspace/tomcat6"
-M2_HOME='/opt/apache-maven-3.2.2/'
-export M2_HOME
-M2=${M2_HOME}/bin
-export M2
-PATH=${PATH}:${M2}
+tomcatfolder="/home/misha/workspace/tomcat"
+M3_HOME='~/workspace/apache-maven-3.3.9'
+export M3_HOME
+M3=${M3_HOME}/bin
+export M3
+PATH=${PATH}:${M3}
 export PATH
 logfile='./1'
 

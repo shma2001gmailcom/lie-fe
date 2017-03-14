@@ -69,9 +69,15 @@ public final class Endo implements Iterable<Pair<Monomial, Polynomial>>, Cloneab
     public Endo times(final Endo e) throws IllegalArgumentException {
         final Endo result = new Endo();
         final Endo product = encodeValues().multiplySimple(e.encodeArguments());
+        log.debug(" " + this);
+        log.debug("X");
+        log.debug(" " + e);
         for (final Monomial letter : tuple.letters()) {
-            result.mapTo(letter, product.copyClear(letter).hall());
+            result.mapTo(letter, product.copyClear(letter));
         }
+        log.debug("------------------------------------------------------------------");
+        log.debug(" " + result);
+        log.debug("===================================================================\n");
         return result;
     }
 
