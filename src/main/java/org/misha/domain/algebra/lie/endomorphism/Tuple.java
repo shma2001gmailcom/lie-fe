@@ -68,7 +68,7 @@ final class Tuple implements Iterable<Pair<Monomial, Polynomial>>, Cloneable {
     }
 
     private void checkIfLetter(final Monomial letter) throws IllegalArgumentException {
-        if (!letter.isLetter()) {
+        if (!letter.hasNoChildren()) {
             throw new IllegalArgumentException(String.format(MUST_BE_A_LETTER, letter));
         }
     }

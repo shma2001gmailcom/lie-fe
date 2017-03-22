@@ -11,9 +11,7 @@ import org.misha.domain.algebra.parser.Parser;
 
 import javax.annotation.Nonnull;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.regex.Matcher;
 
 import static java.lang.String.format;
@@ -22,6 +20,7 @@ import static java.util.regex.Pattern.compile;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils.getMatcher;
 import static org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils.monomial;
+import static org.misha.domain.algebra.lie.polynomial.monomial.Occurrence.*;
 
 /**
  * author: misha
@@ -96,7 +95,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
      * @return letter without constant or throws exception
      */
     public char getSymbol() throws IllegalStateException {
-        if (!isLetter()) {
+        if (!hasNoChildren()) {
             throw new IllegalStateException(String.format(ISN_T_A_LETTER, this));
         }
         final String letter = getMatcher(name).group(3);
@@ -140,7 +139,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
      *
      * @return boolean
      */
-    public boolean isLetter() {
+    public boolean hasNoChildren() {
         return right == null && left == null;
     }
 
@@ -161,8 +160,8 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
      * @return boolean
      */
     public boolean isCorrect() {
-        return isLetter() || left.isCorrect() && right.isCorrect() && left.compareTo(right) > 0 &&
-                (left.isLetter() || left.right().compareTo(right) <= 0);
+        return hasNoChildren() || left.isCorrect() && right.isCorrect() && left.compareTo(right) > 0 &&
+                (left.hasNoChildren() || left.right().compareTo(right) <= 0);
     }
 
     /**
@@ -205,7 +204,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         if (constant == 0) {
             return EMPTY;
         }
-        if (isLetter()) {
+        if (hasNoChildren()) {
             return constant() + name;
         }
         return constant() + LEFT_BRACKET + left + ", " + right + RIGHT_BRACKET;
@@ -244,7 +243,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
             if (left.compareTo(right) == 0) {
                 return result;
             }
-            if (!left.isLetter()) {
+            if (!left.hasNoChildren()) {
                 final Monomial leftRight = left.right();
                 final Monomial leftLeft = left.left();
                 final Monomial first = monomial(
@@ -277,7 +276,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
     public org.misha.domain.algebra.associative.Polynomial expand() {
         final Monomial copy = copy();
         org.misha.domain.algebra.associative.Polynomial result = new org.misha.domain.algebra.associative.Polynomial();
-        if (isLetter()) {
+        if (hasNoChildren()) {
             result = result.plus(
                     org.misha.domain.algebra.associative.impl.Monomial.monomial(
                             "" + copy.getSymbol(), copy.getConst()
@@ -397,14 +396,14 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         m is a current monomial while visiting some tree;
         letter is that letter instead of which it is needed to substitute substitution
     */
-    private void substitute(final Monomial m, final Monomial letter, final Monomial substitution) {
-        if (!letter.isLetter() || letter.constant != 1) {
+    public void substitute(final Monomial m, final Monomial letter, final Monomial substitution) {
+        if (!letter.hasNoChildren() || letter.constant != 1) {
             throw new IllegalArgumentException(String.format(MUST_BE_A_LETTER, letter));
         }
         final Monomial subst = substitution.copy();
         final int constant = subst.copy().constant;
         final Monomial parent = m.parent;
-        if (m.isLetter() && m.isSimilar(letter)) {
+        if (m.hasNoChildren() && m.isSimilar(letter)) {
             if (parent != null && !isNullLetter(parent)) {
                 substituteWithParent(m, subst, parent.copy());
             } else {
@@ -415,12 +414,18 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         m.getRoot().normalize();
     }
 
+    public void substitute(final Monomial letter, final Monomial substitution) {
+        final Monomial fake = monomial(Character.toString((char) (SHIFT + letter.getSymbol())));
+        substitute(this, letter, fake);
+        substitute(this, fake, substitution);
+    }
+
     private boolean isNullLetter(final Monomial parent) {
         return parent.symbol == '\u0000';
     }
 
     private void substituteWithoutParent(final Monomial m, final Monomial subst) {
-        if (subst.isLetter()) {
+        if (subst.hasNoChildren()) {
             m.name = subst.name;
         } else {
             m.left = subst.left.clone();
@@ -468,6 +473,13 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
         normalize();
     }
 
+    public void subst(final Occurrence occurrence, final Monomial substitution) {
+        final Monomial letter = occurrence.getMonomial();
+        final Monomial fake = monomial(Character.toString((char) (SHIFT + letter.getSymbol())));
+        substitute(this, letter, fake);
+        substitute(this, fake, substitution);
+    }
+
     /**
      * Checks if this monomial contains the letter specified
      *
@@ -493,7 +505,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
     }
 
     private Monomial encodeLetter() throws IllegalArgumentException {
-        if (!isLetter()) {
+        if (!hasNoChildren()) {
             throw new IllegalArgumentException(String.format(CAN_T_ENCODE, this));
         }
         final Monomial result = monomial(Character.toString((char) (SHIFT + getSymbol())));
@@ -505,7 +517,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
     }
 
     private Monomial decodeLetter(final Monomial letter) {
-        if (!letter.isLetter()) {
+        if (!letter.hasNoChildren()) {
             throw new IllegalArgumentException(String.format(CAN_T_DECODE, letter));
         }
         if (letter.getSymbol() < SHIFT) {
@@ -529,7 +541,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
 
             @Override
             protected void doSomethingWith(final Monomial m) {
-                if (m.isLetter()) {
+                if (m.hasNoChildren()) {
                     symbols.add(monomial(Character.toString(m.getSymbol())));
                 }
             }
@@ -547,7 +559,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
 
             @Override
             protected void doSomethingWith(final Monomial m) {
-                if (m.isLetter()) {
+                if (m.hasNoChildren()) {
                     symbols.add(monomial(Character.toString(m.getSymbol())));
                 }
             }
@@ -559,17 +571,40 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
     }
 
     public Set<Monomial> letters() {
-        final Set<Monomial> letters = new TreeSet<Monomial>();
+        final Set<Monomial> letters = new HashSet<Monomial>();
         new MonomialVisitor() {
 
             @Override
             protected void doSomethingWith(final Monomial m) {
-                if (m.isLetter()) {
+                if (m.hasNoChildren()) {
                     letters.add(m);
                 }
             }
         }.visit(this);
         return letters;
+    }
+
+    public Map<Character, Set<Occurrence>> occurrences() {
+        final Map<Character, Set<Occurrence>> occurrences = new HashMap<Character, Set<Occurrence>>();
+        new MonomialVisitor() {
+
+            @Override
+            protected void doSomethingWith(final Monomial m) {
+                System.out.println("--------------------------------" + m + "--" + m.getParent());
+                if (m.hasNoChildren()) {
+                    final Character c = m.getSymbol();
+                    final Occurrence occurrence = occurrence(m);
+                    if(occurrences.containsKey(c)) {
+                        occurrences.get(c).add(occurrence);
+                    } else {
+                        Set<Occurrence> set = new HashSet<Occurrence>();
+                        occurrences.put(c, set);
+                        set.add(occurrence);
+                    }
+                }
+            }
+        }.visit(this);
+        return occurrences;
     }
 
     public Iterable<Monomial> actBy(final Endo endo) throws IllegalArgumentException, CloneNotSupportedException {
@@ -596,7 +631,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
     @Override
     public Monomial clone() {
         Monomial clone = null;
-        if (isLetter()) {
+        if (hasNoChildren()) {
             clone = monomial(Character.toString((getSymbol())));
             clone.name = name;
             clone.id = id;

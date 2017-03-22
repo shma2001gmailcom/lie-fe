@@ -14,6 +14,7 @@ import org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils;
 import org.misha.service.impl.EndoServiceImpl;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.misha.domain.algebra.lie.polynomial.Polynomial.mount;
 import static org.misha.domain.algebra.parser.Parser.parseEndo;
 
@@ -144,7 +145,12 @@ public class EndoTest {
         Endo e_ = parseEndo("(+ a; + b; + c - [b, a])");
         Endo ef = e.times(f);
 
-//        assertTrue(mutuallyReversed(e, e_) && mutuallyReversed(f, f_) && mutuallyReversed(g, g_));
+        assertTrue(mutuallyReversed(e, e_) && mutuallyReversed(f, f_) && mutuallyReversed(g, g_));
+        assertEquals(parseEndo("(" +
+                "+ a + [c, b]; " +
+                "+ b + [c, a] - [[c, b], c]; " +
+                "+ c + [b, a] + [[c, a], a] - [[c, b], b] - [[c, b], [c, a]] - [[[c, b], c], [c, b]]" +
+                ")"), ef.times(g));
         assertEquals(ef, e.times(f).times(g).times(g_));
         log.debug("ef=" + ef + " against " + e.times(f).times(g).times(g_));
         assertEquals(ef, e.times(f.times(g)).times(g_));

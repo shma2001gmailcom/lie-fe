@@ -1,5 +1,7 @@
 package org.misha.domain.algebra.lie.polynomial.monomial;
 
+import java.util.LinkedList;
+
 /**
  * Author: mshevelin
  * Date: 3/28/14
@@ -7,18 +9,18 @@ package org.misha.domain.algebra.lie.polynomial.monomial;
  */
 
 abstract class MonomialVisitor {
+    private final LinkedList<Monomial> queue = new LinkedList<Monomial>();
 
     void visit(final Monomial m) {
-        if (m.isLetter()) {
-            doSomethingWith(m);
-            return;
+        queue.add(m);
+        while(!queue.isEmpty()) {
+            final Monomial pop = queue.pop();
+            if(!pop.hasNoChildren()) {
+                queue.add(pop.left());
+                queue.add(pop.right());
+            }
+            doSomethingWith(pop);
         }
-        final Monomial left = m.left();
-        final Monomial right = m.right();
-        doSomethingWith(left);
-        doSomethingWith(right);
-        visit(left);
-        visit(right);
     }
 
     protected abstract void doSomethingWith(Monomial m);
