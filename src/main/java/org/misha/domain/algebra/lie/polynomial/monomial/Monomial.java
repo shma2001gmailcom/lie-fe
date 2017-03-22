@@ -194,7 +194,7 @@ public final class Monomial implements Serializable, Comparable<Monomial>, Clone
             final Monomial t1 = copy();
             m1.setConst(1);
             t1.setConst(1);
-            return String.valueOf(t1.symbol).compareTo(String.valueOf(m1.symbol));
+            return t1.name.compareTo(m1.name);
         }
         return deg() != m.deg() ? deg() - m.deg() : left.compareTo(m.left()) != 0 ? left.compareTo(m.left()) :
                                                     right.compareTo(m.right());
