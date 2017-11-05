@@ -191,8 +191,8 @@ public class MonomialTest {
 
     @Test
     public void findLettersTest() {
-        final Monomial monomial = new Parser().parse("[[[a, b], x],[c, b]]");
-        assertEquals(Arrays.asList(monomial.letters().toArray()).toString(), "[a, b, c, x]");
+        final Monomial monomial = new Parser().parse("[[[a, b], a],[c, b]]");
+        assertEquals(Arrays.asList(monomial.letters().toArray()).toString(), "[a, b, c]");
     }
 
     @Test

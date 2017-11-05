@@ -9,6 +9,7 @@ import org.misha.domain.algebra.fox.Derivative;
 import org.misha.domain.algebra.lie.endomorphism.Endo;
 import org.misha.domain.algebra.lie.polynomial.monomial.Monomial;
 import org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils;
+import org.misha.domain.algebra.lie.polynomial.monomial.Occurrence;
 import org.misha.domain.algebra.parser.Parser;
 
 import java.util.Collection;
@@ -209,7 +210,7 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
             if (m.contains(letter)) {
                 for (final Monomial n : p) {
                     final Monomial mCopy = m.copy();
-                    mCopy.subst(letter, n);
+                    mCopy.subst(letter, n);//todo
                     result = result.plus(mCopy);
                 }
             } else {

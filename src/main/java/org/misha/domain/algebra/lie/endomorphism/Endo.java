@@ -42,8 +42,8 @@ public final class Endo implements Iterable<Pair<Monomial, Polynomial>>, Cloneab
         final Endo result = new Endo();
         for (final Pair<Monomial, Polynomial> pair : tuple) {
             Polynomial value = pair.getValue().clone().hall();
-            for (final Monomial letter : tuple.letters()) {
-                value = value.substitute(letter, e.getAt(letter).hall());
+            for (final Monomial letter : tuple.letters()) {//todo
+                value = value.substitute(letter, e.getAt(letter));
             }
             result.mapTo(pair.getArgument(), value.hall());
         }
@@ -105,7 +105,6 @@ public final class Endo implements Iterable<Pair<Monomial, Polynomial>>, Cloneab
     @Override
     public String toString() {
         if (!tuple.iterator().hasNext()) {
-            //throw new IllegalArgumentException("an endomorphism should contain at least one mapping");
             return "[]";
         }
         StringBuilder sb = new StringBuilder("(");
