@@ -34,8 +34,25 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
         }
     }
 
-    public Iterator<Character> sequenceIterator() {
+    public Iterator<Character> iterator() {
         return sequence.iterator();
+    }
+
+    public Character getAt(int i) {
+        if (i < 0 || i > sequence.size() - 1) return null;
+        return sequence.get(i);
+    }
+
+    public Monomial subWord(int fromIndex, int toIndex) {
+        return monomial(sequence.subList(fromIndex, toIndex));
+    }
+
+    public Monomial head(int toIndex) {
+        return subWord(0, toIndex);
+    }
+
+    public Monomial tail(int fromIndex) {
+        return subWord(fromIndex, deg());
     }
 
     int getConstant() {
@@ -68,11 +85,19 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
         return new Monomial(s, constant);
     }
 
+    public static Monomial monomial(final List<Character> characters, final int constant) {
+        return new Monomial(characters, constant);
+    }
+
+    public static Monomial monomial(final List<Character> characters) {
+        return new Monomial(characters, 1);
+    }
+
     public Monomial copy() {
         return clone();
     }
 
-    int deg() {
+    public int deg() {
         return sequence.size();
     }
 

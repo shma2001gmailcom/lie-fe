@@ -156,7 +156,7 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
     public Derivative fox() {
         final Collection<Character> characters = new TreeSet<Character>();
         for (final Monomial m : copy()) {
-            for (final Iterator<Character> it = m.sequenceIterator(); it.hasNext(); ) {
+            for (final Iterator<Character> it = m.iterator(); it.hasNext(); ) {
                 characters.add(it.next());
             }
         }
