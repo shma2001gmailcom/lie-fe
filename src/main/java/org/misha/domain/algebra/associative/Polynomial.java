@@ -5,15 +5,9 @@ import org.apache.log4j.Logger;
 import org.misha.domain.algebra.associative.impl.Monomial;
 import org.misha.domain.algebra.fox.Derivative;
 
+import javax.annotation.Nonnull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
 import static org.misha.domain.algebra.associative.impl.Monomial.monomial;
 
@@ -23,7 +17,7 @@ import static org.misha.domain.algebra.associative.impl.Monomial.monomial;
  * Time: 11:39 AM
  */
 
-public final class Polynomial implements Iterable<Monomial>, Serializable, Cloneable {
+public final class Polynomial implements Iterable<Monomial>, Serializable, Cloneable, Comparable<Polynomial>{
     private static final Logger log = Logger.getLogger(org.misha.domain.algebra.lie.polynomial.Polynomial.class);
     private static final long serialVersionUID = -2597630069340261466L;
     private List<Monomial> monomials = new ArrayList<Monomial>();
@@ -32,8 +26,16 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
         return monomials.size();
     }
 
-    void sort() {
+    public int deg() {
+        return elder().deg();
+    }
+
+    public void sort() {
         Collections.sort(monomials);
+    }
+
+    public Monomial elder() {
+        return monomials.get(monomials.size() - 1);
     }
 
     public Polynomial plus(final Monomial m) {
@@ -84,7 +86,6 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
         for (final Monomial m : monomials) {
             sb = sb.append(m.toString());
         }
-        log.debug(sb.toString());
         return StringUtils.EMPTY.equals(sb.toString().trim()) ? "0" : sb.toString().trim();
     }
 
@@ -97,6 +98,16 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
                 final Monomial mM = m.copy().times(n.copy());
                 result = result.plus(mM);
             }
+        }
+        result.sort();
+        return result;
+    }
+
+    public Polynomial times(Monomial m) {
+        final Polynomial copy = copy();
+        Polynomial result = new Polynomial();
+        for (final Monomial o : copy) {
+            result = result.plus(o.times(m));
         }
         result.sort();
         return result;
@@ -191,5 +202,25 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
             log.error(e);
         }
         return clone;
+    }
+
+    @Override
+    public int compareTo(@Nonnull Polynomial another) {
+        int deg = deg();
+        int anotherDeg = another.deg();
+        if (deg != anotherDeg) {
+            return deg - anotherDeg;
+        }
+        int size = monomials.size();
+        int anotherSize = another.monomials.size();
+        int min = size > anotherSize ? anotherSize : size;
+        for (int i = 0; i < min; ++i) {
+            int index = min - 1 - i;
+            int c = monomials.get(index).compareTo(another.monomials.get(index));
+            if (c != 0) {
+                return c;
+            }
+        }
+        return size - anotherSize;
     }
 }

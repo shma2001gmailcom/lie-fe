@@ -109,13 +109,22 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
         return result;
     }
 
+    public Polynomial times(Polynomial p) {
+        Polynomial result = new Polynomial();
+        for (Monomial m : p.clone()) {
+            result = result.plus(times(m));
+        }
+        result.sort();
+        return result;
+    }
+
     public Monomial times(final int i) {
         final Monomial copy = copy();
         copy.constant *= i;
         return copy;
     }
 
-    Monomial unify() {
+    public Monomial unify() {
         final Monomial copy = copy();
         copy.constant = 1;
         return copy;

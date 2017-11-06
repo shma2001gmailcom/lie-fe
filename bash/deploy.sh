@@ -15,14 +15,14 @@ appname="lie-fe"
 ###############################################
 #appfolder="/home/mshevelin/workspace/"${appname}"-assembla"
 #tomcatfolder="/home/mshevelin/workspace/tomcat6"
-#javahome="/usr/lib/jvm/jdk-6-oracle"
+javahome="/usr/lib/jvm/java-7-oracle"
 
 ################################################
 ################ AT HOME #######################
 ################################################
 appfolder="/home/misha/workspace/"${appname}/lie-fe
-tomcatfolder="/home/misha/workspace/tomcat"
-M3_HOME='~/workspace/apache-maven-3.3.9'
+tomcatfolder="/home/misha/workspace/tomcat6"
+M3_HOME='/opt/apache-maven-3.2.2'
 export M3_HOME
 M3=${M3_HOME}/bin
 export M3
@@ -31,7 +31,7 @@ export PATH
 logfile='./1'
 
 ################################################
-#export JAVA_HOME=${javahome}
+export JAVA_HOME=${javahome}
 tomcatbin=${tomcatfolder}/bin
 tomcatwebapps=${tomcatfolder}/webapps
 if [ ! -e ${appfolder} ]; then echo 'ERROR: no appfolder' ${appfolder} 'found';exit 1; fi

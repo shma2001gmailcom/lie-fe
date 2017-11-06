@@ -7,6 +7,7 @@ import org.junit.Test;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.misha.domain.algebra.associative.PolynomialUtils.mount;
+import static org.misha.domain.algebra.associative.impl.Monomial.monomial;
 
 /**
  * Author: mshevelin
@@ -67,5 +68,12 @@ public class PolynomialTest {
         final Polynomial ab = mount("+ ab");
         final Polynomial c = mount("- c");
         assertEquals(ab.plus(ba).plus(c), mount("-c + ab - ba"));
+    }
+
+    @Test
+    public void elder() {
+        final Polynomial p = mount("-x + y + xy - xyx + yxy - xxy + yyx");
+        assertTrue(p.elder().equals(monomial("+1yyx")));
+        assertTrue(p.elder().getConst() == 1);
     }
 }

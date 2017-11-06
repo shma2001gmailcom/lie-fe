@@ -47,6 +47,11 @@ public final class PolynomialUtils {
         return result;
     }
 
+    public static Polynomial mount(Monomial m) {
+        Polynomial result = new Polynomial();
+        return result.plus(m);
+    }
+
     public static String findNextSummand(
             final String pattern, String s, final Collection<Summand> result
     ) {

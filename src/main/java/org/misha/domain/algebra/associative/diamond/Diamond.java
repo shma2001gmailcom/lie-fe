@@ -1,5 +1,6 @@
 package org.misha.domain.algebra.associative.diamond;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.misha.domain.algebra.associative.impl.Monomial;
 
 import static org.misha.domain.algebra.associative.impl.Monomial.monomial;
@@ -27,8 +28,8 @@ public class Diamond {
         if (left == null || right == null) {
             throw new IllegalArgumentException("both monomials should be nonnull");
         }
-        this.left = left;
-        this.right = right;
+        this.left = left.unify();
+        this.right = right.unify();
     }
 
     public Top find() {
@@ -38,13 +39,12 @@ public class Diamond {
             return Top.NONE;
         }
         int i = 0, leftBound, rightBound;
-        Monomial leftTail, rightHead;
         final int minDeg = leftDeg <= rightDeg ? leftDeg : rightDeg;
         while (i < minDeg) {
             leftBound = minDeg == leftDeg ? i : leftDeg - i - 1;
             rightBound = minDeg == leftDeg ? leftDeg - i : i + 1;
-            leftTail = left.tail(leftBound);
-            rightHead = right.head(rightBound);
+            final Monomial leftTail = left.tail(leftBound);
+            final Monomial rightHead = right.head(rightBound);
             if (leftTail.equals(rightHead)) {
                 return new Top(left.head(leftBound), leftTail, right.tail(rightBound));
             }
@@ -78,6 +78,12 @@ public class Diamond {
 
         public Monomial tail() {
             return tail.copy();
+        }
+
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this).append("head", head).append("middle", middle).append("tail", tail)
+                                            .toString();
         }
     }
 }
