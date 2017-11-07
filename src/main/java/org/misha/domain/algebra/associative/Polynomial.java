@@ -223,4 +223,8 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
         }
         return size - anotherSize;
     }
+    
+    public boolean isZero() {
+        return monomials.isEmpty();
+    }
 }

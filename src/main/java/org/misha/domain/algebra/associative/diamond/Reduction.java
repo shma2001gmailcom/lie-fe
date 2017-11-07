@@ -21,20 +21,26 @@ public class Reduction {
     private final Polynomial left;
     private final Polynomial right;
 
-    public Reduction(Polynomial left, Polynomial right) {
+    Reduction(Polynomial left, Polynomial right) {
         this.left = left;
         this.right = right;
     }
 
-    public Set<Polynomial> reduceOnce() {
+    private Set<Polynomial> reduceOnce() {
+        final int leftLeadConst = left.elder().getConst();
+        final int rightLeadConst = right.elder().getConst();
         final String le = left.elder().unify().toString().trim().replaceAll("[+-] ", EMPTY);
         final String re = right.elder().unify().toString().trim().replaceAll("[+-] ", EMPTY);
         final Pattern pattern = compile(re);
         final Matcher matcher = pattern.matcher(le);
         final Set<Polynomial> result = new TreeSet<Polynomial>();
         while (matcher.find()) {
-            result.add(left.plus(monomial("+1" + le.substring(0, matcher.start())).times(right).times(monomial(
-                    "+1" + le.substring(matcher.end()))).times(-1)));
+            Polynomial toAdd = left.times(rightLeadConst)
+                    .plus(monomial("+1" + le.substring(0, matcher.start()))
+                            .times(right).times(monomial("+1" + le.substring(matcher.end()))).times(leftLeadConst).times(-1));
+            if(!toAdd.isZero()) {
+                result.add(toAdd);
+            }
         }
         return result;
     }
@@ -53,7 +59,7 @@ public class Reduction {
         return result;
     }
 
-    int total(Set<Polynomial> set) {
+    private int total(Set<Polynomial> set) {
         int total = 0;
         for (Polynomial p : set) {
             total = total < p.deg() ? p.deg() : total;
@@ -61,27 +67,27 @@ public class Reduction {
         return total;
     }
 
-    public Set<Polynomial> reduce(Set<Polynomial> input) {
+    Set<Polynomial> reduce(Set<Polynomial> input) {
         int total = total(input);
         int currentTotal = total;
         Polynomial by = null;
         Set<Polynomial> result = new TreeSet<Polynomial>();
         do {
-            Iterator<Polynomial> iterator = input.iterator();
-            if (iterator.hasNext()) {
-                by = iterator.next();
+            Iterator<Polynomial> inputIterator = input.iterator();
+            if (inputIterator.hasNext()) {
+                by = inputIterator.next();
                 result.add(by);
             }
-            while (iterator.hasNext()) {
-                Polynomial p = iterator.next();
-                iterator.remove();
+            while (inputIterator.hasNext()) {
+                Polynomial p = inputIterator.next();
+                inputIterator.remove();
                 Set<Polynomial> once = new Reduction(p, by).reduceOnce();
                 result.addAll(once);
                 result.addAll(input);
             }
             total = currentTotal;
             currentTotal = total(result);
-            while (iterator.hasNext()) iterator.next();
+            while (inputIterator.hasNext()) inputIterator.next();
         }
         while (currentTotal < total);
         return result;

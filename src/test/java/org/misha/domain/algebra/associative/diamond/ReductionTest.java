@@ -14,17 +14,17 @@ import static org.misha.domain.algebra.associative.PolynomialUtils.mount;
  * time: 6:00 PM
  */
 public class ReductionTest {
+    
     @Test
     public void reduce() throws Exception {
-        Polynomial p = mount("- xyxyx - xyxyxyx");
-        Polynomial q = mount("- x - xyx");
+        Polynomial p = mount("+ y - xyx + yz + z + xyxyxyx");
+        Polynomial q = mount("+ x - xyx");
         Set<Polynomial> input = new TreeSet<Polynomial>();
         input.add(p);
         input.add(q);
         Set<Polynomial> input1 = input;
-        for (int i = 0 ; i < 1; ++ i) {
+        for (int i = 0 ; i < 3; ++ i) {
             input1 = new Reduction(p, q).reduce(input1);
-
         }
         for (Polynomial r : input1) {
             System.out.println("--" + r);
