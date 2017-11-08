@@ -27,6 +27,9 @@ public class Reduction {
     }
 
     private Set<Polynomial> reduceOnce() {
+        if (left.compareTo(right) < 0) {
+            return new TreeSet<Polynomial>() {{add(left); add(right);}};
+        }
         final int leftLeadConst = left.elder().getConst();
         final int rightLeadConst = right.elder().getConst();
         final String le = left.elder().unify().toString().trim().replaceAll("[+-] ", EMPTY);
@@ -34,13 +37,16 @@ public class Reduction {
         final Pattern pattern = compile(re);
         final Matcher matcher = pattern.matcher(le);
         final Set<Polynomial> result = new TreeSet<Polynomial>();
-        while (matcher.find()) {
+        if (matcher.find()) {
             Polynomial toAdd = left.times(rightLeadConst)
                     .plus(monomial("+1" + le.substring(0, matcher.start()))
                             .times(right).times(monomial("+1" + le.substring(matcher.end()))).times(leftLeadConst).times(-1));
             if(!toAdd.isZero()) {
                 result.add(toAdd);
             }
+        } else {
+            result.add(left);
+            result.add(right);
         }
         return result;
     }

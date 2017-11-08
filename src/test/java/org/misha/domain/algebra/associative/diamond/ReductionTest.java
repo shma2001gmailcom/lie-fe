@@ -23,7 +23,7 @@ public class ReductionTest {
         input.add(p);
         input.add(q);
         Set<Polynomial> input1 = input;
-        for (int i = 0 ; i < 3; ++ i) {
+        for (int i = 0 ; i < 3; ++i) {
             input1 = new Reduction(p, q).reduce(input1);
         }
         for (Polynomial r : input1) {
