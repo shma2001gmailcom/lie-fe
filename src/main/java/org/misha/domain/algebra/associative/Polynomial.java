@@ -17,7 +17,7 @@ import static org.misha.domain.algebra.associative.impl.Monomial.monomial;
  * Time: 11:39 AM
  */
 
-public final class Polynomial implements Iterable<Monomial>, Serializable, Cloneable, Comparable<Polynomial>{
+public class Polynomial implements Iterable<Monomial>, Serializable, Cloneable, Comparable<Polynomial>{
     private static final Logger log = Logger.getLogger(org.misha.domain.algebra.lie.polynomial.Polynomial.class);
     private static final long serialVersionUID = -2597630069340261466L;
     private List<Monomial> monomials = new ArrayList<Monomial>();

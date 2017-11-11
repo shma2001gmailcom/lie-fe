@@ -1,4 +1,4 @@
-package org.misha.domain.algebra.associative.diamond;
+package org.misha.domain.algebra.associative.reduction;
 
 import org.junit.Test;
 import org.misha.domain.algebra.associative.Polynomial;
@@ -17,7 +17,7 @@ public class ReductionTest {
     
     @Test
     public void reduce() throws Exception {
-        Polynomial p = mount("+ y - xyx + yz + z + xyxyxyx");
+        Polynomial p = mount("+ y - xyx + xyxyxyx");
         Polynomial q = mount("+ x - xyx");
         Set<Polynomial> input = new TreeSet<Polynomial>();
         input.add(p);

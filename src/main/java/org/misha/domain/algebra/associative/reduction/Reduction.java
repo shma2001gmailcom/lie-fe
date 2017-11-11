@@ -1,4 +1,4 @@
-package org.misha.domain.algebra.associative.diamond;
+package org.misha.domain.algebra.associative.reduction;
 
 import org.misha.domain.algebra.associative.Polynomial;
 
@@ -20,15 +20,18 @@ import static org.misha.domain.algebra.associative.impl.Monomial.monomial;
 public class Reduction {
     private final Polynomial left;
     private final Polynomial right;
-
+    
     Reduction(Polynomial left, Polynomial right) {
         this.left = left;
         this.right = right;
     }
-
+    
     private Set<Polynomial> reduceOnce() {
         if (left.compareTo(right) < 0) {
-            return new TreeSet<Polynomial>() {{add(left); add(right);}};
+            return new TreeSet<Polynomial>() {{
+                add(left);
+                add(right);
+            }};
         }
         final int leftLeadConst = left.elder().getConst();
         final int rightLeadConst = right.elder().getConst();
@@ -37,34 +40,31 @@ public class Reduction {
         final Pattern pattern = compile(re);
         final Matcher matcher = pattern.matcher(le);
         final Set<Polynomial> result = new TreeSet<Polynomial>();
+        result.add(right);
         if (matcher.find()) {
             Polynomial toAdd = left.times(rightLeadConst)
                     .plus(monomial("+1" + le.substring(0, matcher.start()))
                             .times(right).times(monomial("+1" + le.substring(matcher.end()))).times(leftLeadConst).times(-1));
-            if(!toAdd.isZero()) {
+            if (!toAdd.isZero()) {
                 result.add(toAdd);
             }
-        } else {
-            result.add(left);
-            result.add(right);
         }
         return result;
     }
-
-    public Set<Polynomial> reduce(Set<Polynomial> input, Polynomial by) {
-        Set<Polynomial> result = new TreeSet<Polynomial>();
-        Iterator<Polynomial> it = input.iterator();
-        Polynomial current = null;
-        if (it.hasNext()) {
-            current = it.next();
-            it.remove();
-        }
-        if (current != null) {
-            result.addAll(new Reduction(current, by).reduceOnce());
-        }
+    
+    public Set<Polynomial> reduce() {
+        Set<Polynomial> set = new TreeSet<Polynomial>();
+        set.add(left);
+        set.add(right);
+        int total;
+        Set<Polynomial> result = set;
+        do {
+            total = total(result);
+            result = reduce(result);
+        } while(total(result) < total);
         return result;
     }
-
+    
     private int total(Set<Polynomial> set) {
         int total = 0;
         for (Polynomial p : set) {
@@ -72,7 +72,7 @@ public class Reduction {
         }
         return total;
     }
-
+    
     Set<Polynomial> reduce(Set<Polynomial> input) {
         int total = total(input);
         int currentTotal = total;
@@ -93,7 +93,6 @@ public class Reduction {
             }
             total = currentTotal;
             currentTotal = total(result);
-            while (inputIterator.hasNext()) inputIterator.next();
         }
         while (currentTotal < total);
         return result;
