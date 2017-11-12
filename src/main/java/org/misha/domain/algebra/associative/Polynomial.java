@@ -27,6 +27,7 @@ public class Polynomial implements Iterable<Monomial>, Serializable, Cloneable, 
     }
 
     public int deg() {
+        if(monomials.size() == 0) return -1;
         return elder().deg();
     }
 
@@ -35,7 +36,7 @@ public class Polynomial implements Iterable<Monomial>, Serializable, Cloneable, 
     }
 
     public Monomial elder() {
-        return monomials.get(monomials.size() - 1);
+        return monomials.size() >= 1 ? monomials.get(monomials.size() - 1) : monomial("", 0);
     }
 
     public Polynomial plus(final Monomial m) {

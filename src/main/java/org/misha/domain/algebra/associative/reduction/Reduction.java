@@ -20,17 +20,21 @@ import static org.misha.domain.algebra.associative.impl.Monomial.monomial;
 public class Reduction {
     private final Polynomial left;
     private final Polynomial right;
-    
+
     Reduction(Polynomial left, Polynomial right) {
         this.left = left;
         this.right = right;
     }
-    
-    private Set<Polynomial> reduceOnce() {
+
+    Set<Polynomial> reduceOnce() {
         if (left.compareTo(right) < 0) {
             return new TreeSet<Polynomial>() {{
-                add(left);
-                add(right);
+                if (!left.isZero()) {
+                    add(left);
+                }
+                if (!right.isZero()) {
+                    add(right);
+                }
             }};
         }
         final int leftLeadConst = left.elder().getConst();
@@ -39,21 +43,37 @@ public class Reduction {
         final String re = right.elder().unify().toString().trim().replaceAll("[+-] ", EMPTY);
         final Pattern pattern = compile(re);
         final Matcher matcher = pattern.matcher(le);
-        final Set<Polynomial> result = new TreeSet<Polynomial>();
-        result.add(right);
+        final Set<Polynomial> result = new TreeSet<Polynomial>() {
+
+            @Override
+            public boolean add(Polynomial monomials) {
+                return !monomials.isZero() && super.add(monomials);
+            }
+
+            {
+            }
+        };
         if (matcher.find()) {
             Polynomial toAdd = left.times(rightLeadConst)
-                    .plus(monomial("+1" + le.substring(0, matcher.start()))
-                            .times(right).times(monomial("+1" + le.substring(matcher.end()))).times(leftLeadConst).times(-1));
+                                   .plus(monomial("+1" + le.substring(0, matcher.start())).times(right).times(monomial(
+                                           "+1" + le.substring(matcher.end()))).times(leftLeadConst).times(-1));
             if (!toAdd.isZero()) {
                 result.add(toAdd);
             }
+        } else {
+            result.add(left);
         }
         return result;
     }
-    
+
     public Set<Polynomial> reduce() {
-        Set<Polynomial> set = new TreeSet<Polynomial>();
+        Set<Polynomial> set = new TreeSet<Polynomial>() {
+
+            @Override
+            public boolean add(Polynomial monomials) {
+                return !monomials.isZero() && super.add(monomials);
+            }
+        };
         set.add(left);
         set.add(right);
         int total;
@@ -61,35 +81,43 @@ public class Reduction {
         do {
             total = total(result);
             result = reduce(result);
-        } while(total(result) < total);
+        }
+        while (total(result) < total);
         return result;
     }
-    
-    private int total(Set<Polynomial> set) {
+
+    static int total(Set<Polynomial> set) {
         int total = 0;
         for (Polynomial p : set) {
-            total = total < p.deg() ? p.deg() : total;
+            total += p.deg();
         }
         return total;
     }
-    
+
     Set<Polynomial> reduce(Set<Polynomial> input) {
         int total = total(input);
         int currentTotal = total;
         Polynomial by = null;
-        Set<Polynomial> result = new TreeSet<Polynomial>();
+        Set<Polynomial> result = new TreeSet<Polynomial>() {
+
+            @Override
+            public boolean add(Polynomial monomials) {
+                return !monomials.isZero() && super.add(monomials);
+            }
+        };
         do {
             Iterator<Polynomial> inputIterator = input.iterator();
             if (inputIterator.hasNext()) {
                 by = inputIterator.next();
-                result.add(by);
+                if (!by.isZero()) {
+                    result.add(by);
+                }
             }
             while (inputIterator.hasNext()) {
                 Polynomial p = inputIterator.next();
                 inputIterator.remove();
                 Set<Polynomial> once = new Reduction(p, by).reduceOnce();
                 result.addAll(once);
-                result.addAll(input);
             }
             total = currentTotal;
             currentTotal = total(result);

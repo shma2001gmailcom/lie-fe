@@ -3,22 +3,30 @@ package org.misha.domain.algebra.associative.reduction;
 import org.misha.domain.algebra.associative.Polynomial;
 
 import javax.annotation.Nonnull;
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
+
+import static java.util.Arrays.asList;
 
 /**
  * author: misha
  * date: 09.11.17
  */
 public class PolynomialSet implements Iterable<MarkedPolynomial> {
-    private final Set<MarkedPolynomial> set = new TreeSet<MarkedPolynomial>();
+    private final Set<MarkedPolynomial> set = new TreeSet<MarkedPolynomial>()  {
+
+        @Override
+        public boolean add(final MarkedPolynomial mp) {
+            return !mp.isZero() && super.add(mp);
+        }
+    };
     
     void add(Polynomial p) {
         set.add(new MarkedPolynomial(p));
     }
-    
+
     void add(MarkedPolynomial p) {
         set.add(p);
     }
@@ -28,9 +36,14 @@ public class PolynomialSet implements Iterable<MarkedPolynomial> {
     }
     
     void addAll(MarkedPolynomial... polynomials) {
-        set.addAll(Arrays.asList(polynomials));
+        set.addAll(asList(polynomials));
     }
-    
+
+    void addMarked(Collection<MarkedPolynomial> polynomials) {
+
+        set.addAll(polynomials);
+    }
+
     Polynomial remove(Polynomial p) {
         return set.remove(new MarkedPolynomial(p)) ? p : null;
     }
