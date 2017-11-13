@@ -28,6 +28,6 @@ public class Junction {
         final Top top = new Diamond(first.elder(), second.elder()).find();
         System.out.println(top.toString());
         return mount(top.head()).times(second).times(leftConst)
-                                .plus(first.times(mount(top.tail())).times(rightConst));
+                                .plus(first.times(mount(top.tail())).times(-rightConst));
     }
 }
