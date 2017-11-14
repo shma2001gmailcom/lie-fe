@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import static java.util.Arrays.asList;
 
@@ -15,7 +16,7 @@ import static java.util.Arrays.asList;
  * date: 09.11.17
  */
 public class PolynomialSet implements Iterable<MarkedPolynomial> {
-    private final Set<MarkedPolynomial> set = new TreeSet<MarkedPolynomial>()  {
+    private final Set<MarkedPolynomial> set = new ConcurrentSkipListSet<MarkedPolynomial>()  {
 
         @Override
         public boolean add(final MarkedPolynomial mp) {
@@ -80,5 +81,12 @@ public class PolynomialSet implements Iterable<MarkedPolynomial> {
     @Nonnull
     public Iterator<MarkedPolynomial> iterator() {
         return set.iterator();
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (final MarkedPolynomial mp : set) sb.append(mp.mince()).append('\n');
+        return sb.toString();
     }
 }

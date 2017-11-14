@@ -1,6 +1,7 @@
 package org.misha.domain.algebra.associative.reduction;
 
 import org.misha.domain.algebra.associative.Polynomial;
+import org.misha.domain.algebra.associative.impl.Monomial;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -20,12 +21,12 @@ import static org.misha.domain.algebra.associative.impl.Monomial.monomial;
 public class Reduction {
     private final Polynomial left;
     private final Polynomial right;
-
+    
     Reduction(Polynomial left, Polynomial right) {
         this.left = left;
         this.right = right;
     }
-
+    
     Set<Polynomial> reduceOnce() {
         if (left.compareTo(right) < 0) {
             return new TreeSet<Polynomial>() {{
@@ -44,62 +45,48 @@ public class Reduction {
         final Pattern pattern = compile(re);
         final Matcher matcher = pattern.matcher(le);
         final Set<Polynomial> result = new TreeSet<Polynomial>() {
-
+            
             @Override
             public boolean add(Polynomial monomials) {
                 return !monomials.isZero() && super.add(monomials);
-            }
-
-            {
             }
         };
         if (matcher.find()) {
             Polynomial toAdd = left.times(rightLeadConst)
-                                   .plus(monomial("+1" + le.substring(0, matcher.start())).times(right).times(monomial(
-                                           "+1" + le.substring(matcher.end()))).times(leftLeadConst).times(-1));
+                    .plus(monomial("+1" + le.substring(0, matcher.start())).times(right).times(monomial(
+                            "+1" + le.substring(matcher.end()))).times(leftLeadConst).times(-1));
+            System.out.println(" reduction: {");
+            System.out.println(left.times(rightLeadConst));
+            System.out.println("[" + monomial("+1" + le.substring(0, matcher.start())) + "]" + "\u00B7" + "[" + right.times(-1) + "]" + "\u00B7" + "[" + monomial(
+                    "+1" + le.substring(matcher.end())) + "]\n----------------\n" + toAdd);
+            System.out.println("}");
             if (!toAdd.isZero()) {
                 result.add(toAdd);
             }
         } else {
+            System.out.println(" reduction:{}");
             result.add(left);
         }
         return result;
     }
-
-    public Set<Polynomial> reduce() {
-        Set<Polynomial> set = new TreeSet<Polynomial>() {
-
-            @Override
-            public boolean add(Polynomial monomials) {
-                return !monomials.isZero() && super.add(monomials);
+    
+    static Monomial total(Set<Polynomial> set) {
+        if (!set.isEmpty()) {
+            Monomial result = set.iterator().next().elder();
+            for (Polynomial p : set) {
+                result = p.elder().compareTo(result) > 0 ? p.elder() : result;
             }
-        };
-        set.add(left);
-        set.add(right);
-        int total;
-        Set<Polynomial> result = set;
-        do {
-            total = total(result);
-            result = reduce(result);
+            return result;
         }
-        while (total(result) < total);
-        return result;
+        return monomial("", 1);
     }
-
-    static int total(Set<Polynomial> set) {
-        int total = 0;
-        for (Polynomial p : set) {
-            total += p.deg();
-        }
-        return total;
-    }
-
-    Set<Polynomial> reduce(Set<Polynomial> input) {
-        int total = total(input);
-        int currentTotal = total;
+    
+    static Set<Polynomial> reduce(Set<Polynomial> input) {
+        Monomial total = total(input);
+        Monomial currentTotal = total;
         Polynomial by = null;
         Set<Polynomial> result = new TreeSet<Polynomial>() {
-
+            
             @Override
             public boolean add(Polynomial monomials) {
                 return !monomials.isZero() && super.add(monomials);
@@ -108,10 +95,10 @@ public class Reduction {
         do {
             Iterator<Polynomial> inputIterator = input.iterator();
             if (inputIterator.hasNext()) {
+                printSet(input);
                 by = inputIterator.next();
-                if (!by.isZero()) {
-                    result.add(by);
-                }
+                System.out.println("by = " + by);
+                result.add(by);
             }
             while (inputIterator.hasNext()) {
                 Polynomial p = inputIterator.next();
@@ -121,8 +108,15 @@ public class Reduction {
             }
             total = currentTotal;
             currentTotal = total(result);
-        }
-        while (currentTotal < total);
+        } while (currentTotal.compareTo(total) < 0);
         return result;
+    }
+    
+    private static void printSet(final Set<Polynomial> input) {
+        System.out.println("set{");
+        for (Polynomial r : input) {
+            System.out.println("  " + r);
+        }
+        System.out.println("}");
     }
 }
