@@ -22,7 +22,7 @@ public class JunctionTest {
     
     @Test
     public void testJoin() throws Exception {
-        Polynomial first = mount("+ xy - xyx - xyx + yxx");
+        Polynomial first = mount("+ xxy - xyx - xyx + yxx");
         Polynomial second = mount("+ xyy - yxy - yxy + yyx");
         Polynomial junction21 = new Junction(second, first).join();
         System.out.println(junction21);
