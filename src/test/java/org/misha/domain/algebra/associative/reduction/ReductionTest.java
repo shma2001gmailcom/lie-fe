@@ -20,10 +20,10 @@ public class ReductionTest {
     
     @Test
     public void reduce() throws Exception {
-        Polynomial p = mount("+ x - y");
-        Polynomial q = mount("+ xy - yx");
-        Polynomial s = mount("+ xyx - yxx");
-        Polynomial t = mount("+ yxy + yyx");
+        Polynomial p = mount("+ + xy - x");
+        Polynomial q = mount("- x - y - z - xy - yy - zx + zxy");
+        Polynomial s = mount("+ xz - x");
+        Polynomial t = mount("+ zy -y");
         Set<Polynomial> input = new TreeSet<Polynomial>();
         input.add(p);
         input.add(q);
