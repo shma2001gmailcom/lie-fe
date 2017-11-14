@@ -70,7 +70,7 @@ public class Reduction {
         return result;
     }
     
-    static Monomial total(Set<Polynomial> set) {
+    public static Monomial total(Set<Polynomial> set) {
         if (!set.isEmpty()) {
             Monomial result = set.iterator().next().elder();
             for (Polynomial p : set) {
@@ -81,7 +81,7 @@ public class Reduction {
         return monomial("", 1);
     }
     
-    static Set<Polynomial> reduce(Set<Polynomial> input) {
+    public static Set<Polynomial> reduce(Set<Polynomial> input) {
         Monomial total = total(input);
         Monomial currentTotal = total;
         Polynomial by = null;
