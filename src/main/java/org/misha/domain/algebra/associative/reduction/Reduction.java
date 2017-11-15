@@ -58,7 +58,7 @@ public class Reduction {
             System.out.println(" reduction: {");
             System.out.println(left.times(rightLeadConst));
             System.out.println("[" + monomial("+1" + le.substring(0, matcher.start())) + "]" + "\u00B7" + "[" + right.times(-1) + "]" + "\u00B7" + "[" + monomial(
-                    "+1" + le.substring(matcher.end())) + "]\n----------------\n" + toAdd);
+                    "+1" + le.substring(matcher.end())).times(leftLeadConst) + "]\n----------------\n" + toAdd);
             System.out.println("}");
             if (!toAdd.isZero()) {
                 result.add(toAdd);
@@ -118,5 +118,32 @@ public class Reduction {
             System.out.println("  " + r);
         }
         System.out.println("}");
+    }
+    
+    public static Set<Polynomial> doReductions(Set<Polynomial> input) {
+        Monomial totalAfter = monomial("", 1);
+        Monomial totalBefore = total(input);
+        input = doReductions(input, totalAfter, totalBefore);
+        Polynomial x;
+        while (totalAfter.compareTo(totalBefore) < 0) {
+            x = input.iterator().next();
+            input.remove(x);
+            totalBefore = total(input);
+            input = doReductions(input, totalAfter, totalBefore);
+            totalAfter = total(input);
+            input.add(x);
+        }
+        return input;
+    }
+    
+    private static Set<Polynomial> doReductions(
+            Set<Polynomial> input, Monomial totalAfter, Monomial totalBefore
+    ) {
+        while (totalAfter.compareTo(totalBefore) < 0) {
+            totalBefore = total(input);
+            input = Reduction.reduce(input);
+            totalAfter = total(input);
+        }
+        return input;
     }
 }

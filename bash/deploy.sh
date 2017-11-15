@@ -15,14 +15,15 @@ appname="lie-fe"
 ###############################################
 #appfolder="/home/mshevelin/workspace/"${appname}"-assembla"
 #tomcatfolder="/home/mshevelin/workspace/tomcat6"
-javahome="/usr/lib/jvm/java-7-oracle"
+#javahome="/usr/lib/jvm/java-7-oracle"
 
 ################################################
 ################ AT HOME #######################
 ################################################
 appfolder="/home/misha/workspace/"${appname}/lie-fe
-tomcatfolder="/home/misha/workspace/tomcat6"
-M3_HOME='/opt/apache-maven-3.2.2'
+tomcatfolder="/home/misha/workspace/tomcat"
+#M3_HOME='/opt/apache-maven-3.2.2'
+M3_HOME=/home/misha/workspace/apache-maven-3.3.9
 export M3_HOME
 M3=${M3_HOME}/bin
 export M3
@@ -72,5 +73,5 @@ echo         starting tomcat...
 echo ///////////////////////////
 bash startup.sh
 sleep 5
-#firefox "http://localhost:8080/"${appname}
-chromium-browser "http://localhost:8080/"${appname}
+firefox "http://localhost:8080/"${appname}
+#chromium-browser "http://localhost:8080/"${appname}
