@@ -1,5 +1,6 @@
 package org.misha.utils.copy;
 
+import javax.annotation.Nonnull;
 import java.io.InputStream;
 
 import static java.lang.System.arraycopy;
@@ -14,16 +15,10 @@ import static java.lang.System.arraycopy;
 final class FastByteInputStream extends InputStream {
     private static final int INT = 255;
     private final byte[] bytes;
-    /**
-     * Buffer size limit
-     */
-    private final int count;
-    /**
-     * Number of bytes have been read from the buffer
-     */
-    private int position;
+    private final int count;// buffer size limit
+    private int position;// number of bytes have been read from the buffer
 
-    public FastByteInputStream(final byte[] buffer, final int limit) {
+    FastByteInputStream(final byte[] buffer, final int limit) {
         //noinspection AssignmentToCollectionOrArrayFieldFromParameter
         bytes = buffer;
         count = limit;
@@ -40,7 +35,7 @@ final class FastByteInputStream extends InputStream {
     }
 
     @Override
-    public final int read(final byte[] b, final int offset, int length) {
+    public final int read(@Nonnull final byte[] b, final int offset, int length) {
         if (position >= count) {
             return -1;
         }
@@ -55,7 +50,7 @@ final class FastByteInputStream extends InputStream {
     @Override
     public final long skip(long n) {
         if (position + n > count) {
-            n = count - position;
+            n = (long)count - (long)position;
         }
         if (n < 0) {
             return 0;

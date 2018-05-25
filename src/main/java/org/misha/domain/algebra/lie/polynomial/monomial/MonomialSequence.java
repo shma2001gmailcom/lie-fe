@@ -83,17 +83,13 @@ class MonomialSequence {
 
     public static void main(String... args) {
         final BeanFactory factory = new ClassPathXmlApplicationContext("applicationContext.xml");
-        MonomialService monomialService = (MonomialService) factory.getBean("monomialService");
+        final MonomialService monomialService = (MonomialService) factory.getBean("monomialService");
         final Monomial[] alphabet = new Monomial[3];
         for (int i = 0; i < 3; ++i) {
             alphabet[i] = monomialService.findBySmallId((long) i + 1);
         }
-        final MonomialSequence monomialSequence = new MonomialSequence(alphabet);
         int i = 0;
-        while (i < 10) {
-            i = monomialSequence.getNextDbMonomial(monomialService);
-            ++i;
-        }
+        for ( ; i < 10;  i = new MonomialSequence(alphabet).getNextDbMonomial(monomialService), ++i) ;
         log.debug(i);
     }
 }

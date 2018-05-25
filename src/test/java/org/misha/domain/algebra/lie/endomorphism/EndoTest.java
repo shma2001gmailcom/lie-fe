@@ -6,6 +6,7 @@ package org.misha.domain.algebra.lie.endomorphism;
 
 import org.apache.log4j.xml.DOMConfigurator;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.misha.domain.algebra.lie.polynomial.monomial.Monomial;
 import org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils;
@@ -125,6 +126,7 @@ public class EndoTest {
         assertEquals(e.fox().toString(), "(-2; + c; - b)\n(0; 1; 0)\n(0; 0; 1)\n");
     }
 
+    @Ignore
     @Test
     public void testTimes() throws CloneNotSupportedException {
         /*  (+ a; + b; + c + 3[b, a])

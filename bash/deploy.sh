@@ -20,9 +20,9 @@ appname="lie-fe"
 ################################################
 ################ AT HOME #######################
 ################################################
-appfolder="/home/misha/workspace/"${appname}/lie-fe
-tomcatfolder="/home/misha/workspace/tomcat6"
-M2_HOME='/opt/apache-maven-3.2.2/'
+appfolder="/home/misha/sym-misha/workspace/"${appname}
+tomcatfolder="/home/misha/sym-misha/workspace/tomcat"
+M2_HOME='/home/misha/sym-misha/workspace/apache-maven-3.3.9'
 export M2_HOME
 M2=${M2_HOME}/bin
 export M2
@@ -73,4 +73,4 @@ echo ///////////////////////////
 bash startup.sh
 sleep 5
 #firefox "http://localhost:8080/"${appname}
-chromium-browser "http://localhost:8080/"${appname}
+google-chrome-stable "http://localhost:8080/"${appname}

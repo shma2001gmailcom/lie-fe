@@ -48,7 +48,7 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
     }
 
     public static Monomial monomial(final String s) {
-        final Pattern pattern = Pattern.compile("(\\+|-)( *)([0-9]*)([a-zA-Z]*)");
+        final Pattern pattern = Pattern.compile("([+-])( *)([0-9]*)([a-zA-Z]*)");
         final Matcher matcher = pattern.matcher(s.trim());
         final String lead;
         if (matcher.find()) {
@@ -76,23 +76,29 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
         return sequence.size();
     }
 
-    public Monomial times(final Monomial other) {
+    public Monomial times(@Nonnull final Monomial other) {
         final Monomial result = copy();
         final Monomial copy = other.copy();
-        result.sequence.addAll(copy.sequence);
-        result.constant *= copy.constant;
+        if (result != null && copy != null) {
+            result.sequence.addAll(copy.sequence);
+            result.constant *= copy.constant;
+        }
         return result;
     }
 
     public Monomial times(final int i) {
         final Monomial copy = copy();
-        copy.constant *= i;
+        if (copy != null) {
+            copy.constant *= i;
+        }
         return copy;
     }
 
     Monomial unify() {
         final Monomial copy = copy();
-        copy.constant = 1;
+        if (copy != null) {
+            copy.constant = 1;
+        }
         return copy;
     }
 
@@ -116,14 +122,13 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
         if (deg() == 0) {
             return "" + constant;
         }
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         for (final Character c : sequence) {
-            sb = sb.append(c);
+            sb.append(c);
         }
-        return (constant == 1 ? "+ " :
-                constant > 0 ? "+ " + constant : constant == -1 ? "- " : "- " + -constant
-        ) +
-                sb.toString() + " ";
+        final String s1 = constant == -1 ? "- " : "- " + -constant;
+        final String s = constant > 0 ? "+ " + constant : s1;
+        return (constant == 1 ? "+ " :  s) + sb.toString() + " ";
     }
 
     public boolean isSimilar(final Monomial m) {
@@ -161,7 +166,8 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
 
     public Monomial abel() {
         final Monomial result = copy();
-        Collections.sort(result.sequence);
+        if (result != null)
+            Collections.sort(result.sequence);
         return result;
     }
 
@@ -171,10 +177,13 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
             final Character c = sequence.get(i);
             final Monomial key = monomial(Character.toString(c), 1);
             Polynomial value = new Polynomial();
-            final List<Character> newSequence;
+            List<Character> newSequence = null;
             if (sequence.get(0).equals(c)) {
-                newSequence = copy().sequence;
-                newSequence.remove(0);
+                final Monomial copy = copy();
+                if (copy != null) {
+                    newSequence = copy.sequence;
+                    newSequence.remove(0);
+                }
                 value = value.plus(new Monomial(newSequence, getConst()));
             }
             result.put(key, value);
@@ -190,9 +199,7 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
         try {
             clone = (Monomial) super.clone();
             clone.sequence = new ArrayList<Character>();
-            for (final char c : sequence) {
-                clone.sequence.add(c);
-            }
+            clone.sequence.addAll(sequence);
             clone.constant = constant;
         } catch (CloneNotSupportedException e) {
             log.error(e);

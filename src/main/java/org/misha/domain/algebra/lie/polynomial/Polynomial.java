@@ -114,7 +114,6 @@ public final class Polynomial implements Iterable<Monomial>, Cloneable {
      */
     int getConstant(final Monomial m) {
         for (final Monomial monomial : monomials) {
-            //final Monomial copy = monomial.copy();
             if (monomial.isSimilar(m)) {
                 return monomial.getConst();
             }

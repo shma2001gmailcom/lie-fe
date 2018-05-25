@@ -27,7 +27,7 @@ public final class PolynomialUtils {
 
     private static Iterable<Summand> getSummands(final String expression) {
         String summands = StringUtils.remove(expression, " ");
-        final Collection<Summand> result = new ArrayList<Summand>();
+        final Collection<Summand> result = new ArrayList<>();
         String pattern = "(\\+|\\-)([0-9]*)([a-zA-Z]*)(-|\\+)";
         summands = findNextSummand(pattern, summands, result);
         pattern = "(-|\\+)([0-9 ]*)([a-zA-Z]+)";

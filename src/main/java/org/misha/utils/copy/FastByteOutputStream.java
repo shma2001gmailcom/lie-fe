@@ -1,5 +1,6 @@
 package org.misha.utils.copy;
 
+import javax.annotation.Nonnull;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -37,14 +38,14 @@ final class FastByteOutputStream extends OutputStream {
     }
 
     @Override
-    public final void write(final byte[] b) {
+    public final void write(@Nonnull final byte[] b) {
         checkBufferThenWrite(size + b.length);
         arraycopy(b, 0, bytes, size, b.length);
         size += b.length;
     }
 
     @Override
-    public final void write(final byte[] b, final int offset, final int length) {
+    public final void write(@Nonnull final byte[] b, final int offset, final int length) {
         checkBufferThenWrite(size + length);
         arraycopy(b, offset, bytes, size, length);
         size += length;
@@ -56,7 +57,7 @@ final class FastByteOutputStream extends OutputStream {
         bytes[size++] = (byte) b;
     }
 
-    public InputStream getInputStream() {
+    InputStream getInputStream() {
         return new FastByteInputStream(bytes, size);
     }
 }

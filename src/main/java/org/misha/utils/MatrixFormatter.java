@@ -25,7 +25,7 @@ public final class MatrixFormatter {
 
     private MatrixFormatter(final JacobiMatrix m) {
         matrix = m;
-        columnWidths = new ArrayList<Integer>();
+        columnWidths = new ArrayList<>();
     }
 
     public static MatrixFormatter get(final JacobiMatrix matrix) {
