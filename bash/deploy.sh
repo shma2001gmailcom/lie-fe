@@ -14,30 +14,31 @@ appname="lie-fe"
 ################ AT WORK ######################
 ###############################################
 #appfolder="/home/mshevelin/workspace/"${appname}"-assembla"
-#tomcatfolder="/home/mshevelin/workspace/tomcat6"
-#javahome="/usr/lib/jvm/jdk-6-oracle"
+#tomcatfolder="C:\Users\mikhail_shevelin\workspace\tomcat8"
+javahome="C:\jdk1.8.0_171"
 
 ################################################
 ################ AT HOME #######################
 ################################################
-appfolder="/home/misha/sym-misha/workspace/"${appname}
-tomcatfolder="/home/misha/sym-misha/workspace/tomcat"
-M2_HOME='/home/misha/sym-misha/workspace/apache-maven-3.3.9'
+appfolder="C:/Users\mikhail_shevelin/workspace/lie-fe/"${appname}
+tomcatfolder="C:/Users/mikhail_shevelin/workspace/tomcat8"
+M2_HOME='C:/maven-3.5.4'
 export M2_HOME
 M2=${M2_HOME}/bin
 export M2
 PATH=${PATH}:${M2}
 export PATH
+mvn=${M2}/mvn.cmd
 logfile='./1'
 
 ################################################
-#export JAVA_HOME=${javahome}
+export JAVA_HOME=${javahome}
 tomcatbin=${tomcatfolder}/bin
 tomcatwebapps=${tomcatfolder}/webapps
 if [ ! -e ${appfolder} ]; then echo 'ERROR: no appfolder' ${appfolder} 'found';exit 1; fi
 if [ ! -e ${tomcatbin} ]; then echo 'ERROR: no tomcatbin found';exit 1; fi
 cd ${appfolder}
-mvn clean install $@ | tee out.txt ; test ${PIPESTATUS[0]} -eq 0
+${mvn} clean install $@ | tee out.txt ; test ${PIPESTATUS[0]} -eq 0
 if [ ${PIPESTATUS[0]} -ne "0" ]; then
     echo ===================================================
     echo maven build failed, see output for details;exit 1;
@@ -52,6 +53,7 @@ if [ "$(ps axf | grep catalina | grep -v grep)" ]; then
     echo ///////////////////////////
     echo        tomcat has been stopped
 fi
+bash shutdown.sh
 cd ${tomcatwebapps}
 if [ -e ${tomcatwebapps}/${appname} ]; then
     echo ///////////////////////////
@@ -72,5 +74,5 @@ echo         starting tomcat...
 echo ///////////////////////////
 bash startup.sh
 sleep 5
-#firefox "http://localhost:8080/"${appname}
-google-chrome-stable "http://localhost:8080/"${appname}
+# firefox "http://localhost:8080/"${appname}
+"C:/Program Files (x86)/Google/Chrome/Application/chrome.exe" "http://localhost:8080/"${appname}
