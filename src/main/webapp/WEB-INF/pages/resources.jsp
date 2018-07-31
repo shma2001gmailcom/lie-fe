@@ -1,12 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  ~ Copyright (c) 2014. Misha's property, all rights reserved.
-  --%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
     <c:set var="context" value="${pageContext.request.contextPath}"/>
+    <link rel="shortcut icon" href="${context}/resources/pictures/favicon.ico" type="image/x-icon">
+    <title></title>
     <script type="text/javascript"
             src="<c:out value="${context}"/>/resources/jquery/jquery-2.1.1.min.js"></script>
     <script type="text/javascript"

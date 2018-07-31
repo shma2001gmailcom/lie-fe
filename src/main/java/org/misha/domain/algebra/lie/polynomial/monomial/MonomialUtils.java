@@ -71,15 +71,13 @@ public final class MonomialUtils {
         if (right != null && left != null) {
             right.setConst(1);
             left.setConst(1);
-            if (right.equals(left)) {
-                return true;
-            }
+            return right.equals(left);
         }
         return false;
     }
 
     static MatchResult getMatcher(final String s) throws IllegalArgumentException {
-        final Pattern pattern = Pattern.compile("(\\+|-)*([0-9 ])*([\\u0001-\\u2000])");
+        final Pattern pattern = Pattern.compile("([+\\-])*([0-9 ])*([\\u0001-\\u2000])");
         final Matcher matcher = pattern.matcher(s);
         if (!matcher.find()) {
             throw new IllegalArgumentException(String.format(CAN_T_RECOGNIZE_LETTER, s));
