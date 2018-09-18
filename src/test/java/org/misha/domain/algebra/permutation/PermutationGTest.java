@@ -106,8 +106,8 @@ public class PermutationGTest {
 
     @Test
     public void sym3Test() {
-        final Collection<PermutationG<Integer>> set = new TreeSet<PermutationG<Integer>>();
-        set.addAll(PermutationG.sequence(PermutationG.create(1, 2, 3)));
+        final Collection<PermutationG<Integer>> set = new TreeSet<>(
+                PermutationG.sequence(PermutationG.create(1, 2, 3)));
         final Collection<PermutationG<Integer>> expected = new TreeSet<PermutationG<Integer>>();
         expected.add(create(1, 2, 3));
         expected.add(create(1, 3, 2));
@@ -115,14 +115,14 @@ public class PermutationGTest {
         expected.add(create(2, 3, 1));
         expected.add(create(3, 1, 2));
         expected.add(create(3, 2, 1));
-        assertTrue(set.size() == expected.size());
+        assertEquals(set.size(), expected.size());
         assertTrue(set.containsAll(expected) && expected.containsAll(set));
     }
 
     @Test
     public void sym4Test() {
-        final Collection<PermutationG<Integer>> set = new TreeSet<PermutationG<Integer>>();
-        set.addAll(PermutationG.sequence(PermutationG.create(1, 2, 3, 4)));
+        final Collection<PermutationG<Integer>> set = new TreeSet<>(
+                PermutationG.sequence(PermutationG.create(1, 2, 3, 4)));
         final Collection<PermutationG<Integer>> expected = new TreeSet<PermutationG<Integer>>();
         expected.add(create(1, 2, 3, 4));
         expected.add(create(1, 2, 4, 3));
@@ -148,24 +148,22 @@ public class PermutationGTest {
         expected.add(create(4, 2, 3, 1));
         expected.add(create(4, 3, 1, 2));
         expected.add(create(4, 3, 2, 1));
-        assertTrue(set.size() == expected.size());
+        assertEquals(set.size(), expected.size());
         assertTrue(set.containsAll(expected) && expected.containsAll(set));
     }
 
     @Test
     public void sym5Test() {
-        final Collection<PermutationG<Integer>> set = new TreeSet<PermutationG<Integer>>();
-        set.addAll(PermutationG.sequence(PermutationG.create(1, 2, 3, 4, 5)));
+        final Collection<PermutationG<Integer>> set = new TreeSet<>(
+                PermutationG.sequence(PermutationG.create(1, 2, 3, 4, 5)));
         final Collection<PermutationG<Integer>> expected = new TreeSet<PermutationG<Integer>>();
         readSym5To(expected);
-        assertTrue(set.size() == expected.size());
+        assertEquals(set.size(), expected.size());
         assertTrue(set.containsAll(expected) && expected.containsAll(set));
     }
 
     private void readSym5To(final Collection<PermutationG<Integer>> expected) {
-        Scanner sc = null;
-        try {
-            sc = new Scanner(new File("./sym5.txt"), "UTF-8");
+        try (Scanner sc = new Scanner(new File("./sym5.txt"), "UTF-8")) {
             String line;
             while (sc.hasNextLine()) {
                 line = sc.nextLine();
@@ -175,17 +173,13 @@ public class PermutationGTest {
             }
         } catch (final Throwable e) {
             log.error(e);
-        } finally {
-            if (sc != null) {
-                sc.close();
-            }
         }
     }
 
     @Test
     public void generateSequence() {
-        final Collection<PermutationG<Monomial>> set = new TreeSet<PermutationG<Monomial>>();
-        set.addAll(PermutationG.sequence(create("a", "b", "c", "d", "e", "f")));
+        final Collection<PermutationG<Monomial>> set = new TreeSet<>(
+                PermutationG.sequence(create("a", "b", "c", "d", "e", "f")));
         assertEquals(2 * 3 * 4 * 5 * 6, set.size());
     }
 }

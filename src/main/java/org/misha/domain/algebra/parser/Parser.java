@@ -32,7 +32,7 @@ public final class Parser {
     private static final char lBracket = '[';
     private static final char rBracket = ']';
     private final String expression;
-    private List<Summand> summands = new ArrayList<Summand>();
+    private List<Summand> summands = new ArrayList<>();
 
     public Parser(final String expression) {
         this.expression = expression;
@@ -44,8 +44,8 @@ public final class Parser {
     }
 
     public static String getCore(final String s) {
-        final Matcher matcher = compile("(-|\\+)([0-9 ]*)(.*)").matcher(s);
-        return matcher.find() ? matcher.group(3) : compile("(-|\\+)([0-9 ]*)(a-zA-Z)").matcher(s).find() ?
+        final Matcher matcher = compile("([-+])([0-9 ]*)(.*)").matcher(s);
+        return matcher.find() ? matcher.group(3) : compile("([-+])([0-9 ]*)(a-zA-Z)").matcher(s).find() ?
                 matcher.group(3) : s;
     }
 
@@ -123,7 +123,7 @@ public final class Parser {
     }
 
     private Queue<Character> checkAndPrepare(String summand) throws IllegalArgumentException {
-        final Queue<Character> queue = new LinkedList<Character>();
+        final Queue<Character> queue = new LinkedList<>();
         for (final Character c : summand.toCharArray()) {
             queue.add(c);
         }
@@ -171,7 +171,7 @@ public final class Parser {
 
     private List<Summand> getSummands() {
         String summands = expression;
-        final List<Summand> result = new ArrayList<Summand>();
+        final List<Summand> result = new ArrayList<>();
         String pattern = "(-|\\+)([0-9 ]*)([a-zA-Z ,\\Q[\\E\\Q]\\E]+)(-|\\+)";
         summands = findNextSummand(pattern, summands, result);
         pattern = "(-|\\+)([0-9 ]*)([a-zA-Z ,\\Q[\\E\\Q]\\E]+)";

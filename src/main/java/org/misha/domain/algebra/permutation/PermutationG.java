@@ -30,16 +30,17 @@ class PermutationG<T extends Comparable<T>> implements Comparable<PermutationG<T
     private final int degree;
     private final HashMap<T, T> raw;
 
+    @SafeVarargs
     private PermutationG(final T... objects) {
         degree = objects.length;
-        raw = new HashMap<T, T>(degree);
-        set = new TreeSet<T>();
+        raw = new HashMap<>(degree);
+        set = new TreeSet<>();
     }
 
     private PermutationG(final Collection<T> objects) {
         degree = objects.size();
-        raw = new HashMap<T, T>(degree);
-        set = new TreeSet<T>();
+        raw = new HashMap<>(degree);
+        set = new TreeSet<>();
     }
 
     /**
@@ -49,8 +50,9 @@ class PermutationG<T extends Comparable<T>> implements Comparable<PermutationG<T
      * @param <S>     type of objects permuted
      * @return new instance
      */
+    @SafeVarargs
     static <S extends Comparable<S>> PermutationG<S> create(final S... objects) {
-        final PermutationG<S> p = new PermutationG<S>(objects);
+        final PermutationG<S> p = new PermutationG<>(objects);
         Collections.addAll(p.set, objects);
         int i = 0;
         for (final S t : p.set) {
@@ -70,7 +72,7 @@ class PermutationG<T extends Comparable<T>> implements Comparable<PermutationG<T
     static <S extends Comparable<S>> PermutationG<S> create(
             final Collection<S> objects
     ) {
-        final PermutationG<S> p = new PermutationG<S>(objects);
+        final PermutationG<S> p = new PermutationG<>(objects);
         p.set.addAll(objects);
         final Iterator<S> it = objects.iterator();
         for (final S t : p.set) {
@@ -184,7 +186,7 @@ class PermutationG<T extends Comparable<T>> implements Comparable<PermutationG<T
     }
 
     private List<T> asList() {
-        final List<T> list = new ArrayList<T>();
+        final List<T> list = new ArrayList<>();
         for (final T key : set) {
             list.add(raw.get(key));
         }
@@ -196,7 +198,7 @@ class PermutationG<T extends Comparable<T>> implements Comparable<PermutationG<T
         if (degree == 2) {
             return makeForDegreeTwo(result);
         }
-        final Collection<T> pattern = new ArrayList<T>(degree);
+        final Collection<T> pattern = new ArrayList<>(degree);
         makeFirstBlock(result, shift(), pattern);
         final int bound = result.size();
         replicate(result, bound);

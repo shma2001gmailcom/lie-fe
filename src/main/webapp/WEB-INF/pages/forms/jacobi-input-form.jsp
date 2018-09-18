@@ -12,7 +12,7 @@
     <div>
         <label>
             <form:input type="text" class="text-field" width="150" size="150px" path="value"
-                        value="(- a - 2[b, c] + 2[c ,[a, c]]; + b + 2[a, c] - 2[c, [b, c]] + 2[c, [c, [a, c]]]; + c)"/>
+                        value="(- a - 2[b, c] + 2[c, [a, c]]; + b + 2[a, c] - 2[c, [b, c]] + 2[c, [c, [a, c]]]; + c)"/>
         </label>
     </div>
     <br/>

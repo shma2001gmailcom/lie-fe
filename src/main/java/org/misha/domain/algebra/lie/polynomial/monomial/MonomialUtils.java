@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 public final class MonomialUtils {
     private static final String CAN_T_RECOGNIZE_LETTER = "can't recognize valid letter for the String '%s'.";
+    private static final Pattern PATTERN =Pattern.compile("([+\\-])*([0-9 ])*([\\u0001-\\u2000])");
 
     private MonomialUtils() {
     }
@@ -77,8 +78,7 @@ public final class MonomialUtils {
     }
 
     static MatchResult getMatcher(final String s) throws IllegalArgumentException {
-        final Pattern pattern = Pattern.compile("([+\\-])*([0-9 ])*([\\u0001-\\u2000])");
-        final Matcher matcher = pattern.matcher(s);
+        final Matcher matcher = PATTERN.matcher(s);
         if (!matcher.find()) {
             throw new IllegalArgumentException(String.format(CAN_T_RECOGNIZE_LETTER, s));
         } else {

@@ -27,7 +27,7 @@ final class ParserPerformance {
     private static String ad(final int times) {
         String s = "a";
         for (int i = 0; i < times; ++i) {
-            s = "[" + s + ", " + "b" + "]";
+            s = new StringBuilder().append("[").append(s).append(", ").append("b").append("]").toString();
         }
         return s;
     }

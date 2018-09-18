@@ -6,6 +6,7 @@ package org.misha.domain.algebra.lie.endomorphism;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.misha.domain.algebra.lie.polynomial.Polynomial;
@@ -22,14 +23,14 @@ import static org.misha.domain.algebra.lie.polynomial.Polynomial.mount;
  */
 
 public class TupleTest {
-    private static Tuple tuple;
-    private static Monomial a;
-    private static Monomial b;
-    private static Monomial c;
+    private  Tuple tuple;
+    private  Monomial a;
+    private  Monomial b;
+    private  Monomial c;
     private static final Logger log = Logger.getLogger(TupleTest.class);
 
-    @BeforeClass
-    public static void init() {
+    @Before
+    public void init() {
         DOMConfigurator.configure("./src/main/resources/log4j.xml");
         tuple = new Tuple();
         a = MonomialUtils.monomial("a");
@@ -51,10 +52,6 @@ public class TupleTest {
         tuple.mapTo(b, mount("+ b"));
         tuple.mapTo(c, mount("+ c"));
         assertEquals(tuple.getAt(a), mount("+ a + [b, c]"));
-    }
-
-    @Test
-    public void testSize() throws Exception {
         assertEquals(tuple.size(), 3);
     }
 
