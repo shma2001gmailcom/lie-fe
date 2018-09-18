@@ -32,14 +32,15 @@ CREATE TABLE IF NOT EXISTS NODE_DATA (
   INDEX (`data_value`(12))
 );
 
-DROP PROCEDURE IF EXISTS new_node_letter;
+delimiter //
+DROP PROCEDURE IF EXISTS new_node_letter//
 CREATE PROCEDURE new_node_letter(IN node_data VARCHAR(200))
   BEGIN
     INSERT INTO NODE_DATA VALUES (NULL, node_data);
     INSERT INTO NODES VALUES (NULL, left_id, right_id, LAST_INSERT_ID());
-  END;
+  END//
 
-DROP PROCEDURE IF EXISTS alphabet;
+DROP PROCEDURE IF EXISTS alphabet//
 CREATE PROCEDURE alphabet()
   BEGIN
     DECLARE v_max INT UNSIGNED DEFAULT 3;
@@ -51,9 +52,10 @@ CREATE PROCEDURE alphabet()
           ));
       SET v_count = v_count + 1;
     END WHILE;
-  END;
+  END//
 
-DROP FUNCTION IF EXISTS new_node;
+DROP FUNCTION IF EXISTS new_node//
+SET GLOBAL log_bin_trust_function_creators = 1//
 CREATE FUNCTION new_node(left_id INT, right_id INT)
   RETURNS BIGINT
   BEGIN
@@ -74,9 +76,9 @@ CREATE FUNCTION new_node(left_id INT, right_id INT)
     INSERT INTO NODES VALUES (NULL, left_id, right_id, LAST_INSERT_ID())
     ON DUPLICATE KEY UPDATE node_id = node_id;
     RETURN LAST_INSERT_ID();
-  END;
+  END//
 
-DROP FUNCTION IF EXISTS new_polynomial;
+DROP FUNCTION IF EXISTS new_polynomial//
 CREATE FUNCTION new_polynomial()
   RETURNS BIGINT
   BEGIN
@@ -86,9 +88,9 @@ CREATE FUNCTION new_polynomial()
     INTO polynomial_count;
     INSERT INTO POLYNOMIALS VALUES (polynomial_count + 1, NULL, 0, FALSE);
     RETURN polynomial_count + 1;
-  END;
+  END//
 
-DROP PROCEDURE IF EXISTS update_polynomial;
+DROP PROCEDURE IF EXISTS update_polynomial//
 CREATE PROCEDURE update_polynomial(IN in_polynomial_id BIGINT, IN in_monomial_id BIGINT, IN in_scalar INT)
   BEGIN
     DECLARE current_monomial_id BIGINT;
@@ -127,7 +129,7 @@ CREATE PROCEDURE update_polynomial(IN in_polynomial_id BIGINT, IN in_monomial_id
       INSERT INTO POLYNOMIALS VALUES (in_polynomial_id, in_monomial_id, in_scalar, FALSE);
     END IF;
     CLOSE curs;
-  END;
+  END//
 
 DROP PROCEDURE IF EXISTS finalize_polynomial;
 CREATE PROCEDURE finalize_polynomial(IN in_polynomial_id BIGINT)
@@ -135,9 +137,10 @@ CREATE PROCEDURE finalize_polynomial(IN in_polynomial_id BIGINT)
     UPDATE POLYNOMIALS
     SET is_final = TRUE
     WHERE polynomial_id = in_polynomial_id;
-  END;
+  END//
 
 ############################ TEST ########################################
+delimeter ;
 CALL alphabet();
 
 SELECT

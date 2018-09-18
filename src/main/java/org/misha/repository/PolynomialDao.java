@@ -2,7 +2,12 @@ package org.misha.repository;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 
@@ -11,6 +16,7 @@ import javax.inject.Inject;
  * date: 12/27/15 1:05 AM.
  */
 @Repository
+@EnableTransactionManagement
 class PolynomialDao {
     @Inject
     private SpringJdbcTemplates springJdbcTemplates;
@@ -23,12 +29,16 @@ class PolynomialDao {
         executeCall("new_polynomial");
     }
 
+    @Transactional
     private void executeCall(final String callName) {
-        springJdbcTemplates.getJdbcTemplate().update("call " + callName);
+        SimpleJdbcCall call = springJdbcTemplates.getJdbcCall().withFunctionName("new_polynomial");
+        //SqlParameterSource in = new MapSqlParameterSource().addValue("in_id", id);
+        Long id = call.executeFunction(Long.class);
+        System.out.println(id);
     }
 
     public static void main(final String... args) {
         final BeanFactory context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        ((PolynomialDao) context.getBean("monomialDao")).createPolynomial();
+        ((PolynomialDao) context.getBean("polynomialDao")).createPolynomial();
     }
 }
