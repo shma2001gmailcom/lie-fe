@@ -1,15 +1,15 @@
 #################################################################
 ##################### mysql #####################################
 #################################################################
+delimiter $$
+DROP DATABASE IF EXISTS TREES$$
+COMMIT $$
+CREATE DATABASE IF NOT EXISTS TREES$$
+USE TREES $$
 
-DROP DATABASE IF EXISTS TREES;
-COMMIT;
-CREATE DATABASE IF NOT EXISTS TREES;
-USE TREES;
-
-DROP TABLE IF EXISTS NODES;
-DROP TABLE IF EXISTS NODE_DATA;
-DROP TABLE IF EXISTS POLYNOMIALS;
+DROP TABLE IF EXISTS NODES$$
+DROP TABLE IF EXISTS NODE_DATA$$
+DROP TABLE IF EXISTS POLYNOMIALS$$
 
 CREATE TABLE IF NOT EXISTS POLYNOMIALS (
   polynomial_id BIGINT,
@@ -17,30 +17,29 @@ CREATE TABLE IF NOT EXISTS POLYNOMIALS (
   scalar        INT,
   is_final      BOOLEAN,
   INDEX (`polynomial_id`, `monomial_id`)
-);
+)$$
 
 CREATE TABLE IF NOT EXISTS NODES (
   node_id  BIGINT AUTO_INCREMENT PRIMARY KEY,
   left_id  BIGINT,
   right_id BIGINT,
   data_id  BIGINT
-);
+)$$
 
 CREATE TABLE IF NOT EXISTS NODE_DATA (
   node_id    BIGINT AUTO_INCREMENT PRIMARY KEY,
   data_value VARCHAR(200) UNIQUE,
   INDEX (`data_value`(12))
-);
+)$$
 
-delimiter //
-DROP PROCEDURE IF EXISTS new_node_letter//
+DROP PROCEDURE IF EXISTS new_node_letter$$
 CREATE PROCEDURE new_node_letter(IN node_data VARCHAR(200))
   BEGIN
     INSERT INTO NODE_DATA VALUES (NULL, node_data);
     INSERT INTO NODES VALUES (NULL, left_id, right_id, LAST_INSERT_ID());
-  END//
+  END$$
 
-DROP PROCEDURE IF EXISTS alphabet//
+DROP PROCEDURE IF EXISTS alphabet$$
 CREATE PROCEDURE alphabet()
   BEGIN
     DECLARE v_max INT UNSIGNED DEFAULT 3;
@@ -52,10 +51,10 @@ CREATE PROCEDURE alphabet()
           ));
       SET v_count = v_count + 1;
     END WHILE;
-  END//
+  END$$
 
-DROP FUNCTION IF EXISTS new_node//
-SET GLOBAL log_bin_trust_function_creators = 1//
+DROP FUNCTION IF EXISTS new_node$$
+SET GLOBAL log_bin_trust_function_creators = 1$$
 CREATE FUNCTION new_node(left_id INT, right_id INT)
   RETURNS BIGINT
   BEGIN
@@ -76,9 +75,9 @@ CREATE FUNCTION new_node(left_id INT, right_id INT)
     INSERT INTO NODES VALUES (NULL, left_id, right_id, LAST_INSERT_ID())
     ON DUPLICATE KEY UPDATE node_id = node_id;
     RETURN LAST_INSERT_ID();
-  END//
+  END$$
 
-DROP FUNCTION IF EXISTS new_polynomial//
+DROP FUNCTION IF EXISTS new_polynomial$$
 CREATE FUNCTION new_polynomial()
   RETURNS BIGINT
   BEGIN
@@ -88,9 +87,9 @@ CREATE FUNCTION new_polynomial()
     INTO polynomial_count;
     INSERT INTO POLYNOMIALS VALUES (polynomial_count + 1, NULL, 0, FALSE);
     RETURN polynomial_count + 1;
-  END//
+  END$$
 
-DROP PROCEDURE IF EXISTS update_polynomial//
+DROP PROCEDURE IF EXISTS update_polynomial$$
 CREATE PROCEDURE update_polynomial(IN in_polynomial_id BIGINT, IN in_monomial_id BIGINT, IN in_scalar INT)
   BEGIN
     DECLARE current_monomial_id BIGINT;
@@ -129,15 +128,15 @@ CREATE PROCEDURE update_polynomial(IN in_polynomial_id BIGINT, IN in_monomial_id
       INSERT INTO POLYNOMIALS VALUES (in_polynomial_id, in_monomial_id, in_scalar, FALSE);
     END IF;
     CLOSE curs;
-  END//
+  END$$
 
-DROP PROCEDURE IF EXISTS finalize_polynomial;
+DROP PROCEDURE IF EXISTS finalize_polynomial$$
 CREATE PROCEDURE finalize_polynomial(IN in_polynomial_id BIGINT)
   BEGIN
     UPDATE POLYNOMIALS
     SET is_final = TRUE
     WHERE polynomial_id = in_polynomial_id;
-  END//
+  END$$
 
 ############################ TEST ########################################
 delimeter ;

@@ -18,20 +18,20 @@ import javax.inject.Inject;
 @Repository
 @EnableTransactionManagement
 class PolynomialDao {
-    @Inject
     private SpringJdbcTemplates springJdbcTemplates;
 
+    @Inject
     public void setSpringJdbcTemplates(final SpringJdbcTemplates springJdbcTemplates) {
         this.springJdbcTemplates = springJdbcTemplates;
     }
 
-    void createPolynomial() {
+    private void createPolynomial() {
         executeCall("new_polynomial");
     }
 
     @Transactional
     private void executeCall(final String callName) {
-        SimpleJdbcCall call = springJdbcTemplates.getJdbcCall().withFunctionName("new_polynomial");
+        SimpleJdbcCall call = springJdbcTemplates.getJdbcCall().withFunctionName(callName);
         //SqlParameterSource in = new MapSqlParameterSource().addValue("in_id", id);
         Long id = call.executeFunction(Long.class);
         System.out.println(id);

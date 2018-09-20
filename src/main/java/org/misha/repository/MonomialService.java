@@ -4,6 +4,8 @@ import org.misha.domain.algebra.lie.polynomial.monomial.Monomial;
 import org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,12 +18,12 @@ import java.util.HashMap;
  * date: 12/27/15 1:38 PM.
  */
 @Repository
+@EnableTransactionManagement
 public class MonomialService {
-    @Inject
-    @Named("springJdbcTemplates")
     private SpringJdbcTemplates springJdbctemplates;
 
-    public void setSpringJdbcTemplates(final SpringJdbcTemplates springJdbcTemplates) {
+    @Inject
+    public void setSpringJdbcTemplates(@Named("springJdbcTemplates") final SpringJdbcTemplates springJdbcTemplates) {
         this.springJdbctemplates = springJdbcTemplates;
     }
 
@@ -98,8 +100,11 @@ public class MonomialService {
 
     private static final String writeMonomial = "SELECT new_node(?, ?)";
 
+    @Transactional
     public Long write(final Monomial monomial) {
         return springJdbctemplates.getJdbcTemplate()
-                                  .queryForLong(writeMonomial, monomial.left().getId(), monomial.right().getId());
+                                  .queryForObject(writeMonomial,
+                                          new Long[]{monomial.left().getId(), monomial.right().getId()},
+                                          Long.class);
     }
 }

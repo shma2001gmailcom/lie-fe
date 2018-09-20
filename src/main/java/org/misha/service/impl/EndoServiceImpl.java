@@ -24,7 +24,7 @@ public final class EndoServiceImpl implements EndoService {
     private static final Logger log = Logger.getLogger(EndoServiceImpl.class);
 
     @Override
-    public String getProductOf(final String s) throws IllegalArgumentException, CloneNotSupportedException {
+    public String getProductOf(final String s) throws IllegalArgumentException {
         final String[] factors = StringUtils.split(s, "*");
         if (factors.length <= 1) {
             return "Error: the factors count should be more then one.";
@@ -32,15 +32,16 @@ public final class EndoServiceImpl implements EndoService {
         return multiplyFactors(factors);
     }
 
-    private String multiplyFactors(final String[] factors) throws IllegalArgumentException, CloneNotSupportedException {
+    private String multiplyFactors(final String[] factors) throws IllegalArgumentException {
         try {
-            Endo leftFactor = new Parser().parseEndo(factors[0]);
+            final Endo leftFactor = Parser.parseEndo(factors[0]);
+            Endo product = leftFactor;
             final int count = factors.length;
             for (int i = 1; i < count; ++i) {
-                final Endo rightFactor = new Parser().parseEndo(factors[i]);
-                leftFactor = leftFactor.times(rightFactor);
+                final Endo rightFactor = Parser.parseEndo(factors[i]);
+                product = leftFactor.times(rightFactor);
             }
-            return leftFactor.toString();
+            return product.toString();
         } catch (final IllegalArgumentException e) {
             log.error(e.getMessage());
             return ErrorMessage.logErrorForUser(e.getMessage());

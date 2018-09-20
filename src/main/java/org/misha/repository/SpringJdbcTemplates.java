@@ -19,12 +19,10 @@ class SpringJdbcTemplates {
     private NamedParameterJdbcTemplate template;
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcCall jdbcCall;
-    @Inject
-    @Named("dataSource")
     private DataSource dataSource;
 
-    @Autowired
-    public void setDataSource(final DataSource ds) {
+    @Inject
+    public void setDataSource(@Named("dataSource")final DataSource ds) {
         dataSource = ds;
         template = new NamedParameterJdbcTemplate(dataSource);
         jdbcTemplate = new JdbcTemplate(dataSource);

@@ -25,8 +25,8 @@ final class Tuple implements Iterable<Pair<Monomial, Polynomial>>, Cloneable {
     private static final String MUST_BE_A_LETTER = "The %s must be a letter.";
     private static final String MAP_DOES_NOT_EXIST = "The map of %s does not exist.";
     private static final String MAP_VIEW = "%s --> %s";
-    private final Collection<Pair<Monomial, Polynomial>> mappings = new TreeSet<Pair<Monomial, Polynomial>>();
-    private final Set<Monomial> letters = new TreeSet<Monomial>();
+    private final Collection<Pair<Monomial, Polynomial>> mappings = new TreeSet<>();
+    private final Set<Monomial> letters = new TreeSet<>();
 
     private boolean containsArgument(final Monomial argument) throws IllegalArgumentException {
         checkIfLetter(argument);
@@ -47,7 +47,7 @@ final class Tuple implements Iterable<Pair<Monomial, Polynomial>>, Cloneable {
                 }
             }
         } else {
-            mappings.add(new Pair<Monomial, Polynomial>(letter.copy(), p.copy()));
+            mappings.add(new Pair<>(letter.copy(), p.copy()));
         }
         addNewLetters();
     }
@@ -136,7 +136,7 @@ final class Tuple implements Iterable<Pair<Monomial, Polynomial>>, Cloneable {
             clone.letters.add(letterClone);
         }
         for (final Monomial letterClone : clone.letters) {
-            clone.mapTo(letterClone, getAt(letterClone));
+            clone.mapTo(letterClone, getAt(letterClone).clone());
         }
         return clone;
     }
