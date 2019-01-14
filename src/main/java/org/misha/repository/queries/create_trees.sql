@@ -147,10 +147,10 @@ SELECT
   n.left_id,
   n.right_id,
   d.data_value
-FROM NODES n LEFT JOIN NODE_DATA d ON (n.node_id = d.node_id)
+FROM NODE_DATA d LEFT JOIN NODES  n ON (n.node_id = d.node_id)
 WHERE right_id = 3
 ORDER BY n.node_id;
 SELECT new_polynomial();
-
 SELECT *
+
 FROM POLYNOMIALS;
