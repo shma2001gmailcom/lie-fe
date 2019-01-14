@@ -57,8 +57,6 @@ class Checker {
             } else {
                 if (previousDeg != deg) {
                     return false;
-                } else {
-                    previousDeg = deg;
                 }
             }
             ++i;
