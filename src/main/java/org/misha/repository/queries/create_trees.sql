@@ -3,12 +3,13 @@
 #################################################################
 delimiter $$
 DROP DATABASE IF EXISTS TREES$$
-COMMIT $$
+COMMIT$$
 CREATE DATABASE IF NOT EXISTS TREES$$
-USE TREES $$
+USE TREES$$
 
 DROP TABLE IF EXISTS NODES$$
 DROP TABLE IF EXISTS NODE_DATA$$
+
 DROP TABLE IF EXISTS POLYNOMIALS$$
 
 CREATE TABLE IF NOT EXISTS POLYNOMIALS (
@@ -149,7 +150,7 @@ SELECT
   d.data_value
 FROM NODE_DATA d LEFT JOIN NODES  n ON (n.node_id = d.node_id)
 WHERE right_id = 3
-ORDER BY n.node_id;
+ORDER BY n.node_id asc;
 SELECT new_polynomial();
 SELECT *
 

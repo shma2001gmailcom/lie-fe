@@ -5,6 +5,8 @@ import org.misha.domain.algebra.lie.polynomial.monomial.MonomialUtils;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -31,7 +33,9 @@ public class MonomialService {
             "SELECT " + "n.node_id, " + "n.left_id, " + "n.right_id, " + "d.data_value " + "FROM NODES n " + "JOIN NODE_DATA d ON (n.node_id = d.node_id) " + "WHERE n.node_id = :nodeId";
     private static final String findBySmallId = "SELECT d.data_value FROM NODE_DATA d WHERE d.node_id = :nodeId";
 
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.READ_COMMITTED)
     public Monomial findById(final Long id) {
+
         if (id < 26L) {
             return findBySmallId(id);
         }
@@ -100,7 +104,7 @@ public class MonomialService {
 
     private static final String writeMonomial = "SELECT new_node(?, ?)";
 
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public Long write(final Monomial monomial) {
         return springJdbctemplates.getJdbcTemplate()
                                   .queryForObject(writeMonomial,
