@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 public final class RationalMonomial implements MonomialInterface<Rational>, Serializable, Cloneable {
     private static final Logger log = Logger.getLogger(RationalMonomial.class);
     private static final long serialVersionUID = 5526179742214316857L;
-    private List<Character> sequence = new ArrayList<Character>();
+    private List<Character> sequence = new ArrayList<>();
     private Rational constant;
 
     @Override

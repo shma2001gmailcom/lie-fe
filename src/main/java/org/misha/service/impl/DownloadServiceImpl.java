@@ -1,6 +1,5 @@
 package org.misha.service.impl;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.misha.service.DownloadService;
 
@@ -36,16 +35,11 @@ public final class DownloadServiceImpl implements DownloadService {
     }
 
     private void writeBytes(final HttpServletResponse response, final File file) {
-        OutputStream out = null;
-        InputStream in = null;
-        try {
-            out = response.getOutputStream();
-            in = new FileInputStream(file);
+        try (OutputStream out = response.getOutputStream();
+             InputStream in = new FileInputStream(file)) {
             writeBytes(in, out);
         } catch (final Throwable e) {
             log.error(e.getMessage());
-        } finally {
-            close(out, in);
         }
     }
 
@@ -53,34 +47,20 @@ public final class DownloadServiceImpl implements DownloadService {
         final byte[] buffer = new byte[FOUR_THOUSAND_AND_NINETY_SIX];
         int length;
         while ((length = in.read(buffer)) > 0) {
-            try {
-                out.write(buffer, 0, length);
-                out.flush();
-            } catch (final IOException e) {
-                log.error(e.getMessage());
-            }
+            out.write(buffer, 0, length);
+            out.flush();
         }
-    }
-
-    private void close(final OutputStream out, final InputStream in) {
-        IOUtils.closeQuietly(in);
-        IOUtils.closeQuietly(out);
     }
 
     @Override
     public File writeToFile(final String text, final String filePath) {
         final File file = new File(filePath);
-        OutputStreamWriter writer = null;
-        try {
-            writer = new OutputStreamWriter(
-                    new FileOutputStream(filePath), Charset.forName("UTF-8").newEncoder()
-            );
+        try (OutputStreamWriter writer = new OutputStreamWriter(
+                new FileOutputStream(filePath), Charset.forName("UTF-8").newEncoder())) {
             writer.write(text, 0, text.length());
             writer.flush();
         } catch (final Throwable e) {
             log.error(e);
-        } finally {
-            IOUtils.closeQuietly(writer);
         }
         return file;
     }

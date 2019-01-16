@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 public final class Monomial implements Comparable<Monomial>, Serializable, Cloneable {
     private static final Logger log = Logger.getLogger(Monomial.class);
     private static final long serialVersionUID = -7758209558569173319L;
-    private List<Character> sequence = new ArrayList<Character>();
+    private List<Character> sequence = new ArrayList<>();
     private int constant;
 
     private Monomial(final String s, final int constant) {
@@ -172,7 +172,7 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
     }
 
     public Derivative fox() {
-        final Map<Monomial, Polynomial> result = new HashMap<Monomial, Polynomial>();
+        final Map<Monomial, Polynomial> result = new HashMap<>();
         for (int i = 0; i < sequence.size(); i++) {
             final Character c = sequence.get(i);
             final Monomial key = monomial(Character.toString(c), 1);
@@ -198,7 +198,7 @@ public final class Monomial implements Comparable<Monomial>, Serializable, Clone
         Monomial clone = null;
         try {
             clone = (Monomial) super.clone();
-            clone.sequence = new ArrayList<Character>();
+            clone.sequence = new ArrayList<>();
             clone.sequence.addAll(sequence);
             clone.constant = constant;
         } catch (CloneNotSupportedException e) {
