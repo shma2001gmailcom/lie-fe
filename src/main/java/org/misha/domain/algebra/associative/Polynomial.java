@@ -26,7 +26,7 @@ import static org.misha.domain.algebra.associative.impl.Monomial.monomial;
 public final class Polynomial implements Iterable<Monomial>, Serializable, Cloneable {
     private static final Logger log = Logger.getLogger(org.misha.domain.algebra.lie.polynomial.Polynomial.class);
     private static final long serialVersionUID = -2597630069340261466L;
-    private List<Monomial> monomials = new ArrayList<Monomial>();
+    private List<Monomial> monomials = new ArrayList<>();
 
     public int size() {
         return monomials.size();
@@ -82,7 +82,7 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (final Monomial m : monomials) {
-            sb = sb.append(m.toString());
+            sb.append(m.toString());
         }
         log.debug(sb.toString());
         return StringUtils.EMPTY.equals(sb.toString().trim()) ? "0" : sb.toString().trim();
@@ -164,7 +164,7 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
     }
 
     public Derivative foxRelative(final Iterable<Character> characters) {
-        final Map<Monomial, Polynomial> result = new TreeMap<Monomial, Polynomial>();
+        final Map<Monomial, Polynomial> result = new TreeMap<>();
         for (final Character c : characters) {
             final Monomial letter = monomial(Character.toString(c), 1);
             Polynomial polynomial = new Polynomial();
@@ -183,7 +183,7 @@ public final class Polynomial implements Iterable<Monomial>, Serializable, Clone
         Polynomial clone = null;
         try {
             clone = (Polynomial) super.clone();
-            clone.monomials = new ArrayList<Monomial>();
+            clone.monomials = new ArrayList<>();
             for (final Monomial m : monomials) {
                 clone.monomials.add(m.clone());
             }
